@@ -1,0 +1,446 @@
+\section{Light Gradient Boosting Machine (LightGBM) ~\cite{lightgbm} }
+
+
+\subsection{Sơ lược về LightGBM}
+
+$\indent$LightGBM được xem là phiên bản cải tiến của thuật toán Gradient Boosting truyền thống, tập trung vào việc tăng tốc độ huấn luyện và giảm tiêu thụ bộ nhớ, nhờ việc sử dụng các kỹ thuật tối ưu như:
+\begin{itemize}
+    \item \textbf{Histogram-based algorithm}: thay thế phương pháp pre-sort-based thông thường, giúp tăng tốc độ tìm điểm chia (split point) trong quá trình xây dựng cây và tiết kiệm bộ nhớ.
+    \item\textbf{ Gradient-based One-Side Sampling (GOSS) và Exclusive Feature Bundling (EFB)}: hai thuật toán cốt lõi giúp giảm khối lượng tính toán mà vẫn đảm bảo độ chính xác của mô hình.
+\end{itemize}
+
+Không chỉ nổi bật về hiệu suất, LightGBM còn hỗ trợ các bài toán phân loại và hồi quy, có khả năng xử lý dữ liệu cực lớn, hỗ trợ tính toán song song và phân tán, cùng khả năng tùy chỉnh tham số linh hoạt. Nhờ đó, LightGBM trở thành lựa chọn hàng đầu cho các hệ thống dự đoán, phân tích dữ liệu tài chính, y tế, tiếp thị, và nhiều lĩnh vực khác trong học máy hiện đại.
+
+\subsection{Cơ sở toán học cho LightGBM}
+
+\subsubsection*{a) GBDT và phân tích độ phức tạp}
+
+$\indent$GBDT (Gradient Boosting Decision Tree) là mô hình tổ hợp nhiều cây quyết định (decision trees) được huấn luyện nối tiếp nhau. Ở mỗi vòng lặp, mô hình huấn luyện một cây mới để xấp xỉ negative gradient của hàm mất mát đối với đầu ra hiện tại của mô hình. Về bản chất, GBDT thực hiện một dạng tối ưu hoá theo gradient trong không gian hàm.
+
+Giả sử ta có tập dữ liệu huấn luyện $\{(x_i, y_i)\}_{i=1}^{n}$, mô hình dự đoán tại vòng lặp $t$ là:
+\[
+\hat{y}_i^{(t)} = F_{t-1}(x_i) + f_t(x_i),
+\]
+$\indent$trong đó $F_{t-1}$ là mô hình tổ hợp của các cây đã học trước đó, và $f_t$ là cây mới được huấn luyện tại vòng $t$.
+
+Cây $f_t$ được học để xấp xỉ hướng gradient âm của hàm mất mát $L(y, \hat{y})$, tức là:
+\[
+g_i^{(t)} = - \frac{\partial L(y_i, F_{t-1}(x_i))}{\partial F_{t-1}(x_i)}.
+\]
+$\indent$Do đó, tại mỗi vòng, bài toán của GBDT trở thành bài toán hồi quy:
+\[
+f_t = \arg\min_f \sum_{i=1}^{n} \left(g_i^{(t)} - f(x_i)\right)^2.
+\]
+$\indent$Nói cách khác, ta phải xây dựng cây sao cho giá trị dự đoán của các lá xấp xỉ tốt nhất các giá trị $g_i^{(t)}$.
+
+\medskip
+ Trong quá trình huấn luyện cây phần tốn nhiều chi phí nhất là tìm điểm chia (\textbf{split point}) tối ưu cho từng đặc trưng. Có hai cách phổ biến để tìm split:
+\begin{itemize}
+  \item \textbf{Pre-sorted}: duyệt qua tất cả các giá trị đặc trưng đã được sắp xếp và kiểm tra từng điểm chia có thể xảy ra. Cách này tìm được split tối ưu nhưng tốn nhiều bộ nhớ và thời gian.
+  \item \textbf{Histogram-based}: discretize các giá trị đặc trưng liên tục thành các bin rời rạc, sau đó cộng dồn gradient và số lượng mẫu theo từng bin để xây dựng histogram, rồi chọn split tối ưu trên histogram.
+\end{itemize}
+
+Giả sử ta có $m$ đặc trưng, $N$ mẫu, và mỗi đặc trưng được chia thành $K$ bin.  
+Độ phức tạp của thuật toán histogram-based gồm hai phần:
+\begin{itemize}
+  \item \textbf{Chi phí xây dựng histogram}: $O(N \times m)$
+  \item \textbf{Chi phí tìm điểm chia (split)}: $O(K \times m)$
+\end{itemize}
+Vì $K \ll N$, phần xây histogram chiếm ưu thế. Do đó, nếu giảm được số mẫu hoặc số đặc trưng hiệu dụng, thời gian huấn luyện sẽ giảm đáng kể. Đây là cơ sở để LightGBM cải tiến hiệu suất sau này (với GOSS và EFB).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/Histogram.png}
+    \vspace{15pt}
+    \caption{Thuật toán Histogram-based Algorithm trong GBDT}
+    \label{fig:placeholder}
+\end{figure}
+
+
+\subsubsection*{b) Gain dựa trên phương sai (Variance Gain)}
+
+$\indent$Khi xây dựng cây quyết định, mục tiêu là chọn đặc trưng và điểm chia $(j, d)$ sao cho giảm được phương sai của giá trị gradient trong từng nút là lớn nhất. LightGBM định nghĩa \emph{variance gain} cho đặc trưng $j$ tại điểm chia $d$ như sau:
+
+\begin{equation}
+\label{eq:lgbm-var-gain}
+V_{j|O}(d)
+=\frac{1}{n_O}\left(
+\frac{\big(\sum_{x_i\in O: x_{ij}\le d} g_i\big)^2}{n_{jl|O}(d)}
++
+\frac{\big(\sum_{x_i\in O: x_{ij}> d} g_i\big)^2}{n_{jr|O}(d)}
+\right),
+\end{equation}
+
+trong đó:
+\begin{itemize}
+    \item $O$: tập các mẫu thuộc nút đang xét, có kích thước $n_O$.
+    \item $g_i$: gradient của mẫu $i$.
+    \item $n_{jl|O}(d)$ và $n_{jr|O}(d)$: số mẫu rơi vào nhánh trái và phải sau khi cắt tại $d$.
+\end{itemize}
+
+Thuật toán chọn điểm chia tối ưu cho đặc trưng $j$ là:
+\[
+d_j^* = \arg\max_d V_{j|O}(d),
+\]
+$\indent$và chọn đặc trưng tối ưu:
+\[
+j^* = \arg\max_j V_{j|O}(d_j^*).
+\]
+
+Công thức \eqref{eq:lgbm-var-gain} phản ánh mức độ “giảm phương sai” (variance reduction) của gradient khi nút hiện tại được chia thành hai nhánh con. 
+Nói cách khác, nó đo lường mức độ mà việc chia nút giúp làm cho các giá trị gradient trong mỗi nhánh trở nên thuần nhất hơn.
+\vspace{0.8em}
+
+Trong bối cảnh của GBDT, gradient $g_i$ biểu thị hướng và độ lớn của sai lệch (\textit{residual error}) giữa dự đoán của mô hình và giá trị thật. 
+Nếu một tập mẫu có các giá trị gradient tương tự nhau (ví dụ, cùng dương hoặc cùng âm, và có độ lớn gần nhau), điều đó có nghĩa là các mẫu này “đang sai theo cùng một hướng”. Khi đó, nếu gom chúng lại trong cùng một nút, mô hình có thể sửa sai cho chúng một cách hiệu quả bằng một giá trị dự đoán duy nhất ở lá. Ngược lại, nếu trong một nút chứa các mẫu có gradient trái dấu (một số dương, một số âm), thì việc gán cùng một giá trị đầu ra cho tất cả các mẫu này sẽ làm tăng sai số, vì mô hình không thể cùng lúc hiệu chỉnh theo hai hướng ngược nhau.
+\vspace{0.8em}
+
+Do đó, khi xem xét việc chia một nút thành hai nhánh, thuật toán sẽ tính giá trị $V_{j|O}(d)$ — gọi là \emph{variance gain} hay \emph{information gain} — cho từng đặc trưng $j$ và từng điểm chia $d$. 
+Giá trị này càng lớn thì sự “khác biệt về hướng gradient” giữa hai nhánh càng rõ, và mỗi nhánh trở nên đồng nhất hơn về mặt gradient nội bộ. 
+Việc chọn $(j^*, d^*)$ sao cho $V_{j|O}(d)$ đạt cực đại giúp mô hình giảm tổng sai số nhanh nhất sau mỗi bước chia.
+\vspace{0.8em}
+
+Có thể hiểu trực giác như sau:
+\begin{itemize}
+    \item Nếu tổng gradient trong mỗi nhánh có giá trị tuyệt đối lớn, tức là hầu hết các mẫu trong nhánh đó đều “sai cùng hướng”, thì việc chia theo điểm đó giúp mô hình dễ dàng điều chỉnh sai số cho toàn bộ nhóm.
+    \item Nếu tổng gradient nhỏ (gần 0), điều này có nghĩa là các sai số trong nhánh triệt tiêu lẫn nhau (một số dương, một số âm), và việc chia tại điểm đó sẽ không mang lại nhiều lợi ích.
+\end{itemize}
+\vspace{0.8em}
+
+Từ góc nhìn thống kê, công thức \eqref{eq:lgbm-var-gain} tương tự như tiêu chuẩn “giảm phương sai” trong hồi quy tuyến tính, hay “giảm độ hỗn tạp” (impurity reduction) trong cây quyết định phân loại (như chỉ số Gini). 
+Điểm khác biệt là ở đây, biến mục tiêu không phải là $y_i$ mà là gradient $g_i$, phản ánh lỗi của mô hình tại bước hiện tại. Như vậy, công thức này chính là nền tảng để LightGBM (và các mô hình boosting khác) xác định cách phát triển cây trong mỗi vòng huấn luyện. 
+Các cải tiến như GOSS và EFB sau này đều tác động trực tiếp lên quá trình ước lượng $V_{j|O}(d)$ — bằng cách giảm số mẫu hoặc số đặc trưng được sử dụng — nhưng vẫn đảm bảo giá trị ước lượng không bị sai lệch đáng kể so với giá trị gốc, nhờ vào tính chất thống kê ổn định của công thức này khi kích thước dữ liệu lớn.
+
+
+
+\subsection{GOSS: Lấy mẫu một phía theo độ lớn gradient}
+
+\subsubsection*{a) Sơ lược về GOSS}
+$\indent$GOSS (Gradient-based One-Side Sampling) là kỹ thuật giảm số mẫu hiệu dụng trong quá trình xây dựng cây,
+dựa trên quan sát rằng các mẫu có trị tuyệt đối gradient lớn thường chứa nhiều thông tin hơn cho việc tối ưu hoá hàm mất mát.
+Các mẫu có gradient lớn tương ứng với những điểm mà mô hình đang dự đoán sai nhiều nhất,
+vì vậy chúng cần được ưu tiên trong quá trình học. 
+Ngược lại, các mẫu có gradient nhỏ chỉ góp phần tinh chỉnh mô hình, có thể được lấy mẫu ngẫu nhiên mà không làm sai lệch đáng kể kết quả huấn luyện. Nếu chỉ lấy mẫu ngẫu nhiên toàn bộ dữ liệu (như trong Stochastic Gradient Boosting), ta có nguy cơ bỏ sót các mẫu “quan trọng”, dẫn tới sai số lớn hơn. GOSS giải quyết vấn đề này bằng cách giữ lại toàn bộ các mẫu có gradient lớn và chỉ lấy ngẫu nhiên một phần trong số các mẫu có gradient nhỏ,
+sau đó nhân trọng số bù cho nhóm mẫu bị giảm để đảm bảo cân bằng thống kê.
+
+\subsubsection*{b) Mô tả thuật toán}
+Tại mỗi vòng boosting, GOSS thực hiện các bước sau:
+
+\begin{enumerate}
+  \item \textbf{Tính gradient $g_i$ cho tất cả các mẫu.} 
+    \\
+    Ở vòng $t$ ta tính $g_i^{(t)} = -\partial L(y_i, F_{t-1}(x_i))/\partial F_{t-1}(x_i)$ cho mọi $i$. 
+    Việc này yêu cầu dự đoán trên toàn bộ tập dữ liệu, tức GOSS \emph{không} tránh được chi phí tính gradient (và dự đoán) trên toàn bộ dữ liệu — nhưng mục đích là để xác định mẫu nào “quan trọng” (có gradient lớn) để giữ lại.
+  \item \textbf{Sắp xếp các mẫu theo $|g_i|$ giảm dần.}
+    \\
+    Ta dùng trị tuyệt đối của gradient vì độ lớn (magnitude), bất kể dấu, phản ánh mức “chưa được học” của mẫu. 
+    Việc sắp xếp đưa các mẫu có ảnh hưởng lớn lên đầu để giữ lại toàn bộ nhóm này. Về hiệu năng, thay vì sắp toàn bộ (O($N\log N$)), có thể dùng thuật toán chọn phần tử thứ $k$ (nth\_element) để lấy top-$aN$ trong thời gian trung bình O($N$).
+  \item \textbf{Giữ lại tập $A$ gồm $a \times 100\%$ mẫu có gradient lớn nhất.}
+    \\
+    Việc giữ toàn bộ top-$a$ đảm bảo không bỏ các mẫu \emph{under-trained} có ảnh hưởng lớn đến thông tin gain. Kích thước $a$ thường nhỏ (ví dụ $0.05$--$0.1$).
+  \item \textbf{Từ phần còn lại, chọn ngẫu nhiên tập $B$ gồm $b \times 100\%$ mẫu.}
+    \\
+    Có hai cách thường gặp để chọn: lấy ngẫu nhiên trực tiếp $bN$ mẫu từ toàn bộ tập, hoặclấy ngẫu nhiên $b(1-a)N$ mẫu từ phần còn lại. Mục tiêu là giữ một mẫu đại diện cho phần lớn mẫu có gradient nhỏ, nhằm duy trì thông tin về phân phối tổng thể mà không cần duyệt tất cả.
+  \item \textbf{Khi tính gain, nhân các mẫu trong $B$ với hệ số bù}
+    \[
+      \text{fact} \;=\; \frac{1-a}{b}.
+    \]
+    Giải thích: gọi $S_{A^c}=\sum_{i\in A^c} g_i$ là tổng gradient trên phần dữ liệu bị xem là nhỏ. Nếu ta chỉ lấy một mẫu ngẫu nhiên $B$ có kích thước bằng $bN$, thì kỳ vọng tổng gradient trên $B$ bằng $\dfrac{b}{1-a} S_{A^c}$. Để ước lượng lại tổng gradient ban đầu $S_{A^c}$ khi sử dụng $B$, ta cần nhân tổng trên $B$ với hệ số $\dfrac{1-a}{b}$; đó chính là nguồn gốc của \texttt{fact}. Nhờ vậy, phép ước lượng gain dựa trên $A\cup B$ sẽ không bị lệch về quy mô so với việc dùng toàn bộ dữ liệu.
+  \item \textbf{Dùng tập $A \cup B$ (với trọng số đã điều chỉnh) để xây histogram và tìm split tối ưu.}
+    \\
+    Các bước xây histogram, tính gain theo công thức variance gain, và chọn split được thực hiện trên tập rút gọn $A\cup B$, trong đó các mẫu thuộc $B$ được coi có trọng số bằng \texttt{fact} (còn mẫu trong $A$ có trọng số 1). Mô hình yếu (weak learner) được huấn luyện trên tập này (với trọng số tương ứng) để sinh cây mới.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/GOSS .png}
+    \vspace{15pt}
+    \caption{Thuật toán Gradient-based One-Side Sampling.}
+    \label{fig:goss_algo}
+\end{figure}
+\textbf{Ví dụ:}
+Giả sử $N=10\,000$, $a=0.1$, $b=0.1$. Khi đó:
+\begin{itemize}
+  \item $|A| = aN = 1\,000$ (giữ 1.000 mẫu có $|g|$ lớn nhất).
+  \item $|B| = bN = 1\,000$ (lấy ngẫu nhiên 1.000 mẫu).
+  \item $\text{fact} = \dfrac{1-a}{b} = \dfrac{0.9}{0.1} = 9$.
+\end{itemize}
+$\indent$Khi xây histogram, mỗi mẫu trong $B$ được nhân hệ số 9 để bù cho việc bỏ đi 8.000 mẫu còn lại trong phần gradient nhỏ. Như vậy tổng gradient ước lượng từ $B$ (sau nhân) xấp xỉ tổng gradient ban đầu trên phần $A^c$.
+
+
+\subsubsection*{c) Công thức toán học của GOSS}
+Giả sử tại một nút đang xét $O$ có kích thước $n_O$, LightGBM sử dụng công thức \emph{variance gain} được điều chỉnh theo kỹ thuật GOSS để đánh giá chất lượng điểm chia $d$ cho đặc trưng $j$ như sau:
+\begin{equation}
+\label{eq:goss-vtilde}
+\widetilde{V}_j(d)
+=\frac{1}{n}\left(
+\frac{\big(\sum_{x_i\in A_l} g_i + \dfrac{1-a}{b}\sum_{x_i\in B_l} g_i\big)^2}{n_{jl}(d)}
++
+\frac{\big(\sum_{x_i\in A_r} g_i + \dfrac{1-a}{b}\sum_{x_i\in B_r} g_i\big)^2}{n_{jr}(d)}
+\right),
+\end{equation}
+trong đó:
+\begin{itemize}
+    \item $A_l$ và $A_r$: các mẫu trong tập $A$ (các mẫu có gradient lớn nhất) rơi vào nhánh trái và phải sau khi chia tại $d$.
+    \item $B_l$ và $B_r$: các mẫu thuộc tập $B$ (các mẫu được chọn ngẫu nhiên từ phần còn lại) rơi vào nhánh trái và phải.
+    \item $n_{jl}(d)$ và $n_{jr}(d)$: số mẫu rơi vào từng nhánh tương ứng.
+    \item $a$ và $b$: tỉ lệ phần trăm mẫu được chọn theo gradient lớn và nhỏ.
+\end{itemize}
+
+Cấu trúc của công thức \eqref{eq:goss-vtilde} thể hiện rõ hai ý tưởng quan trọng. Thứ nhất, tổng gradient trong tập $A$ được giữ nguyên vì đây là nhóm mẫu có đóng góp lớn vào thông tin gradient, giúp mô hình tập trung vào các vùng dữ liệu mà hàm mất mát vẫn còn lớn. Thứ hai, phần gradient trong tập $B$ (mẫu ngẫu nhiên từ phần còn lại) được nhân với hệ số $\dfrac{1-a}{b}$ để hiệu chỉnh quy mô, đảm bảo rằng tổng ước lượng gradient trên phần này xấp xỉ tổng gradient gốc trên toàn bộ phần bị bỏ qua. Hệ số này xuất phát từ lập luận sau: nếu lấy mẫu ngẫu nhiên $b(1-a)n$ phần tử từ $A^c$, thì kỳ vọng của tổng gradient trên tập mẫu tỉ lệ với $b/(1-a)$ của tổng gradient thật. Do đó, nhân với $\dfrac{1-a}{b}$ sẽ đưa giá trị ước lượng về đúng kỳ vọng gốc.
+\vspace{0.8em}
+
+Tuy nhiên, do biểu thức variance gain có dạng bình phương của tổng gradient, nên mặc dù phép nhân bù này giúp đảm bảo ước lượng \emph{trung bình không lệch} (unbiased) cho tổng tuyến tính, nó không đảm bảo hoàn toàn tính không lệch cho giá trị gain. Cụ thể, khi ta tính kỳ vọng của bình phương tổng gradient, sẽ có thêm một thành phần phương sai của mẫu do phép lấy ngẫu nhiên, làm xuất hiện sai số trong ước lượng. Để định lượng sai số này, ta lấy biên trên cho sai số xấp xỉ $E(d)=|\widetilde{V}_j(d)-V_j(d)|$, với xác suất ít nhất $1-\delta$:
+\[
+E(d) \le C_{a,b}^2 \ln\frac{1}{\delta}\cdot 
+\max\left\{\frac{1}{n_{jl}(d)},\frac{1}{n_{jr}(d)}\right\}
++ 2 D\, C_{a,b}\,\sqrt{\frac{\ln(1/\delta)}{n}},
+\]
+trong đó:
+\begin{itemize}
+    \item $C_{a,b} = \dfrac{1-a}{\sqrt{b}}\max_{x_i\in A^c} |g_i|$: hệ số thể hiện ảnh hưởng của các mẫu bị loại bỏ (gradient nhỏ), cho biết phạm vi lớn nhất của gradient bị bỏ qua.
+    \item $D = \max\{\bar g_{jl}(d),\bar g_{jr}(d)\}$: đại diện cho giá trị trung bình của gradient trên hai nhánh trái/phải.
+    \item $\bar g_{jl}(d)=\dfrac{\sum_{x_i} |g_i|}{n_{jl}(d)}$: giá trị trung bình của gradient tuyệt đối trong nhánh trái (tương tự cho nhánh phải).
+\end{itemize}
+$\indent$Hai hằng số $C_{a,b}$ và $D$ phản ánh phạm vi gradient bị loại bỏ và quy mô của từng nhánh sau khi chia, ảnh hưởng trực tiếp đến sai số xấp xỉ $E(d)$.
+Phần đầu của bất đẳng thức liên quan đến $\max\{1/n_{jl},1/n_{jr}\}$ cho thấy nếu một nhánh sau khi chia có rất ít mẫu, sai số xấp xỉ có thể tăng mạnh do giá trị gain có chứa phép chia cho số lượng mẫu. Phần thứ hai giảm theo bậc $O(1/\sqrt{n})$, cho thấy rằng khi kích thước dữ liệu lớn, sai số ước lượng do lấy mẫu là không đáng kể. Đây chính là cơ sở lý thuyết quan trọng lý giải tại sao GOSS đặc biệt hiệu quả với các tập dữ liệu lớn: dù giảm số lượng mẫu sử dụng trong việc xây histogram, mô hình vẫn gần như không mất mát về chất lượng chia nút.  
+\vspace{0.8em}
+
+Từ các phân tích trên, có thể rút ra một số hệ quả thực tiễn. Thứ nhất, GOSS giúp giảm đáng kể chi phí tính toán khi xây histogram (vốn có độ phức tạp $O(N\times m)$), vì chỉ cần duyệt qua các mẫu trong $A\cup B$, mà kích thước của tập này thường chỉ chiếm 10–20\% dữ liệu gốc. Thứ hai, để sai số xấp xỉ thấp, cần chọn các giá trị $a$ và $b$ hợp lý, thông thường $a,b\in[0.05,0.1]$. Nếu $b$ quá nhỏ, hệ số bù $\frac{1-a}{b}$ trở nên lớn, dẫn đến tăng phương sai ước lượng và gây bất ổn số học khi tính tổng gradient. Ngược lại, nếu $a$ quá lớn, hiệu năng giảm vì lượng mẫu được giữ lại quá nhiều. Do đó, LightGBM khuyến nghị chọn $a$ và $b$ tương đương nhau, hoặc $b$ hơi nhỏ hơn một chút để đạt cân bằng giữa tốc độ và độ chính xác.  
+\vspace{0.8em}
+
+Tổng kết lại, công thức \eqref{eq:goss-vtilde} là điểm cốt lõi thể hiện tinh thần của GOSS: ưu tiên giữ các mẫu có gradient lớn — nơi hàm mất mát còn cao — đồng thời ước lượng lại ảnh hưởng của các mẫu còn lại thông qua phép nhân bù trọng số. Cơ sở toán học của GOSS cho thấy độ sai lệch của ước lượng gain giảm nhanh theo kích thước dữ liệu, trong khi tốc độ huấn luyện lại tăng đáng kể nhờ giảm khối lượng tính toán. Điều này giúp LightGBM đạt được sự cân bằng giữa tốc độ và độ chính xác, trở thành lựa chọn tối ưu cho các bài toán học máy có quy mô lớn.
+
+
+\subsection{EFB: Gom bó đặc trưng loại trừ nhau}
+
+\subsubsection*{a) Sơ lược về EFB}
+$\indent$EFB (Exclusive Feature Bundling) là kỹ thuật giúp giảm số lượng đặc trưng hiệu dụng trong quá trình huấn luyện bằng cách gộp các đặc trưng loại trừ nhau (\textit{mutually exclusive features}) vào cùng một nhóm (bundle).  
+Các đặc trưng được gọi là loại trừ nhau nếu chúng hiếm khi hoặc không bao giờ cùng nhận giá trị khác 0 trên cùng một mẫu.  
+Ví dụ, trong dữ liệu one-hot hoặc bag-of-words, các đặc trưng biểu diễn “từ A xuất hiện” và “từ B xuất hiện” hiếm khi đồng thời xuất hiện, nên có thể gom lại mà không làm mất thông tin.  
+\vspace{0.8em}
+
+EFB tận dụng đặc tính này để giảm đáng kể chi phí xây histogram, vốn chiếm phần lớn thời gian trong quá trình xây dựng cây quyết định.  
+Nếu số đặc trưng ban đầu là $m$, sau khi áp dụng EFB còn lại $k$ bundle ($k \ll m$), từ đó độ phức tạp xây histogram giảm từ $O(N \times m)$ xuống $O(N \times k)$, trong đó $N$ là số mẫu huấn luyện.  
+
+\subsubsection*{b) Mô tả thuật toán}
+$\indent$Ý tưởng chính của EFB là gom các đặc trưng có xung đột nhỏ (ít khi cùng khác 0) vào cùng một bundle, mỗi đặc trưng trong bundle được dịch giá trị bằng một \textit{offset} để tránh chồng lấn miền giá trị.  
+Quy trình thực hiện có thể mô tả như sau:
+
+\begin{enumerate}
+  \item \textbf{Tính độ xung đột giữa các đặc trưng.} \\ 
+  Với mỗi cặp $(f_i, f_j)$, tính số lượng mẫu mà cả hai cùng có giá trị khác 0 (gọi là \emph{conflict count}). Cặp có số xung đột thấp được coi là loại trừ nhau.
+  
+  \item \textbf{Sắp xếp và gom bó.}  \\
+  Các đặc trưng được sắp xếp theo độ thưa (số lượng giá trị khác 0) giảm dần.  
+  Duyệt lần lượt từng đặc trưng và gán nó vào bundle hiện có nếu số xung đột với tất cả đặc trưng trong bundle nhỏ hơn ngưỡng $\epsilon$.  
+  Nếu không có bundle phù hợp, tạo một bundle mới.
+  
+  \item \textbf{Gộp giá trị bằng offset.} \\ 
+  Khi gộp một đặc trưng $f_i$ vào bundle $B_k$, ta cộng thêm một giá trị dịch $\text{offset}_i$ sao cho các miền giá trị của các đặc trưng trong cùng bundle không chồng lên nhau.  
+  Khi đó, bundle $B_k$ được biểu diễn:
+  \[
+    B_k(x) = f_i(x) + \text{offset}_i, \quad \forall f_i \in B_k.
+  \]
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/GreedyBundling.png}
+    \vspace{15pt}
+    \caption{Thuật toán gom bó đặc trưng loại trừ nhau}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/MEF.png}
+    \vspace{15pt}
+    \caption{Thuật toán gom bó với offset để tránh chồng lấn}
+    \label{fig:placeholder}
+\end{figure}
+Hai hình trên minh họa quy trình cụ thể của hai thuật toán trong EFB.  
+Thuật toán đầu tiên mô tả quá trình gom bó các đặc trưng loại trừ nhau theo hướng tham lam. Mỗi đặc trưng được duyệt lần lượt theo thứ tự đã sắp xếp, thường là theo độ thưa giảm dần. Với mỗi đặc trưng đang xét, thuật toán kiểm tra lần lượt các bundle hiện có và tính số lượng xung đột nếu đặc trưng này được thêm vào bundle đó. Nếu tổng số xung đột không vượt quá ngưỡng cho phép, đặc trưng được gộp vào bundle tương ứng; ngược lại, một bundle mới sẽ được tạo ra. Cách tiếp cận này giúp tận dụng tối đa các bundle đã có mà vẫn đảm bảo giới hạn mức chồng lấn giữa các đặc trưng trong cùng nhóm. Nhờ việc sử dụng cấu trúc dữ liệu thưa (như danh sách vị trí khác 0 hoặc bitset), việc tính toán số xung đột giữa các đặc trưng được thực hiện nhanh chóng, giảm đáng kể chi phí so với việc quét toàn bộ ma trận dữ liệu. Độ phức tạp trung bình của thuật toán phụ thuộc vào số lượng bundle hiện có, thường nhỏ hơn nhiều so với số lượng đặc trưng gốc, nên quy trình gom bó vẫn rất hiệu quả ngay cả khi số đặc trưng ban đầu lớn.
+\vspace{0.8em}
+
+Thuật toán thứ hai trình bày cách ghép các đặc trưng trong cùng một bundle thành một đặc trưng duy nhất bằng cơ chế \textit{offset}. Với mỗi bundle, thuật toán đầu tiên xác định tổng số bin cần thiết bằng cách cộng dồn số bin của từng đặc trưng thành phần. Sau đó, mỗi đặc trưng $f_j$ trong bundle được ánh xạ vào một miền giá trị riêng bằng cách cộng thêm một giá trị dịch $\text{offset}_j$, được xác định dựa trên vị trí tích lũy của các đặc trưng trước đó trong bundle. Trong quá trình duyệt dữ liệu, nếu một mẫu có giá trị khác 0 ở đặc trưng $f_j$, giá trị bin của mẫu đó sẽ được gán bằng $\text{bin}(f_j) + \text{offset}_j$. Nhờ cơ chế này, các đặc trưng trong cùng bundle sẽ chiếm các khoảng giá trị rời rạc không chồng lấn nhau, giúp bảo toàn toàn bộ thông tin gốc khi tính histogram.  
+\vspace{0.8em}
+
+Phương pháp ghép bin với offset giúp giảm mạnh số lượng histogram cần xây mà vẫn giữ được khả năng tách biệt của từng đặc trưng trong không gian giá trị hợp nhất. Trong trường hợp hiếm hoi có xung đột nhỏ (tức là nhiều đặc trưng trong cùng bundle khác 0 trên cùng một mẫu), thuật toán giả định sai số này không đáng kể so với tổng thể và thường bỏ qua vì ngưỡng xung đột đã được kiểm soát rất nhỏ trong giai đoạn gom bó. Nhờ hai bước này, EFB vừa đảm bảo được độ chính xác thống kê của các đặc trưng sau gộp, vừa giúp giảm đáng kể độ phức tạp tính toán và bộ nhớ trong quá trình huấn luyện mô hình.
+
+\subsubsection*{c) Công thức toán học của EFB}
+$\indent$Xét $m$ đặc trưng ban đầu $\{f_1, f_2, \ldots, f_m\}$ và tập $k$ bundle thu được $\{B_1, B_2, \ldots, B_k\}$ sau khi áp dụng EFB, ta có:
+\[
+  B_{p(i)}(x) = f_i(x) + \Delta_i,
+\]
+$\indent$với $p(i)$ là chỉ số bundle chứa $f_i$ và $\Delta_i$ là offset ứng với đặc trưng đó.
+
+Khi tính gain trong quá trình xây cây, thay vì duyệt tất cả đặc trưng $f_i$, LightGBM chỉ cần xét các bundle $B_k$:
+\[
+  V_{B_k}(d) 
+  = \frac{1}{n}\left(
+  \frac{\big(\sum_{x_i \in L_k(d)} g_i\big)^2}{n_{L_k(d)}} 
+  + 
+  \frac{\big(\sum_{x_i \in R_k(d)} g_i\big)^2}{n_{R_k(d)}}
+  \right),
+\]
+trong đó:
+\begin{itemize}
+  \item $L_k(d)$ và $R_k(d)$: các mẫu rơi vào nhánh trái và phải khi chia bundle $B_k$ tại điểm $d$;
+  \item $n_{L_k(d)}$, $n_{R_k(d)}$: số mẫu trong từng nhánh tương ứng;
+  \item $g_i$: gradient của mẫu $x_i$.
+\end{itemize}
+
+Công thức trên cho thấy EFB chỉ thay đổi không gian đặc trưng (gộp nhiều đặc trưng thành một bundle) mà vẫn giữ nguyên nguyên tắc tính gain theo variance như GBDT gốc.  
+Vì các đặc trưng trong cùng bundle gần như loại trừ nhau, tổng gradient trong từng bin vẫn được bảo toàn, đảm bảo sai lệch ước lượng không đáng kể.  
+\vspace{0.8em}
+
+Tổng kết lại, EFB giúp giảm đáng kể chi phí tính toán khi số lượng đặc trưng lớn mà không ảnh hưởng tới độ chính xác của mô hình.  
+Khi kết hợp với GOSS, LightGBM đồng thời giảm số lượng mẫu và số lượng đặc trưng hiệu dụng, đạt được hiệu suất huấn luyện vượt trội.
+
+
+\subsection{Hiện thực mô hình LightGBM (tóm lược thực nghiệm)}
+
+$\indent$Sau khi trình bày hai kỹ thuật cốt lõi \textit{GOSS} và \textit{EFB}, phần này tập trung mô tả cách LightGBM được hiện thực và đánh giá trong quá trình huấn luyện thực tế.  
+LightGBM được phát triển trên nền tảng của Gradient Boosted Decision Tree (GBDT) truyền thống, nhưng được tối ưu hóa mạnh mẽ ở nhiều khía cạnh như tốc độ huấn luyện, quản lý bộ nhớ và khả năng mở rộng. Những cải tiến này giúp LightGBM trở thành một trong những thuật toán ensemble nhanh và hiệu quả nhất hiện nay.
+\vspace{0.8em}
+
+Trong giai đoạn tiền xử lý, dữ liệu được discretize nhằm chuyển các giá trị liên tục thành các bin rời rạc, thông thường giới hạn ở 255 bin cho mỗi đặc trưng. Cách làm này không chỉ giảm đáng kể dung lượng lưu trữ mà còn cho phép việc xây dựng histogram diễn ra nhanh hơn nhiều lần so với việc xử lý trực tiếp trên giá trị thực. Đối với các đặc trưng thưa, LightGBM áp dụng kỹ thuật \textit{Exclusive Feature Bundling (EFB)} để gom nhóm các đặc trưng loại trừ nhau, từ đó giảm số chiều đặc trưng mà vẫn bảo toàn thông tin cần thiết.  
+\vspace{0.8em}
+
+Trong quá trình huấn luyện, thuật toán \textit{Gradient-based One-Side Sampling (GOSS)} được sử dụng để tối ưu hóa tốc độ xây dựng histogram. Ở mỗi vòng boosting, LightGBM giữ lại toàn bộ các mẫu có gradient lớn nhất – tương ứng với những điểm mà mô hình đang dự đoán sai nhiều – đồng thời chọn ngẫu nhiên một phần nhỏ các mẫu còn lại. Nhờ nhân trọng số bù thích hợp cho nhóm mẫu này, ước lượng thông tin gradient vẫn được đảm bảo không lệch đáng kể so với toàn bộ dữ liệu gốc. Cách tiếp cận này giúp giảm đáng kể chi phí tính toán, khi chỉ cần xử lý khoảng 10–20\% dữ liệu mà vẫn duy trì được chất lượng mô hình gần như không thay đổi.
+\vspace{0.8em}
+
+Một điểm khác biệt nổi bật khiến LightGBM đạt hiệu quả cao là chiến lược phát triển cây theo hướng \textit{leaf-wise} thay vì \textit{level-wise} như trong XGBoost. Trong phương pháp truyền thống, cây được mở rộng đồng loạt trên toàn bộ các nút cùng cấp, điều này giúp cấu trúc cây cân đối nhưng lại lãng phí tài nguyên khi phải chia cả những nhánh có mức độ sai số nhỏ. Ngược lại, LightGBM chọn phát triển cây theo hướng lá, tức là ở mỗi bước, thuật toán chỉ chia tiếp lá có giá trị \textit{information gain} lớn nhất. Việc tập trung vào những vùng dữ liệu phức tạp nhất giúp mô hình giảm nhanh giá trị hàm mất mát và đạt độ hội tụ nhanh hơn.  
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/leafwise.png}
+    \vspace{15pt}
+    \caption{So sánh chiến lược phát triển cây: Level-wise và Leaf-wise.}
+    \label{fig:leafwise}
+\end{figure}
+
+Nếu ký hiệu $\Delta L_l$ là mức giảm hàm mất mát khi chia lá $l$, thì tại mỗi bước, LightGBM sẽ chọn lá tối ưu theo công thức:
+\[
+l^* = \arg\max_l \Delta L_l.
+\]
+$\indent$Sau khi chia, hai lá mới được thêm vào cây, và quá trình tiếp tục cho đến khi đạt số lá tối đa (\texttt{num\_leaves}) hoặc giới hạn độ sâu (\texttt{max\_depth}).  
+Phương pháp leaf-wise giúp mô hình giảm lỗi nhanh hơn và đạt được độ chính xác cao chỉ với ít cây hơn. Tuy nhiên, vì có thể tạo ra các cây rất sâu ở một số nhánh, mô hình dễ bị overfitting nếu không kiểm soát. Do đó, LightGBM giới hạn độ sâu và kích thước tối thiểu của mỗi lá (\texttt{min\_data\_in\_leaf}) để duy trì khả năng tổng quát hoá.  
+\vspace{0.8em}
+
+Bên cạnh đó, LightGBM tận dụng cơ chế huấn luyện song song và phân tán để tăng tốc xử lý. Quá trình xây histogram được chia đều cho nhiều luồng tính toán, đồng thời sử dụng phương pháp \textit{histogram subtraction} — tức histogram của nhánh phải có thể được tính nhanh bằng cách lấy hiệu giữa histogram của nút cha và nhánh trái. Cách làm này giảm đáng kể số phép tính cần thiết, giúp mô hình đạt hiệu năng gần tuyến tính theo số lượng lõi xử lý.  
+\vspace{0.8em}
+
+Sau khi huấn luyện, mô hình được đánh giá bằng các chỉ số như Accuracy, F1-score, hoặc AUC, tùy thuộc vào bài toán phân loại hay hồi quy. Các tham số quan trọng cần tinh chỉnh bao gồm \texttt{num\_leaves}, \texttt{max\_depth}, \texttt{learning\_rate}, \texttt{feature\_fraction}, và \texttt{bagging\_fraction}. Thực nghiệm cho thấy LightGBM thường đạt hội tụ nhanh hơn và sử dụng ít bộ nhớ hơn so với XGBoost, đặc biệt trên những tập dữ liệu có kích thước lớn hoặc nhiều chiều đặc trưng.
+
+
+
+\subsection{Các tham số chung của mô hình LightGBM}
+
+$\indent$Mô hình LightGBM được thiết lập với các thông số dưới đây:
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3cm}|
+                    >{\raggedright\arraybackslash}p{4cm}|
+                    >{\raggedright\arraybackslash}p{7cm}|}
+\hline
+\textbf{Tham số} & \textbf{Kiểu dữ liệu / Default} & \textbf{Ý nghĩa} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Tham số} & \textbf{Kiểu dữ liệu / Default} & \textbf{Ý nghĩa} \\
+\hline
+\endhead
+
+num\_leaves & \texttt{int}, mặc định = 31 & 
+Số lượng lá tối đa của mỗi cây. Tham số này trực tiếp kiểm soát độ phức tạp của mô hình (đặc biệt trong chiến lược \textbf{Leaf-wise}). 
+Giá trị càng lớn giúp mô hình học chi tiết hơn, nhưng cũng dễ dẫn tới overfitting. \\
+\hline
+
+max\_depth & \texttt{int}, mặc định = -1 & 
+Độ sâu tối đa của cây. Nếu đặt là -1, cây sẽ phát triển tự do theo Leaf-wise cho đến khi đạt điều kiện dừng (ví dụ num\_leaves). 
+Tham số này giúp giới hạn chiều sâu và ngăn overfitting. \\
+\hline
+
+learning\_rate & \texttt{float}, mặc định = 0.1 & 
+Tốc độ học, xác định mức độ đóng góp của mỗi cây vào mô hình cuối cùng. Giá trị nhỏ giúp học ổn định hơn nhưng cần nhiều vòng boosting hơn. 
+Thường chọn trong khoảng 0.01–0.3. \\
+\hline
+
+n\_estimators & \texttt{int}, mặc định = 100 & 
+Số lượng cây (vòng boosting). Kết hợp với learning\_rate để điều chỉnh độ mạnh của mô hình. \\
+\hline
+
+feature\_fraction & \texttt{float}, mặc định = 1.0 & 
+Tỷ lệ đặc trưng được chọn ngẫu nhiên khi xây mỗi cây. Giúp giảm overfitting và tăng tính đa dạng. 
+Kỹ thuật này kết hợp hiệu quả với \textbf{EFB} để giảm số chiều đặc trưng trước khi chọn. \\
+\hline
+
+bagging\_fraction & \texttt{float}, mặc định = 1.0 & 
+Tỷ lệ mẫu được chọn ngẫu nhiên để huấn luyện mỗi cây. Khi nhỏ hơn 1.0, LightGBM thực hiện sampling theo mini-batch, giúp giảm thời gian và tăng tính tổng quát hóa. 
+Kết hợp hiệu quả với \textbf{GOSS} để chọn mẫu quan trọng theo độ lớn gradient. \\
+\hline
+
+bagging\_freq & \texttt{int}, mặc định = 0 & 
+Tần suất thực hiện bagging. Nếu = 0 thì không bagging, nếu = 5 thì cứ mỗi 5 vòng boosting sẽ lấy mẫu lại. \\
+\hline
+
+lambda\_l1 & \texttt{float}, mặc định = 0.0 & 
+Hệ số regularization L1 (Lasso) trên trọng số lá, giúp làm thưa mô hình (sparse) và giảm overfitting. \\
+\hline
+
+lambda\_l2 & \texttt{float}, mặc định = 0.0 & 
+Hệ số regularization L2 (Ridge) trên trọng số lá, giúp ổn định mô hình và giảm dao động trong gradient. \\
+\hline
+
+min\_data\_in\_leaf & \texttt{int}, mặc định = 20 & 
+Số lượng mẫu tối thiểu trong một lá. Tham số này giúp giới hạn việc chia lá quá nhỏ, tránh việc mô hình học nhiễu. 
+Giá trị lớn làm mô hình đơn giản hơn nhưng có thể giảm độ chính xác. \\
+\hline
+
+min\_gain\_to\_split & \texttt{float}, mặc định = 0.0 & 
+Ngưỡng gain tối thiểu cần đạt được để thực hiện chia nút. Nếu gain nhỏ hơn giá trị này, nút sẽ không được chia tiếp. 
+Tham số này đặc biệt quan trọng trong chiến lược \textbf{Leaf-wise} nhằm kiểm soát việc chia quá sâu. \\
+\hline
+
+boosting\_type & \texttt{str}, mặc định = ``gbdt'' & 
+Loại boosting được sử dụng: \texttt{gbdt}, \texttt{dart}, hoặc \texttt{goss}.  \\
+\hline
+
+objective & \texttt{str}, mặc định = ``regression'' & 
+Hàm mất mát chính: \texttt{regression}, \texttt{binary}, \texttt{multiclass}, \texttt{lambdarank}, v.v.  
+Xác định loại bài toán cần tối ưu (hồi quy, phân loại, xếp hạng...). \\
+\hline
+
+metric & \texttt{str/list}, mặc định = ``auto'' & 
+Chỉ định hàm đánh giá: RMSE, Logloss, AUC, Accuracy, NDCG...  
+Có thể dùng nhiều metric cùng lúc để theo dõi hiệu năng. \\
+\hline
+
+early\_stopping\_round & \texttt{int}, mặc định = None & 
+Dừng sớm nếu metric trên tập validation không được cải thiện sau $n$ vòng. 
+Giúp tiết kiệm thời gian và tránh overfitting. \\
+\hline
+
+max\_bin & \texttt{int}, mặc định = 255 & 
+Số lượng \textbf{bin} khi thực hiện phân loại giá trị đặc trưng liên tục.  
+LightGBM sử dụng kỹ thuật histogram-based binning để tăng tốc quá trình tìm split, 
+giảm độ phức tạp từ $O(N \times m)$ xuống $O(\text{num\_bins} \times m)$. \\
+\hline
+
+verbosity & \texttt{int}, mặc định = 1 & 
+Mức độ hiển thị log trong quá trình huấn luyện. 0 để tắt, >1 để hiển thị chi tiết. \\
+\hline
+
+num\_threads & \texttt{int}, mặc định = -1 & 
+Số lượng luồng CPU được sử dụng. -1 nghĩa là dùng tất cả các luồng khả dụng. \\
+\hline
+
+device\_type & \texttt{str}, mặc định = ``cpu'' & 
+Chọn thiết bị huấn luyện: \texttt{cpu} hoặc \texttt{gpu}.  
+Khi dùng GPU, LightGBM sử dụng song song hóa theo histogram để tăng tốc đáng kể. \\
+\hline
+
+seed & \texttt{int}, mặc định = None & 
+Giá trị khởi tạo random seed để đảm bảo kết quả tái lập được. \\
+\hline
+\end{longtable}

@@ -1,0 +1,581 @@
+\section{Tiền xử lý dữ liệu}
+\subsection{Xử lý dữ liệu khuyết với Phương pháp gán đa biến bằng phương trình chuỗi (MICE - Multivariate imputation by chained equations)~\cite{mice}}
+\subsubsection{Sơ lược về MICE}
+$\indent$\textbf{Thiếu khuyết dữ liệu} là vấn đề phổ biến thường xảy ra khi thực hiện các bài toán với dữ liệu. Khi gặp trường hợp thiếu khuyết nếu thực hiện bỏ hoàn toàn hoặc chỉ thay thế bằng một giá trị trung bình có thể dẫn đến mất thông tin, giảm độ chính xác và bias trong phân tích. Nhằm giải quyết vấn đề trên, \textbf{MICE} là phương án xử lý dữ liệu thiếu khuyết đặc biệt hữu ích cho quy trình gán lớn.
+\vspace{0.8em}
+
+\textbf{Phương pháp gán đa biến bằng phương trình chuỗi (MICE)}, còn được gọi là \textbf{"đặc tả có điều kiện đầy đủ"(FCS)} hoặc \textbf{"gán nhiều hồi quy tuần tự"} đã xuất hiện trong tài liệu thống kê như một phương pháp nguyên tắc để giải quyết dữ liệu bị thiếu. Tạo ra nhiều quy gán, trái ngược với các quy gán đơn lẻ, giải thích cho sự không chắc chắn thống kê trong các quy gán. Ngoài ra, phương pháp phương trình chuỗi rất linh hoạt và có thể xử lý các biến thuộc các loại khác nhau cũng như độ phức tạp như giới hạn hoặc mẫu bỏ qua khảo sát. 
+\vspace{0.8em}
+
+\noindent
+\textbf{* Quy trình hiện thực MICE:}
+\begin{enumerate}
+    \item \textbf{Một phép gán đơn giản}, chẳng hạn như gán giá trị trung bình \textbf{(mean)} hay trung vị \textbf{(median)}, được thực hiện cho mọi giá trị bị thiếu trong tập dữ liệu. Những quy gán trung bình này có thể được coi là "người giữ chỗ".
+    \item \textbf{"Người giữ chỗ"} có nghĩa là gán cho một biến \textbf{("var")} được đặt trở lại thiếu.
+    \item \textbf{Các giá trị quan sát} được từ biến \textbf{"var"} trong \textbf{Bước 2} được hồi quy trên các biến khác trong mô hình gán, có thể bao gồm hoặc không bao gồm tất cả các biến trong tập dữ liệu. Nói cách khác, \textbf{"var"} là biến phụ thuộc trong mô hình hồi quy và tất cả các biến khác là biến độc lập trong mô hình hồi quy. Các mô hình hồi quy này hoạt động theo cùng một giả định mà người ta sẽ thực hiện khi thực hiện các mô hình \textbf{hồi quy tuyến tính}, \textbf{logistic} hoặc \textbf{Poison} bên ngoài bối cảnh gán dữ liệu bị thiếu.
+    \item \textbf{Các giá trị bị thiếu} cho \textbf{"var"} sau đó được thay thế bằng các dự đoán (gán) từ \textbf{mô hình hồi quy}. Khi \textbf{"var"} sau đó được sử dụng như một biến độc lập trong các mô hình hồi quy cho các biến khác, cả hai giá trị quan sát được và các giá trị được gán này sẽ được sử dụng.
+    \item Sau đó, các \textbf{bước 2–4 được lặp lại} cho mỗi biến bị thiếu dữ liệu. Chu kỳ qua mỗi biến tạo thành một \textbf{vòng lặp} hoặc \textbf{"chu kỳ"}. Vào cuối một chu kỳ, tất cả các giá trị bị thiếu đã được thay thế bằng các dự đoán từ hồi quy phản ánh các \textbf{mối quan hệ quan sát} được trong dữ liệu.
+    \item Các \textbf{bước 2–4 được lặp lại} trong một số chu kỳ, với các quy gán được cập nhật ở mỗi chu kỳ.
+\end{enumerate}
+\newpage
+\subsubsection{Hiện thực MICE trong Python}
+$\indent$\textbf{MICE} trong Python được hiện thực thông qua \texttt{sklearn.experimental.IterativeImputer}. Các tham số thiết lập MICE:
+\begin{longtable}{|p{3.5cm}|p{3.5cm}|p{8cm}|}
+\hline
+\textbf{Tham số} & \textbf{Giá trị mặc định / Kiểu dữ liệu} & \textbf{Ý nghĩa / Giải thích} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Tham số} & \textbf{Giá trị mặc định / Kiểu dữ liệu} & \textbf{Ý nghĩa / Giải thích} \\
+\hline
+\endhead
+
+estimator & BayesianRidge() & 
+Mô hình hồi quy được dùng để dự đoán giá trị bị khuyết. 
+Có thể thay bằng mô hình khác (LinearRegression, RandomForestRegressor, v.v.). \\
+\hline
+
+missing\_values & np.nan & 
+Giá trị được xem là missing trong dữ liệu (thường là \texttt{np.nan}). \\
+\hline
+
+sample\_posterior & False & 
+Nếu True, mẫu ngẫu nhiên được rút từ phân phối hậu nghiệm (posterior) của mô hình thay vì giá trị dự đoán trung bình. 
+Giúp phản ánh bất định (uncertainty) khi multiple imputation. \\
+\hline
+
+max\_iter & 10 & 
+Số vòng lặp tối đa qua tất cả các biến cần được impute. 
+Giá trị cao hơn có thể cho kết quả ổn định hơn nhưng tốn thời gian hơn. \\
+\hline
+
+tol & 1e-3 & 
+Ngưỡng hội tụ (tolerance). 
+Nếu thay đổi trung bình giữa hai vòng nhỏ hơn \texttt{tol}, quá trình dừng sớm. \\
+\hline
+
+imputation\_order & 'ascending' &
+Thứ tự các biến được impute trong mỗi vòng:
+\texttt{'ascending'} (từ ít missing đến nhiều missing),
+\texttt{'descending'},
+\texttt{'roman'},
+\texttt{'arabic'},
+hoặc \texttt{'random'}. \\
+\hline
+
+skip\_complete & False &
+Nếu True, bỏ qua các biến không có missing values để tiết kiệm thời gian. \\
+\hline
+
+min\_value & -np.inf &
+Giới hạn nhỏ nhất của giá trị được impute. 
+Dùng để tránh sinh ra giá trị âm hoặc vượt giới hạn. \\
+\hline
+
+max\_value & np.inf &
+Giới hạn lớn nhất của giá trị được impute. 
+Ví dụ, đặt \texttt{max\_value=1} nếu biến là tỷ lệ phần trăm. \\
+\hline
+
+verbose & 0 &
+Mức độ hiển thị thông tin khi chạy:
+0 = im lặng, 1 = thông tin cơ bản, 2 = chi tiết. \\
+\hline
+
+random\_state & None &
+Hạt giống (seed) để tái lập kết quả ngẫu nhiên trong quá trình imputation. \\
+\hline
+
+add\_indicator & False &
+Nếu True, thêm cột chỉ báo (binary indicator) cho biết giá trị nào bị khuyết trong dữ liệu gốc. 
+Hữu ích cho mô hình học máy muốn tận dụng thông tin “missingness”. \\
+\hline
+
+initial\_strategy & 'mean' &
+Cách khởi tạo giá trị ban đầu cho các biến khuyết:
+\texttt{'mean'}, \texttt{'median'}, \texttt{'most\_frequent'}, hoặc \texttt{'constant'}. \\
+\hline
+
+fill\_value & None &
+Chỉ dùng nếu \texttt{initial\_strategy='constant'}. 
+Giá trị được dùng để thay thế ban đầu cho missing. \\
+\hline
+
+n\_nearest\_features & None &
+Số lượng biến (features) gần nhất được sử dụng làm predictor khi dự đoán giá trị khuyết. 
+Nếu None, dùng toàn bộ biến còn lại. \\
+\hline
+
+initial\_imputer & None &
+Cho phép truyền một imputer khác để khởi tạo giá trị ban đầu thay vì dùng \texttt{initial\_strategy}. \\
+\hline
+
+keep\_empty\_features & False &
+Nếu True, vẫn giữ các cột có toàn bộ giá trị bị missing trong dữ liệu đầu vào. 
+Mặc định bỏ qua vì không thể impute. \\
+\hline
+
+\caption{Các tham số của \texttt{IterativeImputer} trong scikit-learn và ý nghĩa chi tiết.}
+\end{longtable}
+\subsection{Trọng số của bằng chứng (WOE - Weight Of Envidence) và Giá trị thông tin (IV - Information Value)~\cite{woeniv}}
+
+$\indent$\textbf{Mô hình hồi quy logistic} là một trong những kỹ thuật thống kê được sử dụng phổ biến nhất để giải bài toán phân loại nhị phân. Đây là một kỹ thuật được chấp nhận trong hầu hết các lĩnh vực. Hai khái niệm này - \textbf{trọng số bằng chứng (WOE)} và \textbf{giá trị thông tin (IV)} phát triển từ cùng một kỹ thuật hồi quy logistic. Hai thuật ngữ này đã tồn tại trong \textbf{thế giới chấm điểm tín dụng} trong hơn 4-5 thập kỷ. Hai thông số đã được sử dụng như một tiêu chuẩn để \textbf{sàng lọc các biến số} trong các dự án \textbf{mô hình hóa rủi ro tín dụng} như \textbf{xác suất vỡ nợ}. Chúng giúp khám phá dữ liệu và các biến màn hình. Chúng cũng được sử dụng trong \textbf{dự án phân tích tiếp thị} như mô hình tiêu hao khách hàng, mô hình phản hồi chiến dịch, v.v.
+\subsubsection{Trọng số của bằng chứng (WOE - Weight Of Envidence)}
+$\indent$\textbf{Trọng lượng của bằng chứng (WOE)} cho biết \textbf{khả năng dự đoán} của một biến độc lập liên quan đến biến phụ thuộc. Vì thông số này được phát triển từ \textbf{thế giới chấm điểm tín dụng}, nó thường được mô tả như \textbf{một thước đo sự tách biệt} giữa khách hàng tốt và xấu. \textbf{"Khách hàng xấu"} đề cập đến những khách hàng không trả được khoản vay và \textbf{"Khách hàng tốt"} là khách hàng đã trả lại khoản vay.
+\begin{equation}
+    WOE = ln(\frac{Dist_{Goods}}{Dist_{Bads}})
+\end{equation}
+
+\textbf{* Trong đó:}
+\begin{itemize}
+    \item $Dist_{Goods}$ là tỉ lệ \textit{\textbf{"Khách hàng tốt"}} trong 1 nhóm cụ thể. 
+    \item $Dist_{Bads}$ là tỉ lệ \textit{\textbf{"Khách hàng xấu"}} trong 1 nhóm cụ thể.
+    \item $Dist_{Goods} > Dist_{Bads}$ dẫn đến giá trị $WOE$ dương.
+    \item $Dist_{Goods} < Dist_{Bads}$ dẫn đến giá trị $WOE$ âm.
+\end{itemize}
+
+\textbf{Trọng lượng của bằng chứng (WOE)} giúp chuyển đổi một biến độc lập liên tục thành một tập hợp các nhóm hoặc thùng dựa trên sự tương đồng của phân phối biến phụ thuộc, tức là số lượng quan sát "diễn ra sự kiện" và "không diễn ra sự kiện".
+\begin{itemize}
+    \item \textbf{Đối với các biến độc lập liên tục (numeric):} Đầu tiên, \textbf{tạo các thùng (danh mục / nhóm)} cho một biến độc lập liên tục, sau đó kết hợp các danh mục có giá trị WOE tương tự và thay thế các danh mục bằng các giá trị WOE. Sử dụng các giá trị WOE thay vì các giá trị đầu vào trong mô hình.
+    \item \textbf{Đối với các biến độc lập phân loại (categrical):} Kết hợp các danh mục có WOE tương tự và sau đó tạo các danh mục mới của một biến độc lập với các giá trị WOE liên tục. Nói cách khác, hãy sử dụng giá trị WOE thay vì danh mục thô trong mô hình. Biến biến đổi sẽ là một biến liên tục với các giá trị WOE giống như bất kỳ biến liên tục nào.
+\end{itemize}
+
+Việc kết hợp các \textbf{"danh mục"} có $WOE$ tương tự sẽ cho tỉ lệ "diễn ra sự kiện" và "không diễn ra sự kiện" gần như bằng nhau.
+\vspace{0.8em}
+
+\noindent
+\textbf{* Ứng dụng của Trọng số bằng chứng:}
+\begin{itemize}
+    \item Thống số này có thể xử lý các giá trị ngoại biên (outliers).
+    \item Nó có thể được sử dụng để xử lý dữ liệu khuyết bằng cách gom nhóm dữ liệu khuyết thành 1 danh mục tách biệt.
+    \item Việc biến đổi $WOE$ xử lý biến phân loại giúp cho việc chuyển đổi biến giả là không cần thiết.
+    \item Chuyển đổi $WOE$ giúp xây dựng mối quan hệ tuyến tính chặt chẽ với tỷ lệ cược log. Nếu không, không dễ dàng để hoàn thành mối quan hệ tuyến tính bằng cách sử dụng các phương pháp biến đổi khác như log, căn bậc hai, v.v. Tóm lại, nếu không sử dụng phép biến đổi $WOE$, có thể phải thử một số phương pháp biến đổi để đạt được điều này.
+\end{itemize}
+
+\subsubsection{Giá trị thông tin (IV - Information Value)}
+$\indent$Giá trị thông tin (IV) là một trong những kỹ thuật hữu ích nhất để chọn các biến quan trọng trong mô hình dự đoán. Thông số giúp xếp hạng các biến trên cơ sở tầm quan trọng của chúng. IV được tính theo công thức sau:
+\begin{equation}
+    IV=\displaystyle \sum (Dist_{Goods}-Dist_{Bads})*WOE  
+\end{equation}
+
+Theo \textbf{Siddiqi (2006)}, theo quy ước, các giá trị của thống kê IV trong chấm điểm tín dụng có thể được hiểu như sau.
+\begin{longtable}{|c|c|}
+\hline
+\textbf{Giá trị thông tin (IV)} & \textbf{Khả năng dự đoán biến đổi} \\ \hline
+Dưới 0,02 & Không hữu ích cho việc lập mô hình dự đoán \\ \hline
+0,02 đến 0,1 & Khả năng dự đoán yếu \\ \hline
+0,1 đến 0,3 & Công suất dự đoán trung bình \\ \hline
+0,3 đến 0,5 & Khả năng dự đoán mạnh mẽ \\ \hline
+> 0,5 & Khả năng dự đoán đáng ngờ, cần kiểm tra lại \\ \hline
+\caption{Thang đánh giá mức độ thông tin (Information Value - IV)} \label{tab:IV_levels} \\
+\end{longtable}
+
+\noindent
+\textbf{* Những điểm quan trọng:}
+\begin{itemize}
+    \item Giá trị thông tin tăng khi các thùng / nhóm tăng lên đối với một biến độc lập. Hãy cẩn thận khi có hơn 20 thùng vì một số nhóm có thể có rất ít quan sát "diễn ra sự kiện" và "không diễn ra sự kiện".
+    \item Giá trị thông tin không phải là một phương pháp lựa chọn tính năng (biến) tối ưu khi bạn đang xây dựng một mô hình phân loại khác với hồi quy logistic nhị phân vì tỷ lệ cược log có điều kiện (mà chúng tôi dự đoán trong mô hình hồi quy logistic) có liên quan nhiều đến việc tính toán trọng số của bằng chứng. Nói cách khác, thông số này được thiết kế chủ yếu cho mô hình hồi quy logistic nhị phân. Cũng hãy nghĩ theo cách này - \textbf{Rừng ngẫu nhiên (Random Forest)} có thể phát hiện mối quan hệ phi tuyến tính rất tốt, vì vậy việc chọn các biến thông qua \textbf{Giá trị thông tin} và sử dụng chúng trong mô hình rừng ngẫu nhiên có thể không tạo ra mô hình dự đoán chính xác và mạnh mẽ nhất.
+\end{itemize}
+\subsection{Xử lý dữ liệu ngoại biên (outliers) với Rừng cô lập (Isolation Forest)~\cite{if}}
+$\indent$\textbf{Isolation Forest} là một thuật toán hiệu quả và đơn giản được sử dụng để \textbf{phát hiện bất thường}, khiến nó trở thành lựa chọn phổ biến trong các ngành như an ninh mạng, tài chính và chăm sóc sức khỏe. Thuật toán xác định \textbf{các ngoại lệ} trong các bộ dữ liệu lớn bằng cách \textbf{cô lập} chúng thông qua \textbf{phân vùng nhị phân} đòi hỏi chi phí tính toán tối thiểu. Khả năng nhanh chóng tìm ra \textbf{điểm bất thường} này rất quan trọng trong các ứng dụng mà việc phát hiện các mẫu bất thường là chìa khóa để bảo vệ khỏi rủi ro hoặc xác định thông tin chi tiết ẩn.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Images/IF.png}
+    \vspace{15pt}
+    \caption{Rừng cô lập - Isolation Forest}
+    \label{fig:placeholder}
+\end{figure}
+
+Trong sơ đồ, "Tập dữ liệu đầu vào" (Input Dataset) ở trên cùng. Tập dữ liệu này sau đó được chia thành hai nhánh, được gắn nhãn "Bình thường với không phổ biến" (Normal with uncommon) và "Ngoại lệ" (Outliers). Nhánh "Bình thường với không phổ biến" lại tách ra cho đến khi đạt đến nhãn "Bình thường" (). Điều này cho thấy rằng các điểm dữ liệu được phân loại là bình thường có thể có một số đặc điểm bất thường. Nhánh "Ngoại lệ" đạt đến nhãn "Ngoại lệ" nhanh hơn, cho thấy rằng các ngoại lệ có thể được xác định tương đối dễ dàng bằng cách sử dụng Rừng cô lập.
+\vspace{0.8em}
+
+\noindent
+\textbf{* Cách thức hoạt động của thuật toán Isolation Forest:}
+\begin{enumerate}
+    \item \textbf{Phân vùng ngẫu nhiên - Random Partitioning:} Thuật toán bắt đầu với việc chọn đặc trưng ngẫu nhiên từ bộ dữ liệu. Sau đó, chia dữ liệu theo một giá trị ngẫu nhiên trong phạm vi của đối tượng địa lý đó, chia thành hai phần. Quá trình này được lặp lại đệ quy giúp tạo cây nhị phân trong đó mỗi nhánh đại diện cho một sự phân tách trong dữ liệu.
+    \item \textbf{Con đường cách ly - Isolation Path:} Đề cập đến số lượng phân tách cần thiết để cô lập một điểm dữ liệu. Các dị thể thường có đường dẫn ngắn hơn vì chúng ở xa hầu hết dữ liệu, đòi hỏi ít phân tách hơn để tách chúng.
+    \item \textbf{Quần thể cây cối - Ensemble of Trees:} Thay vì dựa vào một cái cây, nó xây dựng một quần thể cây. Mỗi cây được tạo độc lập với các phân tách ngẫu nhiên giúp dẫn đến các đường dẫn cách ly đa dạng cho từng điểm dữ liệu trên nhiều cây. Điều này đảm bảo tính mạnh mẽ và độ tin cậy trong kết quả.
+    \item \textbf{Chấm điểm bất thường - Anomaly Scoring:} Điểm bất thường cho mỗi điểm dữ liệu được tính bằng cách tính trung bình độ dài đường dẫn trên tất cả các cây. Đường đi ngắn hơn (ít phân tách hơn) cho thấy điểm có nhiều khả năng là một điểm bất thường.
+    \item \textbf{Phân loại - Classification:} Để phân loại các điểm dữ liệu là bình thường hoặc bất thường, thuật toán đặt ngưỡng cho điểm bất thường. Các điểm trên ngưỡng được phân loại là dị thường trong khi các điểm bên dưới được coi là bình thường.
+\end{enumerate}
+
+\subsection{Phân tích độ nhọn (Kurtosis) và độ lệch (Skewness)}
+\subsubsection{Độ nhọn (Kurtosis)~\cite{kurtosis}}
+$\indent$Kurtosis là một thước đo thống kê mô tả hình dạng của phân phối dữ liệu, đặc biệt là mức độ nặng hay nhẹ của đuôi. Thông số cho chúng ta biết liệu một tập dữ liệu có nhièu điểm ngoại lệ hơn phân phối chuẩn hay hầu hết các điểm dữ liệu gần với mức trung bình hơn. Thông số này cho biết một bức tranh rõ nét hơn về mức độ lan rộng hoặc đỉnh của dữ liệu thực sự vượt ra ngoài giá trị trung bình và phương sai.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Images/kurtosis.png}
+    \vspace{15pt}
+    \caption{Độ nhọn - Kurtosis}
+    \label{fig:placeholder}
+\end{figure}
+
+Kurtosis (độ nhọn) định lượng mức độ mà các điểm dữ liệu tập trung ở phần đuôi hoặc đỉnh của một phân phối. Công thức của nó thường được xác định dựa trên moment chuẩn hóa bậc bốn (fourth standardized moment):
+\begin{equation}
+    Kurtosis=\frac{\mathbf{E}[(X-\mu)^4]}{\sigma^4}
+\end{equation}
+
+Trong đó, $\mu$ là giá trị trung bình và $\sigma$ là độ lệch chuẩn. Phân phố chuẩn có giá trị độ nhọn là 3, tức là mesokurtic.
+\vspace{0.8em}
+
+\noindent
+\textbf{* Các loại độ nhọn:}
+\begin{enumerate}
+    \item \textbf{Leptokurtic:} Phân bố có đuôi rộng và kurtosis dương được gọi là phân bố leptokurtic. Dữ liệu có các ngoại lệ cực đoan, đạt đỉnh mạnh ở mức trung bình.
+    \item \textbf{Mesokurtic:} Khi kurtosis dư thừa bằng không hoặc gần bằng không được gọi là phân bố mesokurtic. Phân bố giống như đường cong bình thường, xác suất tiêu chuẩn của các sự kiện cực đoan.
+    \item \textbf{PlaytyKurtic:} Khi kurtosis dư thừa âm tính được gọi là phân bố platykurtic. Dữ liệu trải đều hơn, đỉnh phẳng hơn và đuôi nhẹ hơn.
+\end{enumerate}
+\vspace{0.8em}
+
+\noindent
+\textbf{* Một số ứng dụng của phân tích độ nhọn:}
+\begin{enumerate}
+    \item \textbf{Tài chính:} Kurtosis giúp đo lường rủi ro bằng cách phát hiện những đuôi nặng nề trong lợi nhuận cổ phiếu, cho thấy khả năng thua lỗ hoặc lợi nhuận cực lớn.
+    \item \textbf{Kiểm soát chất lượng:} Xác định khả năng xảy ra lỗi hoặc ngoại lệ trong quy trình sản xuất.
+    \item \textbf{Thống kê và phân tích dữ liệu:} Được sử dụng cùng với giá trị trung bình và phương sai để mô tả các đặc điểm phân phối đầy đủ hơn.
+    \item \textbf{Machine Learning:} Giúp phát hiện sự bất thường trong bộ dữ liệu và thông báo các quyết định tiền xử lý.
+    \item \textbf{Nghiên cứu và Khoa học Xã hội:} Đo lường mức độ cực đoan của các câu trả lời khảo sát hoặc thực nghiệm.
+\end{enumerate}
+\vspace{0.8em}
+
+\noindent
+\textbf{* Hạn chế của phân tích độ nhọn:}
+\begin{enumerate}
+    \item \textbf{Nhạy cảm với các giá trị ngoại lệ:} Cực kỳ bị ảnh hưởng bởi một vài giá trị cực trị trong dữ liệu.
+    \item \textbf{Gây hiểu lầm cho các mẫu nhỏ:} Bộ dữ liệu nhỏ có thể tạo ra các giá trị kurtosis không chính xác.
+    \item \textbf{Không hiển thị hướng:} Kurtosis cho biết trọng lượng đuôi nhưng không cho biết dữ liệu bị lệch sang trái hay phải.
+    \item \textbf{Bối cảnh nhu cầu:} Nên được giải thích với các thước đo thống kê khác để có những hiểu biết sâu sắc có ý nghĩa.
+\end{enumerate}
+\subsubsection{Độ lệch (Skewness)~\cite{skew}}
+$\indent$Độ lệch là một thước đo thống kê quan trọng cho thấy dữ liệu được trải rộng như thế nào trong tập dữ liệu. Giá trị này cho chúng ta biết liệu các điểm dữ liệu bị lệch sang trái (độ lệch âm) hay sang phải (độ lệch dương) liên quan đến giá trị trung bình. Điều này rất quan trọng vì nó giúp chúng ta hiểu hình dạng của phân phối dữ liệu, điều này rất quan trọng để phân tích dữ liệu chính xác và giúp xác định các ngoại lệ và tìm ra các phương pháp thống kê tốt nhất để sử dụng để phân tích.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.45\linewidth]{Images/skewness.png}
+    \vspace{15pt}
+    \caption{Độ lệch (Skewness)}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+
+Độ lệch mô tả hướng và mức độ bất đối xứng trong phân phối của tập dữ liệu. Các dạng hình độ lệch:
+\begin{enumerate}
+    \item \textbf{Độ lệch tích cực (Right Skewness):} Trong phân phối lệch dương, đuôi phải dài hơn đuôi trái, có nghĩa là hầu hết các điểm dữ liệu nằm ở bên trái với một vài giá trị lớn kéo phân phối sang phải.
+    \item \textbf{Độ lệch tiêu cực (Left Skewness):} Trong phân phối lệch âm, đuôi trái dài hơn, có nghĩa là hầu hết các điểm dữ liệu nằm ở bên phải với một vài giá trị nhỏ hơn kéo phân phối sang trái.
+    \item \textbf{Độ lệch bằng không (Symmetrical Distribution)}: Độ lệch bằng không cho thấy một phân phối đối xứng hoàn hảo trong đó giá trị trung bình, trung vị và chế độ bằng nhau. Trong phân phối đối xứng, các điểm dữ liệu được phân bố đều xung quanh điểm trung tâm.
+\end{enumerate}
+\vspace{0.8em}
+
+Giá trị độ lệch được đo lường bằng các kĩ thuật khác nhau để định lượng mức độ bất đối xứng trong phân phối của tập dữ liệu. Dưới đây là ba phương pháp phổ biến để đo độ lệch:
+\begin{enumerate}
+    \item \textbf{Phép đo lường của Karl Pearson}
+    \vspace{0.4em}
+    
+    $\indent$\textbf{Phép đo lường của Karl Pearson} sử dụng giá trị trung bình, trung bình và độ lệch chuẩn của dữ liệu đã cho để đo lường sự bất đối xứng của phân phối. Nó cung cấp một số không thứ nguyên giúp định lượng mức độ sai lệch của dữ liệu.
+    \vspace{0.8em}
+    
+    \textbf{* Công thức:}
+    \begin{enumerate}
+        \item Trung bình và trung vị: $S_k=\frac{3 * \hat{X}-M}{\sigma}$
+        \item Trung bình và Mode: $S_k=\frac{\hat{X}-Mode}{\sigma}$
+    \end{enumerate}
+    \textbf{Trong đó:}
+    \begin{itemize}
+        \item $S_k$ là hệ số độ lệch của \textit{Karl Pearson}.
+        \item $\hat{X}$ là giá trị trung bình của tập dữ liệu.
+        \item $M$ là trung vị của tập dữ liệu.
+        \item $\sigma$ là độ lệch chuẩn của tập dữ liệu.
+    \end{itemize}
+    \item \textbf{Phép đo lường của Bowley}
+    \vspace{0.4em}
+    
+    \textbf{Hệ số độ lệch của Bowley} là một phương pháp khác để tính độ lệch dựa trên tứ phân vị ($Q_1$, $Q_2$, $Q_3$). Không giống như Phép đo lường của Karl Pearson, nó không dựa vào giá trị trung bình hoặc độ lệch chuẩn, điều này làm cho nó hữu ích cho dữ liệu có thể không tuân theo phân phối chuẩn. Nó được tính bằng cách sử dụng tứ phân vị đầu tiên ($Q_1$), tứ phân vị thứ hai ($Q_2$ hoặc trung bình) và tứ phân vị thứ ba ($Q_3$).
+    \vspace{0.8em}
+    
+    \textbf{* Công thức:} $B=\frac{Q_3+Q_1-2Q_2}{Q_3-Q_1}$
+    \item \textbf{Phép đo lường của Kelly}
+    \vspace{0.4em}
+    
+    \textbf{Phép đo lường của Kelly} tính toán độ lệch bằng cách so sánh các phân vị nhất định trong dữ liệu, thường là phân vị thứ 10, 50 (trung bình) và 90. Biện pháp này hữu ích khi xử lý các bộ dữ liệu không được phân phối bình thường hoặc khi các biện pháp độ lệch khác có thể không hiệu quả.
+    \vspace{0.8em}
+    
+    \textbf{* Công thức:} $SKL=\frac{P_{90}+P_{10}-2P_{50}}{P_{90}-P_{10}}$
+    \vspace{0.4em}
+    
+    \textbf{Trong đó:}
+    \begin{itemize}
+        \item $P_{90}=$ Phân vị thứ 90
+        \item $P_{50}=$ Phân vị thứ 50 (Trung bình)
+        \item $P_{10}=$ Phân vị thứ 10
+    \end{itemize}
+\end{enumerate}
+\vspace{0.8em}
+
+\textbf{Việc diễn giải độ lệch (skewness)} bao gồm việc hiểu \textbf{hướng lệch} (trái hoặc phải) và \textbf{mức độ lệch} (độ mạnh của sự bất đối xứng) trong phân phối dữ liệu:
+
+\begin{enumerate}
+    \item \textbf{Hướng của Độ lệch (Direction of Skewness)}
+
+    \begin{itemize}
+        \item \textbf{Độ lệch âm (Negative Skewness / Left-Skewed):}
+        Khi skewness có giá trị âm, phân phối bị lệch về bên trái. Trong phân phối lệch trái:
+        \begin{itemize}
+            \item Đuôi bên trái (phía các giá trị nhỏ) dài hơn và có thể chứa các ngoại biên (outliers).
+            \item Phần lớn các điểm dữ liệu tập trung về phía bên phải.
+            \item Giá trị trung bình (\(\text{mean}\)) nhỏ hơn giá trị trung vị (\(\text{median}\)).
+        \end{itemize}
+        \vspace{0.4em}
+
+        \item \textbf{Độ lệch dương (Positive Skewness / Right-Skewed):}
+        Khi skewness có giá trị dương, phân phối bị lệch về bên phải. Trong phân phối lệch phải:
+        \begin{itemize}
+            \item Đuôi bên phải (phía các giá trị lớn) dài hơn và có thể chứa các ngoại biên.
+            \item Phần lớn các điểm dữ liệu tập trung về phía bên trái.
+            \item Giá trị trung bình (\(\text{mean}\)) lớn hơn giá trị trung vị (\(\text{median}\)).
+        \end{itemize}
+        \vspace{0.4em}
+
+        \item \textbf{Độ lệch bằng không (Zero Skewness / Symmetric):}
+        Khi giá trị skewness gần bằng 0, phân phối được xem là đối xứng, 
+        tức dữ liệu được phân bố đồng đều hai bên giá trị trung bình. 
+        Khi đó, phân phối không có độ lệch rõ rệt.
+    \end{itemize}
+    \vspace{0.4em}
+
+    \item \textbf{Mức độ của Độ lệch (Magnitude of Skewness)}
+
+    Mức độ (độ lớn) của skewness phản ánh mức độ nghiêm trọng của sự lệch trong phân phối:
+
+    \begin{itemize}
+        \item \(-0.5 \leq \text{Skewness} \leq 0.5\): Phân phối gần như đối xứng.
+        \item \(\text{Skewness} < -1\): Phân phối lệch trái mạnh (strong negative skew) với đuôi dài ở bên trái.
+        \item \(\text{Skewness} > 1\): Phân phối lệch phải mạnh (strong positive skew) với đuôi dài ở bên phải.
+    \end{itemize}
+\end{enumerate}
+
+Khi làm việc với dữ liệu bị lệch (skewed data), điều quan trọng là phải hiểu cách xử lý độ lệch một cách hiệu quả. 
+Dữ liệu có độ lệch cao có thể ảnh hưởng đến độ chính xác của các phân tích thống kê và kết quả dự đoán. 
+Tuỳ theo bản chất của dữ liệu và loại phân tích cần thực hiện, ta có thể áp dụng các phương pháp khác nhau để giảm hoặc khắc phục độ lệch. 
+Dưới đây là một số cách phổ biến:
+
+\begin{enumerate}
+    \item \textbf{Biến đổi dữ liệu (Data Transformation)}
+
+    \begin{itemize}
+        \item \textbf{Log Transformation:} 
+        Thường được sử dụng cho dữ liệu lệch phải, giúp nén các giá trị lớn và làm cho phân phối trở nên đối xứng hơn.
+        
+        \item \textbf{Square Root / Cube Root:} 
+        Giúp giảm độ lệch dương, đặc biệt hữu ích đối với dữ liệu đếm (\textit{count data}).
+
+        \item \textbf{Box–Cox Transformation:} 
+        Là một phương pháp linh hoạt, có thể xử lý cả độ lệch dương và âm, 
+        nhưng chỉ áp dụng được cho dữ liệu có giá trị dương.
+
+        \item \textbf{Yeo–Johnson Transformation:} 
+        Là phần mở rộng của Box–Cox, cho phép biến đổi cả dữ liệu có giá trị âm lẫn dương. 
+        Phương pháp này đặc biệt hữu ích khi tập dữ liệu chứa giá trị bằng không hoặc âm, 
+        giúp phân phối trở nên gần chuẩn hơn mà không cần loại bỏ dữ liệu.
+    \end{itemize}
+
+    \item \textbf{Loại bỏ giá trị ngoại biên (Removing Outliers)}
+
+    Các ngoại biên (\textit{outliers}) có thể là nguyên nhân gây ra độ lệch. 
+    Việc loại bỏ chúng có thể giúp phân phối dữ liệu trở nên đối xứng hơn:
+
+    \begin{itemize}
+        \item \textbf{Z-score:} 
+        Xác định và loại bỏ các điểm dữ liệu có giá trị z vượt quá \(\pm3\).
+        \item \textbf{IQR Method:} 
+        Loại bỏ các điểm dữ liệu nằm ngoài khoảng 
+        \(1.5 \times \text{IQR}\) (interquartile range) tính từ tứ phân vị thứ nhất và thứ ba.
+    \end{itemize}
+
+    \item \textbf{Kiểm định phi tham số (Non-Parametric Tests)}
+
+    Khi các phép biến đổi không mang lại hiệu quả, có thể sử dụng các kiểm định phi tham số 
+    như \textit{Mann–Whitney U Test} hoặc \textit{Kruskal–Wallis Test}. 
+    Các phương pháp này không giả định phân phối chuẩn và tập trung vào so sánh trung vị (\textit{median}) 
+    thay vì trung bình (\textit{mean}).
+
+    \item \textbf{Mô hình Học máy (Machine Learning Models)}
+
+    Một số mô hình có khả năng xử lý dữ liệu lệch tốt hơn:
+
+    \begin{itemize}
+        \item \textbf{Tree-based Models:} 
+        Các mô hình cây quyết định (\textit{Decision Trees}) 
+        và rừng ngẫu nhiên (\textit{Random Forests}) ít nhạy cảm hơn với độ lệch dữ liệu.
+
+        \item \textbf{Generalized Linear Models (GLM):} 
+        Sử dụng các hàm liên kết (link functions) thích hợp để mô hình hóa dữ liệu có độ lệch.
+    \end{itemize}
+\end{enumerate}
+\vspace{0.8em}
+
+\noindent
+\textbf{* Sự khác biệt giữa Độ phân tán (Dispersion) và Độ lệch (Skewness):}
+\vspace{0.4em}
+
+Mặc dù độ phân tán và độ lệch có thể trông tương tự nhau, 
+nhưng chúng đo lường những khía cạnh hoàn toàn khác nhau của phân phối dữ liệu. 
+\vspace{0.8em}
+
+\textbf{Độ phân tán (Dispersion)} phản ánh mức độ mà các điểm dữ liệu 
+\textit{phân tán xung quanh giá trị trung tâm} (trung bình hoặc trung vị). 
+Nó giúp ta hiểu mức độ biến thiên của dữ liệu — tức dữ liệu có đồng nhất hay không. 
+\vspace{0.8em}
+
+Ngược lại, \textbf{Độ lệch (Skewness)} mô tả \textit{hình dạng của phân phối} 
+và hướng mà dữ liệu bị kéo dài (trái hoặc phải). 
+Trong khi độ phân tán tập trung vào “mức độ lan rộng” của dữ liệu, 
+thì độ lệch tập trung vào “mức độ bất đối xứng” của phân phối.
+\vspace{0.8em}
+\begin{longtable}{|p{0.47\textwidth}| p{0.47\textwidth}|}
+\hline
+\textbf{Dispersion} & \textbf{Skewness} \\
+\hline
+Đo lường mức độ phân tán của dữ liệu quanh giá trị trung tâm (\textit{mean, median}). 
+& 
+Đo lường hình dạng của phân phối và hướng lệch (trái hoặc phải). \\
+\hline
+Bao gồm các chỉ số: phương sai (\textit{variance}), độ lệch chuẩn (\textit{standard deviation}), 
+phạm vi (\textit{range}), và khoảng tứ phân vị (\textit{interquartile range, IQR}). 
+& 
+Bao gồm các thước đo như hệ số lệch Pearson (\textit{Pearson's coefficient of skewness}), 
+moment skewness, và biểu đồ Q–Q (\textit{Q–Q plots}). \\
+\hline
+Độ phân tán ảnh hưởng đến cách diễn giải giá trị trung bình nhưng không liên quan trực tiếp đến độ lệch. 
+& 
+Độ lệch thể hiện mối quan hệ giữa giá trị trung bình và trung vị. \\
+\hline
+Độ phân tán cao cho thấy các điểm dữ liệu phân tán rộng quanh giá trị trung tâm. 
+& 
+\textbf{Skewness dương:} đuôi bên phải dài hơn. \newline
+\textbf{Skewness âm:} đuôi bên trái dài hơn. \newline
+\textbf{Skewness bằng không:} phân phối đối xứng. \\
+\hline
+Giúp hiểu rõ mức độ biến thiên của dữ liệu. 
+& 
+Giúp nhận diện hình dạng và mức độ bất đối xứng của phân phối dữ liệu. \\
+\hline
+Ví dụ: điểm kiểm tra (\textit{test scores}), biến động giá cổ phiếu, độ tuổi trong mẫu khảo sát. 
+& 
+Ví dụ: phân phối thu nhập (thường lệch phải), phân phối điểm thi (có thể lệch trái hoặc phải). \\
+\hline
+\end{longtable}
+\vspace{0.8em}
+
+\noindent
+\textbf{* Kết luận:}
+\vspace{0.4em}
+
+Bằng cách nắm vững khái niệm về \textit{độ lệch (skewness)} và hiểu rõ cách đo lường nó, 
+chúng ta có thể dễ dàng đánh giá hình dạng của phân phối dữ liệu, 
+đưa ra các quyết định phân tích chính xác hơn, 
+và lựa chọn các kỹ thuật xử lý dữ liệu phù hợp. 
+Điều này đặc biệt quan trọng trong các quy trình 
+\textit{tiền xử lý dữ liệu (data preprocessing)} và 
+\textit{phân tích thống kê (statistical analysis)} trong học máy (Machine Learning),
+giúp cải thiện hiệu suất và độ tin cậy của mô hình.
+\subsection{Xử lý dữ liệu mất cân bằng trong bài toán phân loại~\cite{imbalance}}
+\subsubsection{Sơ lược về mất cân bằng dữ liệu (Imbalanced Data)}
+$\indent$Một thành phần quan trọng trong các bài toán phân loại (classification) của học máy (machine learning) là xử lý \textbf{dữ liệu mất cân bằng (imbalanced data)}, được đặc trưng bởi \textbf{phân bố lớp bị lệch (skewed class distribution)} — trong đó một \textbf{lớp chiếm ưu thế (majority class)} có số lượng vượt trội so với các \textbf{lớp thiểu số (minority classes)}.  
+\vspace{0.8em}
+
+Thách thức mà sự mất cân bằng này gây ra là mô hình (model) có thể thể hiện \textbf{hiệu suất kém (poor performance)} do \textbf{thiên vị (bias)} về phía \textbf{lớp đa số (majority class)}. Trong các tình huống dữ liệu không đồng đều, mô hình thường có xu hướng \textbf{ưu tiên độ chính xác tổng thể (accuracy)} hơn là \textbf{khả năng nhận diện chính xác các mẫu thuộc lớp thiểu số (minority class recognition)}.  
+\vspace{0.8em}
+
+\newpage
+Vấn đề này có thể được giải quyết bằng cách áp dụng các \textbf{chiến lược chuyên biệt (specialized strategies)} như:
+\begin{itemize}
+    \item \textbf{Tái lấy mẫu (Resampling)} — bao gồm \textbf{tăng mẫu lớp thiểu số (oversampling)} hoặc \textbf{giảm mẫu lớp đa số (undersampling)} hoặc sử dụng \textbf{kết hợp cả hai cách};
+    \item Sử dụng các \textbf{chỉ số đánh giá (evaluation metrics)} khác như \textbf{F1-score}, \textbf{precision}, và \textbf{recall};
+    \item Triển khai các \textbf{thuật toán nâng cao (advanced algorithms)} được thiết kế để hoạt động hiệu quả với \textbf{tập dữ liệu mất cân bằng (imbalanced datasets)}.
+\end{itemize}
+\vspace{0.8em}
+
+\textbf{Dữ liệu mất cân bằng (Imbalanced data)} đề cập đến các tập dữ liệu trong đó \textbf{phân bố của các quan sát (observations)} trong \textbf{nhãn mục tiêu (target class)} là \textbf{không đồng đều}. Nói cách khác, một \textbf{nhãn lớp (class label)} có số lượng quan sát cao hơn đáng kể, trong khi các nhãn khác có số lượng thấp hơn rõ rệt.  
+\vspace{0.8em}
+
+Khi một lớp có số lượng mẫu vượt trội so với các lớp khác trong một bài toán phân loại, dữ liệu được xem là \textbf{mất cân bằng (imbalanced)}. Các mô hình học máy (machine learning models) có thể trở nên \textbf{thiên lệch (biased)} trong quá trình dự đoán, có xu hướng \textbf{ưu tiên lớp đa số (majority class)}. Các kỹ thuật như \textbf{tăng mẫu lớp thiểu số (oversampling)} hoặc \textbf{giảm mẫu lớp đa số (undersampling)} được sử dụng trong \textbf{tái lấy mẫu (resampling)} để khắc phục vấn đề này.  
+\vspace{0.8em}
+
+Hơn nữa, có thể đánh giá hiệu suất mô hình (model performance) một cách chính xác hơn bằng cách thay thế thước đo \textbf{độ chính xác (accuracy)} bằng các \textbf{chỉ số đánh giá khác (assessment measures)} như \textbf{precision}, \textbf{recall} hoặc \textbf{F1-score}. Ngoài ra, để cải thiện hơn nữa việc xử lý \textbf{tập dữ liệu mất cân bằng (imbalanced datasets)} nhằm đạt được \textbf{kết quả dự đoán đáng tin cậy và công bằng hơn (reliable and equitable predictions)}, có thể áp dụng các kỹ thuật chuyên biệt (specialized techniques) như \textbf{phương pháp tập hợp (ensemble approaches)} hoặc \textbf{tạo dữ liệu tổng hợp (synthetic data generation)}.
+
+\subsubsection{Các cách xử lý dữ liệu mất cân bằng trong phân loại}  
+
+$\indent$Việc giải quyết \textbf{dữ liệu mất cân bằng (imbalanced data)} trong các bài toán \textbf{phân loại (classification)} là rất quan trọng để đảm bảo \textbf{hiệu suất mô hình công bằng (fair model performance)}.  
+Các kỹ thuật phổ biến bao gồm \textbf{tái lấy mẫu (resampling)} — như \textbf{tăng mẫu (oversampling)} hoặc \textbf{giảm mẫu (undersampling)}, \textbf{tạo dữ liệu tổng hợp (synthetic data generation)}, \textbf{thuật toán chuyên biệt (specialized algorithms)}, và \textbf{chỉ số đánh giá thay thế (alternative evaluation metrics)}.  
+Việc áp dụng các chiến lược này giúp mô hình đưa ra dự đoán chính xác hơn và ít thiên lệch hơn (more accurate and unbiased predictions) cho tất cả các lớp.  
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Chỉ số đánh giá khác (Different Evaluation Metric)}  
+
+    Độ chính xác của bộ phân loại (\textbf{classifier accuracy}) được tính bằng cách chia tổng số dự đoán đúng cho tổng số dự đoán — phù hợp với các lớp cân bằng, nhưng kém hiệu quả khi dữ liệu bị mất cân bằng.  
+    \textbf{Precision} đo độ chính xác của mô hình khi dự đoán một lớp cụ thể, trong khi \textbf{recall} đánh giá khả năng nhận diện đúng các mẫu của lớp đó.  
+
+    Trong các tập dữ liệu mất cân bằng, \textbf{F1-score} trở thành thước đo được ưu tiên vì nó cân bằng giữa precision và recall, mang lại cái nhìn toàn diện hơn về hiệu suất mô hình.  
+    F1-score được biểu diễn như sau:
+    \[
+    F_1 = 2 \times \frac{precision \times recall}{precision + recall}
+    \]
+
+    Khi mô hình dự đoán sai lớp thiểu số (tăng số lượng \textbf{false positives}), cả precision và F1-score đều giảm.  
+    Tương tự, nếu mô hình không nhận diện tốt lớp thiểu số (tăng \textbf{false negatives}), recall và F1-score cũng giảm.  
+    F1-score chỉ tăng khi mô hình cải thiện cả số lượng và độ chính xác của dự đoán.  
+
+    Tóm lại, \textbf{F1-score} là một thống kê tổng hợp quan trọng, phản ánh \textbf{mối đánh đổi (trade-off)} giữa precision và recall — yếu tố then chốt trong việc đánh giá hiệu suất mô hình trên các tập dữ liệu mất cân bằng.
+
+    \item \textbf{Tái lấy mẫu (Resampling: Undersampling và Oversampling)}  
+
+    Phương pháp này điều chỉnh sự cân bằng giữa lớp thiểu số và lớp đa số bằng cách \textbf{tăng mẫu (upsampling)} hoặc \textbf{giảm mẫu (downsampling)}.  
+    Với các tập dữ liệu mất cân bằng, \textbf{oversampling} được sử dụng để tăng số lượng mẫu của lớp thiểu số bằng cách lặp lại ngẫu nhiên các mẫu hiện có.  
+    Ngược lại, \textbf{undersampling} loại bỏ ngẫu nhiên các mẫu từ lớp đa số để làm cân bằng dữ liệu.  
+
+    Cách tiếp cận này giúp tạo ra một \textbf{tập dữ liệu cân bằng (balanced dataset)}, đảm bảo cả hai lớp đều có mức đại diện tương đương, từ đó mô hình \textbf{học công bằng hơn (learns fairly)} trong quá trình huấn luyện.
+
+    \item \textbf{BalancedBaggingClassifier}  
+
+    Khi làm việc với tập dữ liệu mất cân bằng, các bộ phân loại truyền thống thường có xu hướng ưu tiên \textbf{lớp đa số (majority class)} và bỏ qua \textbf{lớp thiểu số (minority class)} do tần suất xuất hiện thấp.  
+    \textbf{BalancedBaggingClassifier} — một mở rộng của các bộ phân loại trong \textbf{Scikit-learn} — giải quyết vấn đề này bằng cách thực hiện cân bằng dữ liệu trong quá trình huấn luyện (balancing during training).  
+
+    Bộ phân loại này cung cấp các tham số như:
+    \begin{itemize}
+        \item \texttt{sampling\_strategy}: xác định loại tái lấy mẫu (ví dụ: \texttt{'majority'} để chỉ lấy mẫu lại lớp đa số, \texttt{'all'} để tái lấy mẫu tất cả các lớp);
+        \item \texttt{replacement}: quy định việc lấy mẫu có \textbf{thay thế (with replacement)} hay không.
+    \end{itemize}
+
+    \textbf{BalancedBaggingClassifier} đảm bảo \textbf{xử lý cân bằng và công bằng hơn giữa các lớp (equitable class treatment)}, đặc biệt hữu ích khi làm việc với \textbf{tập dữ liệu mất cân bằng (imbalanced datasets)}.
+
+    \item \textbf{SMOTH}
+
+    Kỹ thuật Tăng mẫu Lớp thiểu số Tổng hợp (Synthetic Minority Oversampling Technique - SMOTE) giải quyết vấn đề \textbf{tập dữ liệu mất cân bằng (imbalanced datasets)} bằng cách \textbf{tạo ra các mẫu tổng hợp (synthetic instances)} cho \textbf{lớp thiểu số (minority class)}.  
+    
+    Không giống như việc chỉ đơn giản \textbf{sao chép lại các bản ghi hiện có (duplicating records)}, SMOTE giúp \textbf{tăng tính đa dạng (enhance diversity)} bằng cách \textbf{tạo ra các mẫu nhân tạo (artificial instances)} mới.  
+    
+    Nói một cách đơn giản, SMOTE sẽ:
+    \begin{itemize}
+        \item Xem xét các mẫu thuộc lớp thiểu số;
+        \item Chọn ngẫu nhiên một \textbf{láng giềng gần nhất (nearest neighbor)} bằng thuật toán \textbf{k-láng giềng gần nhất (k-nearest neighbors)};
+        \item Tạo ra một \textbf{mẫu tổng hợp (synthetic instance)} mới được đặt ngẫu nhiên trong \textbf{không gian đặc trưng (feature space)} giữa hai điểm này.
+    \end{itemize}
+    
+    Kỹ thuật này giúp mô hình học máy có thêm dữ liệu đa dạng, cải thiện khả năng \textbf{nhận diện lớp thiểu số (minority class recognition)} mà không làm mất cân bằng tự nhiên của tập dữ liệu.
+    \item \textbf{Dịch chuyển ngưỡng - Threshold Moving}
+
+    Trong các \textbf{bộ phân loại (classifiers)}, các \textbf{dự đoán (predictions)} thường được biểu diễn dưới dạng xác suất thuộc về một lớp (probabilities of class membership).  
+    Ngưỡng mặc định (\textbf{default threshold}) để gán một dự đoán vào một lớp cụ thể thường được đặt là \textbf{0.5}.  
+    
+    Tuy nhiên, trong bối cảnh của các \textbf{bài toán có lớp mất cân bằng (imbalanced class problems)}, ngưỡng mặc định này có thể không mang lại kết quả tối ưu.  
+    Để \textbf{cải thiện hiệu suất của bộ phân loại (enhance classifier performance)}, việc \textbf{điều chỉnh ngưỡng (adjusting the threshold)} là cần thiết nhằm đạt được sự \textbf{phân biệt hiệu quả (efficient discrimination)} giữa hai lớp.  
+    
+    Các kỹ thuật như:
+    \begin{itemize}
+        \item \textbf{Đường cong ROC (ROC Curves)} và \textbf{đường cong Precision–Recall (Precision–Recall Curves)} — được sử dụng để xác định \textbf{ngưỡng tối ưu (optimal threshold)};
+        \item \textbf{Tìm kiếm theo lưới (Grid Search)} hoặc khám phá trong một dải giá trị cụ thể (exploration within a range of values) — có thể được áp dụng để tìm ra \textbf{ngưỡng phù hợp nhất (most suitable threshold)} cho bộ phân loại.
+    \end{itemize}
+    
+    Việc tinh chỉnh ngưỡng này giúp mô hình đạt được sự cân bằng tốt hơn giữa \textbf{độ chính xác (precision)} và \textbf{độ bao phủ (recall)}, đặc biệt trong các tập dữ liệu có sự chênh lệch lớn giữa các lớp.
+
+\end{enumerate}

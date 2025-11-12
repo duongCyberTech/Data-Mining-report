@@ -1,0 +1,657 @@
+\chapter{Hiện thực bài toán}
+\section{Xác định bài toán}
+$\indent$Trong bài toán này, nhóm sử dụng mô hình học máy có giám sát (Supervised) để thực hiện huấn luyện mô hình do bộ dữ liệu của bài toán được đánh nhãn. Nhãn của bộ dữ liệu là dữ liệu dạng phân loại nhị phân (0, 1) nên trong bài toán này nhóm sẽ sử dụng các mô hình dạng phân loại (Classifier).
+
+Trong bài toán này, nhóm sử dụng bộ dữ liệu bao gồm 121 đặc trưng và nhãn \textbf{TARGET}.
+\section{Tiền xử lý dữ liệu}
+$\indent$Trước khi huấn luyện mô hình, thực hiện tiền xử lý dữ liệu nhằm loại bỏ các biến không có ý nghĩa, xử lý dữ liệu khuyết, xử lý outliers.
+\subsection{Loại bỏ các biến không có ý nghĩa trong bài toán}
+$\indent$Tại bước này, tổng cộng có 43 đặc trưng không có ý nghĩa bị loại bỏ được thống kê trong bảng dưới đây:
+\vspace{0.4em}
+\begin{lstlisting}[language=Python, caption={Loại bỏ các cột không có nghĩa}]
+    # Drop unneccessary features
+    df = df.drop(columns=[
+        "SK_ID_CURR", "FLAG_MOBIL", "FLAG_EMP_PHONE", "FLAG_CONT_MOBILE",
+        "FLAG_WORK_PHONE", "FLAG_PHONE", "FLAG_EMAIL", "FLAG_DOCUMENT_2",
+        "FLAG_DOCUMENT_3", "FLAG_DOCUMENT_4", "FLAG_DOCUMENT_5", "FLAG_DOCUMENT_6",
+        "REG_REGION_NOT_LIVE_REGION", "FLAG_DOCUMENT_7", "FLAG_DOCUMENT_8",
+        "FLAG_DOCUMENT_9", "FLAG_DOCUMENT_10", "FLAG_DOCUMENT_11", "FLAG_DOCUMENT_12",
+        "FLAG_DOCUMENT_13", "FLAG_DOCUMENT_14", "FLAG_DOCUMENT_15", "FLAG_DOCUMENT_16",
+        "FLAG_DOCUMENT_17", "FLAG_DOCUMENT_18", "FLAG_DOCUMENT_19", "FLAG_DOCUMENT_20",
+        "FLAG_DOCUMENT_21", "LIVE_REGION_NOT_WORK_REGION", "REG_CITY_NOT_LIVE_CITY",
+        "REG_CITY_NOT_WORK_CITY", "LIVE_CITY_NOT_WORK_CITY", "DAYS_LAST_PHONE_CHANGE",
+        "AMT_REQ_CREDIT_BUREAU_HOUR", "AMT_REQ_CREDIT_BUREAU_DAY",
+        "AMT_REQ_CREDIT_BUREAU_WEEK", "AMT_REQ_CREDIT_BUREAU_MON",
+        "AMT_REQ_CREDIT_BUREAU_QRT", "AMT_REQ_CREDIT_BUREAU_YEAR",
+        "REG_REGION_NOT_WORK_REGION", "DAYS_ID_PUBLISH", "DAYS_BIRTH",
+        'WEEKDAY_APPR_PROCESS_START', 'HOUR_APPR_PROCESS_START'
+    ])
+\end{lstlisting}
+
+\begin{longtable}{|c|l|l|p{7cm}|}
+\caption{Thông tin các biến liên quan đến thông tin liên lạc, khu vực và tài liệu khách hàng} \\
+\hline
+\textbf{STT} & \textbf{Column} & \textbf{Type} & \textbf{Description} \\ \hline
+\endfirsthead
+
+\hline
+\textbf{STT} & \textbf{Column} & \textbf{Type} & \textbf{Description} \\ \hline
+\endhead
+
+\endfoot
+
+1 & SK\_ID\_CURR & int64 & ID of loan in our sample \\ \hline
+2 & FLAG\_MOBIL & int64 & Did client provide mobile phone (1=YES, 0=NO) \\ \hline
+3 & FLAG\_EMP\_PHONE & int64 & Did client provide work phone (1=YES, 0=NO) \\ \hline
+4 & FLAG\_WORK\_PHONE & int64 & Did client provide home phone (1=YES, 0=NO) \\ \hline
+5 & FLAG\_CONT\_MOBILE & int64 & Was mobile phone reachable (1=YES, 0=NO) \\ \hline
+6 & FLAG\_PHONE & int64 & Did client provide home phone (1=YES, 0=NO) \\ \hline
+7 & FLAG\_EMAIL & int64 & Did client provide email (1=YES, 0=NO) \\ \hline
+8 & REG\_REGION\_NOT\_LIVE\_REGION & int64 & Flag if client's permanent address does not match contact address (1=different, 0=same, at region level) \\ \hline
+9 & REG\_REGION\_NOT\_WORK\_REGION & int64 & Flag if client's permanent address does not match work address (1=different, 0=same, at region level) \\ \hline
+10 & LIVE\_REGION\_NOT\_WORK\_REGION & int64 & Flag if client's contact address does not match work address (1=different, 0=same, at region level) \\ \hline
+11 & REG\_CITY\_NOT\_LIVE\_CITY & int64 & Flag if client's permanent address does not match contact address (1=different, 0=same, at city level) \\ \hline
+12 & REG\_CITY\_NOT\_WORK\_CITY & int64 & Flag if client's permanent address does not match work address (1=different, 0=same, at city level) \\ \hline
+13 & LIVE\_CITY\_NOT\_WORK\_CITY & int64 & Flag if client's contact address does not match work address (1=different, 0=same, at city level) \\ \hline
+14 & FLAG\_DOCUMENT\_2 & int64 & Did client provide document 2 \\ \hline
+15 & FLAG\_DOCUMENT\_3 & int64 & Did client provide document 3 \\ \hline
+16 & FLAG\_DOCUMENT\_4 & int64 & Did client provide document 4 \\ \hline
+17 & FLAG\_DOCUMENT\_5 & int64 & Did client provide document 5 \\ \hline
+18 & FLAG\_DOCUMENT\_6 & int64 & Did client provide document 6 \\ \hline
+19 & FLAG\_DOCUMENT\_7 & int64 & Did client provide document 7 \\ \hline
+20 & FLAG\_DOCUMENT\_8 & int64 & Did client provide document 8 \\ \hline
+21 & FLAG\_DOCUMENT\_9 & int64 & Did client provide document 9 \\ \hline
+22 & FLAG\_DOCUMENT\_10 & int64 & Did client provide document 10 \\ \hline
+23 & FLAG\_DOCUMENT\_11 & int64 & Did client provide document 11 \\ \hline
+24 & FLAG\_DOCUMENT\_12 & int64 & Did client provide document 12 \\ \hline
+25 & FLAG\_DOCUMENT\_13 & int64 & Did client provide document 13 \\ \hline
+26 & FLAG\_DOCUMENT\_14 & int64 & Did client provide document 14 \\ \hline
+27 & FLAG\_DOCUMENT\_15 & int64 & Did client provide document 15 \\ \hline
+28 & FLAG\_DOCUMENT\_16 & int64 & Did client provide document 16 \\ \hline
+29 & FLAG\_DOCUMENT\_17 & int64 & Did client provide document 17 \\ \hline
+30 & FLAG\_DOCUMENT\_18 & int64 & Did client provide document 18 \\ \hline
+31 & FLAG\_DOCUMENT\_19 & int64 & Did client provide document 19 \\ \hline
+32 & FLAG\_DOCUMENT\_20 & int64 & Did client provide document 20 \\ \hline
+33 & FLAG\_DOCUMENT\_21 & int64 & Did client provide document 21 \\ \hline
+34 & AMT\_REQ\_CREDIT\_BUREAU\_HOUR & float64 & Number of enquiries to Credit Bureau about the client one hour before application \\ \hline
+35 & AMT\_REQ\_CREDIT\_BUREAU\_DAY & float64 & Number of enquiries to Credit Bureau about the client one day before application (excluding one hour before application) \\ \hline
+36 & AMT\_REQ\_CREDIT\_BUREAU\_WEEK & float64 & Number of enquiries to Credit Bureau about the client one week before application (excluding one day before application) \\ \hline
+37 & AMT\_REQ\_CREDIT\_BUREAU\_MON & float64 & Number of enquiries to Credit Bureau about the client one month before application (excluding one week before application) \\ \hline
+38 & AMT\_REQ\_CREDIT\_BUREAU\_QRT & float64 & Number of enquiries to Credit Bureau about the client 3 months before application (excluding one month before application) \\ \hline
+39 & AMT\_REQ\_CREDIT\_BUREAU\_YEAR & float64 & Number of enquiries to Credit Bureau about the client one year before application (excluding last 3 months before application) \\ \hline
+40 & DAYS\_LAST\_PHONE\_CHANGE & int64 & Number of days since last phone change \\ \hline
+41 & DAYS\_ID\_PUBLISH & int64 & Number of days since ID was published \\ \hline
+42 & DAYS\_BIRTH & int64 & Number of days since client’s birth \\ \hline
+43 & WEEKDAY\_APPR\_PROCESS\_START & object & On which day of the week did the client apply for previous application \\ \hline
+44 & HOUR\_APPR\_PROCESS\_START & int64 & Approximately at what hour did the client apply for the previous application \\ \hline
+\end{longtable}
+
+Sau khi loại bỏ các đặc trưng không quan trọng, bộ dữ liệu còn 307,511 quan sát và 78 đặc trưng.
+\subsection{Xử lý dữ liệu khuyết}
+\noindent
+\textbf{* Bảng phân tích tỉ lệ khuyết dữ liệu:}
+\vspace{0.4em}
+\begin{longtable}{|c|l|c|}
+
+\hline
+\textbf{STT} & \textbf{Column} & \textbf{Missing (\%)} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{STT} & \textbf{Column} & \textbf{Missing (\%)} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\endlastfoot
+
+1 & COMMONAREA\_MEDI & 69.87 \\
+2 & COMMONAREA\_MODE & 69.87 \\
+3 & COMMONAREA\_AVG & 69.87 \\
+4 & NONLIVINGAPARTMENTS\_AVG & 69.43 \\
+5 & NONLIVINGAPARTMENTS\_MODE & 69.43 \\
+6 & NONLIVINGAPARTMENTS\_MEDI & 69.43 \\
+7 & FONDKAPREMONT\_MODE & 68.39 \\
+8 & LIVINGAPARTMENTS\_AVG & 68.35 \\
+9 & LIVINGAPARTMENTS\_MODE & 68.35 \\
+10 & LIVINGAPARTMENTS\_MEDI & 68.35 \\
+11 & FLOORSMIN\_AVG & 67.85 \\
+12 & FLOORSMIN\_MODE & 67.85 \\
+13 & FLOORSMIN\_MEDI & 67.85 \\
+14 & YEARS\_BUILD\_AVG & 66.50 \\
+15 & YEARS\_BUILD\_MODE & 66.50 \\
+16 & YEARS\_BUILD\_MEDI & 66.50 \\
+17 & OWN\_CAR\_AGE & 65.99 \\
+18 & LANDAREA\_AVG & 59.38 \\
+19 & LANDAREA\_MODE & 59.38 \\
+20 & LANDAREA\_MEDI & 59.38 \\
+21 & BASEMENTAREA\_AVG & 58.52 \\
+22 & BASEMENTAREA\_MODE & 58.52 \\
+23 & BASEMENTAREA\_MEDI & 58.52 \\
+24 & EXT\_SOURCE\_1 & 56.38 \\
+25 & NONLIVINGAREA\_AVG & 55.18 \\
+26 & NONLIVINGAREA\_MODE & 55.18 \\
+27 & NONLIVINGAREA\_MEDI & 55.18 \\
+28 & ELEVATORS\_AVG & 53.30 \\
+29 & ELEVATORS\_MODE & 53.30 \\
+30 & ELEVATORS\_MEDI & 53.30 \\
+31 & WALLSMATERIAL\_MODE & 50.84 \\
+32 & APARTMENTS\_AVG & 50.75 \\
+33 & APARTMENTS\_MODE & 50.75 \\
+34 & APARTMENTS\_MEDI & 50.75 \\
+35 & ENTRANCES\_AVG & 50.35 \\
+36 & ENTRANCES\_MODE & 50.35 \\
+37 & ENTRANCES\_MEDI & 50.35 \\
+38 & LIVINGAREA\_AVG & 50.19 \\
+39 & LIVINGAREA\_MODE & 50.19 \\
+40 & LIVINGAREA\_MEDI & 50.19 \\
+41 & HOUSETYPE\_MODE & 50.18 \\
+42 & FLOORSMAX\_AVG & 49.76 \\
+43 & FLOORSMAX\_MODE & 49.76 \\
+44 & FLOORSMAX\_MEDI & 49.76 \\
+45 & YEARS\_BEGINEXPLUATATION\_AVG & 48.78 \\
+46 & YEARS\_BEGINEXPLUATATION\_MODE & 48.78 \\
+47 & YEARS\_BEGINEXPLUATATION\_MEDI & 48.78 \\
+48 & TOTALAREA\_MODE & 48.27 \\
+49 & EMERGENCYSTATE\_MODE & 47.40 \\
+50 & OCCUPATION\_TYPE & 31.35 \\
+51 & EXT\_SOURCE\_3 & 19.83 \\
+52 & ORGANIZATION\_TYPE & 18.01 \\
+53 & NAME\_TYPE\_SUITE & 0.42 \\
+54 & OBS\_30\_CNT\_SOCIAL\_CIRCLE & 0.33 \\
+55 & DEF\_30\_CNT\_SOCIAL\_CIRCLE & 0.33 \\
+56 & OBS\_60\_CNT\_SOCIAL\_CIRCLE & 0.33 \\
+57 & DEF\_60\_CNT\_SOCIAL\_CIRCLE & 0.33 \\
+58 & EXT\_SOURCE\_2 & 0.21 \\
+59 & AMT\_GOODS\_PRICE & 0.09 \\
+60 & TARGET & 0.00 \\
+61 & NAME\_CONTRACT\_TYPE & 0.00 \\
+62 & CODE\_GENDER & 0.00 \\
+63 & FLAG\_OWN\_CAR & 0.00 \\
+64 & FLAG\_OWN\_REALTY & 0.00 \\
+65 & CNT\_CHILDREN & 0.00 \\
+66 & AMT\_INCOME\_TOTAL & 0.00 \\
+67 & AMT\_CREDIT & 0.00 \\
+68 & AMT\_ANNUITY & 0.00 \\
+69 & NAME\_INCOME\_TYPE & 0.00 \\
+70 & NAME\_EDUCATION\_TYPE & 0.00 \\
+71 & NAME\_FAMILY\_STATUS & 0.00 \\
+72 & NAME\_HOUSING\_TYPE & 0.00 \\
+73 & REGION\_POPULATION\_RELATIVE & 0.00 \\
+74 & DAYS\_EMPLOYED & 0.00 \\
+75 & DAYS\_REGISTRATION & 0.00 \\
+76 & CNT\_FAM\_MEMBERS & 0.00 \\
+77 & REGION\_RATING\_CLIENT & 0.00 \\
+78 & REGION\_RATING\_CLIENT\_W\_CITY & 0.00 \\
+\hline
+\caption{Tỉ lệ khuyết dữ liệu} \\
+\end{longtable}
+
+
+
+\subsubsection*{a) Loại bỏ các đặc trưng bị khuyết quá 40\%}
+$\indent$Từ bảng thống kê tỉ lệ dữ liệu khuyết, nhóm loại bỏ thêm 49 đặc trưng bị khuyết trên 40\%.
+\vspace{0.4em}
+\begin{lstlisting}[language=Python, caption={Loại bỏ các đặc trưng bị khuyết quá 40\%}]
+df = df.replace("NaN", np.nan)
+for col in df.columns:
+    if df[col].isna().sum() / len(df) > 0.4:
+        df = df.drop(columns=[col])
+df.head()
+\end{lstlisting}
+
+\subsubsection*{b) Xử lý các phần dữ liệu bị khuyết còn lại}
+$\indent$Đối với biến đặc trưng dạng phân loại, các quan sát bị khuyết bị loại bỏ. Còn đối với biến đặc trưng liên tục, IterativeImputer - một thuật toán gán đa biến (MICE) được thực hiện trong scikit-learn - được sử dụng để điền các ô dữ liệu bị khuyết.
+\vspace{0.4em}
+\begin{lstlisting}[language=Python, caption={Thực hiện điền khuyết dữ liệu định}]
+    cat_columns = df.select_dtypes(include=['object']).columns
+    print(cat_columns)
+    num_columns = df.select_dtypes(include=['int64', 'float64']).columns.drop('TARGET', errors='ignore')
+
+    df = df.dropna(subset=cat_columns)
+
+    numeric_imputer = IterativeImputer(
+        estimator=DecisionTreeRegressor(random_state=42),
+        missing_values=np.nan,
+        n_nearest_features=10,
+        max_iter=3,
+        initial_strategy='median',
+        skip_complete=True,
+        verbose=1,
+        random_state=42
+    )
+
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_imputer, num_columns),
+            ('cat', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1), cat_columns)
+        ]
+    )
+
+    y = df['TARGET']
+    X = df.drop(columns=['TARGET'])
+
+    data_fit = preprocessor.fit_transform(X)
+
+    processed_columns = list(num_columns) + list(cat_columns)
+    X_processed = pd.DataFrame(data_fit, columns=processed_columns, index=df.index)
+
+    df = pd.concat([X_processed, y], axis=1)
+\end{lstlisting}
+
+Sau khi thực hiện xử lý dữ liệu khuyết, bộ dữ liệu còn 210211 quan sát và 29 đặc trưng.
+\subsection{Đánh giá chỉ số giá trị thông tin (IV - Information Value)}
+$\indent$Nhằm đánh giá mức độ ảnh hưởng của các đặc trưng đến nhãn, chỉ số giá trị thông tin được sử dụng. Đối với các biến phân loại chỉ số được tính toán theo từng category của biến đó. Đối với biên liên tục, các giá trị sẽ được chia thành các category trước khi thực hiện tính toán chỉ số IV. Đối với các đặc trưng có IV dưới 0.02 thì sẽ bị loại bỏ khỏi bộ dữ liệu để huấn luyện mô hình.
+\vspace{0.4em}
+
+\begin{lstlisting}[language=Python, caption={Phân tích giá trị thông tin}]
+import pandas as pd
+import numpy as np
+from sklearn.tree import DecisionTreeClassifier
+
+def auto_binning(df, feature, target, max_bins=5, min_bin_size=0.05):
+    """Bin partitioning By DecisionTree"""
+    x = df[[feature]].copy()
+    y = df[target]
+
+    if not np.issubdtype(x[feature].dtype, np.number):
+        return df[feature]
+
+    tree = DecisionTreeClassifier(
+        max_leaf_nodes=max_bins,
+        min_samples_leaf=min_bin_size
+    ).fit(x, y)
+
+    thresholds = sorted(tree.tree_.threshold[tree.tree_.threshold > -2])
+    bins = [-np.inf] + thresholds + [np.inf]
+    binned = pd.cut(df[feature], bins=bins, duplicates='drop')
+    return binned
+
+
+def calc_woe_iv(df, feature, target):
+    """Calculate WOE and IV for numeric feature"""
+    lst = []
+    total_good = (df[target] == 0).sum()
+    total_bad = (df[target] == 1).sum()
+
+    grouped = df.groupby(feature)
+    for val, group in grouped:
+        good = (group[target] == 0).sum()
+        bad = (group[target] == 1).sum()
+        dist_good = good / total_good if total_good > 0 else 0
+        dist_bad = bad / total_bad if total_bad > 0 else 0
+
+        # Tránh log(0)
+        if dist_good == 0 or dist_bad == 0:
+            woe = 0
+        else:
+            woe = np.log(dist_good / dist_bad)
+
+        iv = (dist_good - dist_bad) * woe
+        lst.append({
+            'Feature': feature,
+            'Bin': val,
+            'Good': good,
+            'Bad': bad,
+            'WOE': round(woe, 2),
+            'IV': round(iv, 2)
+        })
+    iv_df = pd.DataFrame(lst)
+    total_iv = iv_df['IV'].sum()
+    return iv_df, total_iv
+
+
+def woe_iv_categorical(df, feature, target):
+    """Calculate WOE and IV for categorical feature"""
+    lst = []
+    total_good = (df[target] == 0).sum()
+    total_bad = (df[target] == 1).sum()
+
+    for val in df[feature].dropna().unique():
+        good = ((df[feature] == val) & (df[target] == 0)).sum()
+        bad = ((df[feature] == val) & (df[target] == 1)).sum()
+        dist_good = good / total_good if total_good > 0 else 0
+        dist_bad = bad / total_bad if total_bad > 0 else 0
+
+        woe = np.log(dist_good / dist_bad) if (dist_good > 0 and dist_bad > 0) else 0
+        iv = (dist_good - dist_bad) * woe
+
+        lst.append({
+            'Feature': feature,
+            'Category': val,
+            'Good': good,
+            'Bad': bad,
+            'WOE': round(woe, 2),
+            'IV': round(iv, 2)
+        })
+
+    iv_df = pd.DataFrame(lst)
+    total_iv = iv_df['IV'].sum()
+    return iv_df, total_iv
+
+
+def compute_woe_iv_dataset(df, target, cat_features=[], max_bins=5):
+    results = []
+    all_dfs = []
+
+    for feature in [c for c in df.columns if c != target]:
+        if feature in cat_features:
+            iv_df, total_iv = woe_iv_categorical(df, feature, target)
+        else:
+            binned = auto_binning(df, feature, target, max_bins=max_bins)
+            df_temp = df.copy()
+            df_temp[feature] = binned
+            iv_df, total_iv = calc_woe_iv(df_temp, feature, target)
+
+        all_dfs.append(iv_df)
+        results.append({
+            'Feature': feature,
+            'IV_Total': round(total_iv, 2)
+        })
+
+    summary_df = pd.DataFrame(results).sort_values('IV_Total', ascending=False).reset_index(drop=True)
+    full_detail_df = pd.concat(all_dfs, ignore_index=True)
+    return summary_df, full_detail_df
+\end{lstlisting}
+
+\noindent
+\textbf{* Bảng Giá trị thông tin IV:}
+\begin{longtable}{|c|l|c|}
+
+\hline
+\textbf{STT} & \textbf{Feature} & \textbf{IV\_Total} \\
+\hline
+\endfirsthead
+\hline
+\textbf{STT} & \textbf{Feature} & \textbf{IV\_Total} \\
+\hline
+\endhead
+1 & EXT\_SOURCE\_2 & 0.32 \\
+2 & EXT\_SOURCE\_3 & 0.26 \\
+3 & AMT\_GOODS\_PRICE & 0.09 \\
+4 & OCCUPATION\_TYPE & 0.07 \\
+5 & REGION\_RATING\_CLIENT\_W\_CITY & 0.06 \\
+6 & NAME\_EDUCATION\_TYPE & 0.06 \\
+7 & AMT\_CREDIT & 0.06 \\
+8 & REGION\_RATING\_CLIENT & 0.06 \\
+9 & CODE\_GENDER & 0.03 \\
+10 & REGION\_POPULATION\_RELATIVE & 0.03 \\
+11 & NAME\_INCOME\_TYPE & 0.03 \\
+12 & AMT\_ANNUITY & 0.02 \\
+13 & FLAG\_OWN\_CAR & 0.02 \\
+14 & NAME\_CONTRACT\_TYPE & 0.02 \\
+15 & NAME\_HOUSING\_TYPE & 0.01 \\
+16 & NAME\_FAMILY\_STATUS & 0.01 \\
+17 & AMT\_INCOME\_TOTAL & 0.01 \\
+18 & ORGANIZATION\_TYPE & 0.01 \\
+19 & DEF\_60\_CNT\_SOCIAL\_CIRCLE & 0.01 \\
+20 & DEF\_30\_CNT\_SOCIAL\_CIRCLE & 0.01 \\
+21 & CNT\_FAM\_MEMBERS & 0.00 \\
+22 & DAYS\_REGISTRATION & 0.00 \\
+23 & DAYS\_EMPLOYED & 0.00 \\
+24 & CNT\_CHILDREN & 0.00 \\
+25 & OBS\_30\_CNT\_SOCIAL\_CIRCLE & 0.00 \\
+26 & OBS\_60\_CNT\_SOCIAL\_CIRCLE & 0.00 \\
+27 & FLAG\_OWN\_REALTY & 0.00 \\
+28 & NAME\_TYPE\_SUITE & 0.00 \\
+\hline
+\caption{Information Value (IV) của các biến}\\
+\end{longtable}
+
+Sau khi thực hiện xử lý dữ liệu khuyết, bộ dữ liệu còn 210211 quan sát và 14 đặc trưng.
+\subsection{Loại bỏ outliers với Isolation Forest}
+$\indent$Đối với thuật toán \texttt{Isolation Forest}, các giá trị ngoại lai sẽ trả về kết quả là 1, ngược lại thuật toán sẽ trả về kết quả là -1.
+\vspace{0.4em}
+\begin{lstlisting}[language=Python, caption={Loại bỏ giá trị ngoại lai}]
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import IsolationForest
+
+cat_columns = categorical_features
+
+num_columns = [x for x in df.columns if (x not in cat_columns) and x != 'TARGET']
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(df[num_columns])
+
+iso = IsolationForest(contamination=0.02, random_state=42, n_jobs=-1)
+outlier_pred = iso.fit_predict(X_scaled)
+
+df['is_outlier'] = outlier_pred == -1
+df_clean = df[df['is_outlier'] == False]
+df = df_clean.dropna()
+df = df.drop(columns=['is_outlier'])
+df.head()
+ 
+\end{lstlisting}
+\subsection{Phân tích độ nhọn (Kurtosis) và độ lệch (Skewness)}
+\textbf{* Phân phối dữ liệu dựa trên độ nhọn và độ lệch đối với các biến liên tục:}
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+        \includegraphics[width=0.45\textwidth]{Images/Data Distribution/amt_annuity.png} &
+        \includegraphics[width=0.45\textwidth]{Images/Data Distribution/amt_credit.png} \\[1em]
+        \includegraphics[width=0.45\textwidth]{Images/Data Distribution/amt_goods_price.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Data Distribution/ext_source_3.png} \\[1em]
+        \includegraphics[width=0.45\textwidth]{Images/Data Distribution/ext_source_2.png} &
+        \includegraphics[width=0.45\textwidth]{Images/Data Distribution/region_population_relative.png} \\
+    \end{tabular}
+    \vspace{15pt}
+    \caption{Phân phối dữ liệu, độ nhọn và độ lệch}
+    \label{fig:grid_images}
+\end{figure}
+
+Đối với những đặc trưng có phân phối dữ liệu bị lệch, trong khuôn khổ bài toán, nhóm sử dụng phép biến đổi Yeo-Johnson để đưa phân phối dữ liệu về gần phân phối chuẩn.
+\begin{lstlisting}[language=Python, caption={Biến đổi phân phối dữ liệu với Yeo-Johnson}]
+from sklearn.preprocessing import PowerTransformer
+
+def transform_distribution(df, categorical_features):
+  l_skew, r_skew, _ = analyze_distribution(df)
+  for col in categorical_features:
+      df[col] = df[col].apply(lambda x: round(x))
+
+  yeo = PowerTransformer(method='yeo-johnson', standardize=True)
+  box = PowerTransformer(method='box-cox', standardize=True)
+  if len(l_skew) > 0:
+    df[[col for col in l_skew if col not in categorical_features]] = yeo.fit_transform(df[[col for col in l_skew if col not in categorical_features]])
+  if len(r_skew) > 0:
+    df[[col for col in r_skew if col not in categorical_features]] = yeo.fit_transform(df[[col for col in r_skew if col not in categorical_features]])
+  return df
+\end{lstlisting}
+
+\noindent
+\textbf{* Phân phối dữ liệu các biến liên tục sau khi thực hiện biến đổi:}
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+        \includegraphics[width=0.38\textwidth]{Images/Data Transformation/amt_annuity.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Data Transformation/amt_credit.png} \\[1em]
+        \includegraphics[width=0.38\textwidth]{Images/Data Transformation/amt_goods_price.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Data Transformation/ext_3.png} \\[1em]
+        \includegraphics[width=0.38\textwidth]{Images/Data Transformation/ext_3.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Data Transformation/re_popu_re.png} \\
+    \end{tabular}
+    \vspace{15pt}
+    \caption{Phân phối dữ liệu, độ nhọn và độ lệch sau khi biến đổi}
+    \label{fig:grid_images}
+\end{figure}
+\subsection{Cân bằng dữ liệu}
+$\indent$Trong bài toán này, nhóm thực hiện 4 phương án tái lấy mẫu nhằm cân bằng dữ liệu khác nhau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Oversampling với SMOTE}
+    \vspace{0.4em}
+    
+    SMOTE tạo ra mẫu tổng hợp (synthetic samples) của lớp thiểu số bằng cách nội suy tuyến tính giữa một điểm dữ liệu và các láng giềng gần của nó.
+    \begin{lstlisting}[language=Python, caption={Cân bằng nhãn với SMOTH}]
+    from imblearn.over_sampling import SMOTE
+    from collections import Counter
+    
+    def smote_resample(X, y):
+      smote = SMOTE(sampling_strategy='auto', random_state=42)
+      X_smote, y_smote = smote.fit_resample(X, y)
+      print(Counter(y))
+      print(Counter(y_smote))
+      #df_smote = pd.concat([X_smote, y_smote], axis=1)
+      print(X_smote.shape)
+      return X_smote, y_smote
+    \end{lstlisting}
+    \item \textbf{Undersampling với NearMiss}
+    \vspace{0.4em}
+    
+    NearMiss là kỹ thuật giảm lớp đa số (majority class) một cách có kiểm soát và chọn ra các mẫu đa số nằm “gần” các mẫu thiểu số nhất — giúp giữ lại các điểm dữ liệu có giá trị phân biệt cao cho mô hình học.
+    \begin{lstlisting}[language=Python, caption={Undersampling với NearMiss}]
+    from imblearn.under_sampling import RandomUnderSampler, NearMiss
+    from collections import Counter
+    
+    def under_resample(X, y):
+      rus = NearMiss(version=3, n_neighbors=5)
+      X_rus, y_rus = rus.fit_resample(X, y)
+      print(Counter(y))
+      print(Counter(y_rus))
+      #df_rus = pd.concat([X_rus, y_rus], axis=1)
+      print(X_rus.shape)
+      return X_rus, y_rus
+    \end{lstlisting}
+    \item \textbf{Tái lấy mẫu kết hợp BOTH - SMOTHENN}
+    \vspace{0.4em}
+    
+    SMOTHENN là phương pháp tái lấy mẫu với 2 giai đoạn:
+    \begin{itemize}
+        \item Cân bằng dữ liệu giữa các lớp (giống SMOTE).
+        \item Làm sạch dữ liệu bằng cách loại bỏ các điểm nhiễu hoặc chồng lấn giữa hai lớp (nhờ ENN).
+    \end{itemize}
+    Từ đó giúp mô hình học ranh giới phân lớp rõ ràng hơn và tránh overfitting do synthetic data của SMOTE.
+    \begin{lstlisting}[language=Python, caption={Tái lấy mẫu kết hợp BOTH - SMOTHENN}]
+    from collections import Counter
+    from imblearn.combine import SMOTEENN, SMOTETomek
+    from imblearn.over_sampling import SMOTE
+    
+    def both_resample(X, y):
+      smote_enn = SMOTEENN(sampling_strategy='auto', random_state=42)
+      X_smote_enn, y_smote_enn = smote_enn.fit_resample(X, y)
+      #df_smote_enn = pd.concat([X_smote_enn, y_smote_enn], axis=1)
+      return X_smote_enn, y_smote_enn
+    \end{lstlisting}
+    \item \textbf{Tái lấy mẫu ngẫu nhiên}
+    \vspace{0.4em}
+    
+    Nhóm thực hiện lấy $n$ quan sát ngẫu nhiên từ nhóm chiếm đa số với $n$ là số lượng quan sát mẫu thiểu số.
+    \begin{lstlisting}[language=Python, caption={Tái lấy mẫu ngẫu nhiên}]
+    def normal_resample(X, y):
+      df = pd.concat([X, y], axis=1)
+      df_0 = df[df['TARGET'] == 0]
+      df_1 = df[df['TARGET'] == 1]
+      n_1 = len(df_1)
+      df_0 = df_0.sample(n=n_1, random_state=42)
+      df = pd.concat([df_0, df_1])
+      return df.drop(columns=['TARGET']), df['TARGET']
+    \end{lstlisting}
+\end{enumerate}
+
+\section{Mô hình CatBoost}
+\subsection{Thiết lập mô hình dự đoán khả năng vỡ nợ tài chính}
+\subsubsection*{a) Các biến được sử dụng trong mô hình}
+\begin{itemize}
+    \item Biến phân loại: [\\
+    'NAME\_CONTRACT\_TYPE', 'CODE\_GENDER', 'FLAG\_OWN\_CAR', \\
+    'NAME\_INCOME\_TYPE', 'NAME\_EDUCATION\_TYPE', 'OCCUPATION\_TYPE', \\
+    'REGION\_RATING\_CLIENT', 'REGION\_RATING\_CLIENT\_W\_CITY'\\]
+    \item Biến liên tục: [\\
+    'AMT\_CREDIT', 'AMT\_ANNUITY', 'AMT\_GOODS\_PRICE'\\
+    'REGION\_POPULATION\_RELATIVE', 'EXT\_SOURCE\_2', 'EXT\_SOURCE\_3'\\
+    ]
+    \item Biến phụ thuộc: ['TARGET']
+\end{itemize}
+\subsubsection*{b) Thiết lập mô hình CatBoostClassifier}
+\begin{lstlisting}[language=Python, caption={Thiết lập mô hình CatBoostClassifier}]
+    model = CatBoostClassifier(
+        iterations=300,
+        learning_rate=0.02,
+        depth=6,
+        loss_function='Logloss',
+        eval_metric='AUC',
+        verbose=10,
+        early_stopping_rounds=100,
+        random_seed=42
+    )
+\end{lstlisting}
+\subsection{Kết quả mô hình}
+\textbf{* Kết quả mô hình được biểu diễn lần lượt theo định dạng sau:}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \textbf{(1) Normal Resampling} & \textbf{(2) SMOTE Resampling} \\[1em]
+        \hline
+        \\
+        
+        \textbf{(3) NearMiss Resampling} & \textbf{(4) SMOTEENN Resampling}
+    \end{tabular}
+    \caption{Định dạng trình bày kết quả mô hình}
+    \label{tab:placeholder}
+\end{table}
+\subsubsection*{a) Báo cáo phân loại - Classification Report}
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+        \includegraphics[width=0.38\textwidth]{Images/Report/normal.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Report/smote.png} \\[1em]
+        \includegraphics[width=0.38\textwidth]{Images/Report/under.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Report/both.png} \\
+    \end{tabular}
+    \vspace{15pt}
+    \caption{Classification Report của các phương án tái lấy mẫu}
+    \label{fig:grid_images}
+\end{figure}
+\textbf{* Nhận xét:} 
+\begin{enumerate}
+    \item \textbf{Normal Resampling}
+    \begin{itemize}
+        \item Độ chính xác tổng thể đạt khoảng 66\% cho thấy khả năng dự đoán của mô hình khi thực hiện lấy mẫu ngầu nhiên theo lớp tối thiểu.
+        \item Mô hình cho thấy sự cân bằng trên cả 2 lớp. Tuy nhiên, hai thông số Precision và Recall trên cả 2 lớp đều khá thấp cho thấy lượng sai lầm phân bố khá đều, mô hình dự đoán chưa đủ tốt.
+        \item \textbf{Kết luận:} 
+    \end{itemize}
+\end{enumerate}
+\subsubsection*{b) Ma trận nhầm lẫn - Confusion Matrix}
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+        \includegraphics[width=0.38\textwidth]{Images/Confusion Matrix/normal.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Confusion Matrix/smote.png} \\[1em]
+        \includegraphics[width=0.38\textwidth]{Images/Confusion Matrix/under.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Confusion Matrix/both.png} \\
+    \end{tabular}
+    \vspace{15pt}
+    \caption{Ma trận nhầm lẫn của các phương án tái lấy mẫu}
+    \label{fig:grid_images}
+\end{figure}
+\newpage
+\subsubsection*{c) Mức độ ảnh hưởng của các đặc trưng - Feature Importances}
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+        \includegraphics[width=0.38\textwidth]{Images/Feature Imp/normal.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Feature Imp/smote.png} \\[1em]
+        \includegraphics[width=0.38\textwidth]{Images/Feature Imp/under.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Feature Imp/both.png} \\
+    \end{tabular}
+    \vspace{15pt}
+    \caption{Mức độ ảnh hưởng của các đặc trưng của các phương án tái lấy mẫu}
+    \label{fig:grid_images}
+\end{figure}
+\subsubsection*{Phân phối xác suất dự đoán theo nhãn thật}
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+        \includegraphics[width=0.38\textwidth]{Images/Pred Distribution/normal.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Pred Distribution/smote.png} \\[1em]
+        \includegraphics[width=0.38\textwidth]{Images/Pred Distribution/under.png} &
+        \includegraphics[width=0.38\textwidth]{Images/Pred Distribution/both.png} \\
+    \end{tabular}
+    \vspace{15pt}
+    \caption{Phân phối xác suất dự đoán theo nhãn thật}
+    \label{fig:grid_images}
+\end{figure}
+\section{Mô hình XGBoost}
+\section{Mô hình LightGBM}

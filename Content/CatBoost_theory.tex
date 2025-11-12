@@ -1,0 +1,325 @@
+\section{Gradient Boosting}
+\subsection{Sơ lược về giải thuật Gradient Boosting~\cite{gboost}}
+$\indent$\textbf{Gradient Boosting} là một thuật toán tăng cường và ở đây mỗi mô hình mới được đào tạo để giảm thiểu hàm tổn thất, chẳng hạn như sai số bình phương trung bình hoặc entropy chéo của mô hình trước đó bằng cách sử dụng \textbf{Gradient Descent} (giảm độ dốc). Trong mỗi lần lặp, thuật toán tính toán gradient của hàm mất liên quan đến các dự đoán và sau đó đào tạo một mô hình yếu mới để giảm thiểu gradient này. Các dự đoán của mô hình mới sau đó được thêm vào tổng hợp (dự đoán tất cả các mô hình) và quá trình được lặp lại cho đến khi đáp ứng tiêu chí dừng.
+\vspace{0.8em}
+
+Trong đó, \textbf{Gradient Descent} là xương sống của quá trình học tập cho các thuật toán khác nhau, bao gồm hồi quy tuyến tính, hồi quy logistic, máy vectơ hỗ trợ và mạng nơ-ron đóng vai trò như một kỹ thuật tối ưu hóa cơ bản để giảm thiểu hàm chi phí của mô hình bằng cách \textbf{điều chỉnh lặp đi lặp lại các tham số mô hình để giảm sự khác biệt giữa giá trị dự đoán và giá trị thực tế, cải thiện hiệu suất của mô hình.}
+\subsubsection*{a) Độ co ngót và độ phức tạp của mô hình (Shrinkage \& Model Complexity)}
+$\indent$Một tính năng chính của Gradient Boosting là thu nhỏ quy mô đóng góp của mỗi mô hình mới bằng cách sử dụng \textbf{tốc độ học tập - learning\_rate} (được ký hiệu là $\eta$).
+\begin{itemize}
+    \item \textbf{Tỷ lệ học tập nhỏ hơn: }có nghĩa là sự đóng góp của mỗi cây nhỏ hơn, điều này làm giảm nguy cơ quá khớp nhưng cần nhiều cây hơn để đạt được hiệu suất tương tự.
+    \item \textbf{Tỷ lệ học tập lớn hơn: }có nghĩa là mỗi cây có tác động đáng kể hơn nhưng điều này có thể dẫn đến quá khớp.
+\end{itemize}
+
+Có một sự đánh đổi giữa tốc độ học tập và số lượng estimators (cây), tốc độ học nhỏ hơn thường có nghĩa là cần nhiều cây hơn để đạt được hiệu suất tối ưu.
+
+\subsubsection*{b) Cơ chế hoạt động của Gradient Boosting}
+$\indent$Cơ chế học máy của giải thuật \textbf{Gradient Boosting} là quy trình học tuần tự thông qua một \textbf{quần thể (ensemble)} bao gồm nhiều cây với \textbf{mỗi cây sẽ sửa lỗi cho cây trước đó}. Trong \textbf{lần lặp (iteration)} đầu tiên, \textbf{Cây 1} được đào tạo trên dữ liệu gốc $x$ và các nhãn hiệu (label) $y$ thực sự. Nó đưa ra dự đoán được sử dụng để tính toán lỗi. 
+\vspace{0.8em}
+
+Trong lần lặp thứ hai, \textbf{Cây 2} được đào tạo bằng ma trận tính năng $x$ và các lỗi từ Cây 1 dưới dạng nhãn. Điều này có nghĩa là Cây 2 được đào tạo để \textbf{dự đoán sai số} của Cây 1. Quá trình này tiếp tục đối với tất cả các cây trong quần thể. Mỗi cây tiếp theo được đào tạo để dự đoán sai số của cây trước đó.
+
+\begin{figure}[h] % [h] = here, đặt ảnh ngay vị trí gọi
+  \centering
+  \includegraphics[width=0.75\textwidth]{Images/GB.png} % đường dẫn ảnh
+  \vspace{10pt}
+  \caption{Cây tăng cường độ dốc}
+  \label{fig:sample} % dùng để tham chiếu
+\end{figure}
+\newpage
+
+Sau khi mỗi cây được huấn luyện, các dự đoán của nó được thu nhỏ bằng cách nhân chúng với tốc độ học $\eta$ nằm trong khoảng từ 0 đến 1. Điều này ngăn chặn tình trạng quá khớp bằng cách đảm bảo mỗi cây có tác động nhỏ hơn đến mô hình cuối cùng.
+\vspace{0.8em}
+
+Khi tất cả các cây được đào tạo, các dự đoán được thực hiện bằng cách tổng đóng góp của tất cả các cây. Dự đoán cuối cùng được đưa ra theo công thức:
+
+\begin{center}
+    $y_{pred} = y_1 + \eta * r_1+\eta*r_2*...*\eta*r_N$
+\end{center}
+
+Trong đó, $r_1, r_2,...,r_N$ là sai số được dự đoán ở mỗi cây.
+\vspace{0.8em}
+
+\textbf{Gradient Boosting} là một kỹ thuật máy học hiệu quả và được sử dụng rộng rãi cho cả các vấn đề phân loại và hồi quy. Nó xây dựng các mô hình tuần tự tập trung vào việc sửa lỗi do các mô hình trước đó gây ra, dẫn đến cải thiện hiệu suất. Giải thuật bao gồm các thông số: 
+\begin{itemize}
+    \item \textbf{n\_estimators: }Số lượng cây (ước tính) sẽ được xây dựng. Giá trị cao hơn thường cải thiện hiệu suất mô hình nhưng làm tăng thời gian tính toán.
+    \item \textbf{learning\_rate: }Tốc độ học của mô hình.
+    \item \textbf{random\_state: }Đảm bảo khả năng tái tạo của kết quả. Đặt giá trị cố định cho random\_state đảm bảo rằng bạn nhận được kết quả giống nhau mỗi khi chạy mô hình.
+    \item \textbf{max\_features: Tham số này giới hạn số lượng yếu tố (features) mà mỗi cây có thể sử dụng để tách. Nó giúp ngăn chặn quá khớp bằng cách hạn chế độ phức tạp của từng cây và thúc đẩy sự đa dạng trong mô hình.}
+\end{itemize}
+\subsection{Cơ sở toán học cho Gradient Boosting~\cite{catboost}}
+$\indent$Khi thực hiện khảo sát trên 1 tập dữ liệu $\mathcal{D} = \{(x_k,y_k)\}_{k=1..n}$ với $x_k$ là vector ngẫu nhiên của $m$ features và $y \in R$ là giá trị đích (nhãn) - $y$ có thể mang giá trị định lượng biến thiên liên tục trên tập số thực hoặc giá trị phân loại định tính.
+\vspace{0.8em}
+
+Với cặp giá trị $(x_k,y_k)$ độc lập và được phân phối dựa trên một phân phối chưa biết $P(.,.)$, mục tiêu của tác vụ học là huấn luyện hàm $F:R^m \to R$ nhằm tối thiểu hóa giá trị mất mát kì vọng $\mathcal{L}(F):=E(L(y,F(x)))$. Trong đó, $L(.,.)$ là một hàm mất mát liên tục và cặp $(x,y)$ là một cặp mẫu thử lấy từ $P$ và độc lập với bộ dữ liệu huấn luyện $\mathcal{D}$.
+\vspace{0.8em}
+
+Thủ tục Gradient Boosting xây dựng lặp lại theo từng bước dãy các giá trị xấp xỉ dần tiến gần đến nghiệm (solution) thật $F:R^m \to R$, $t=0,1,...$ theo cách tiếp cận tham lam - tối ưu cục bộ. Giá trị thứ $F^t$ được tính từ giá trị xấp xỉ trước $F^{t-1}$ bằng cách cộng dồn các giá trị trước đó: $F^t = F^{t-1}+\alpha h^t$, với giá trị $\alpha$ là kích thước bước nhảy và hàm $h^t:R^m\to R$ (base predictor) được chọn là một họ các hàm $H$ được dùng để tối thiểu hóa giá trị mất mát kì vọng:
+\begin{equation}
+h^t = \arg\min_{h \in H} \mathcal{L}(F^{t-1} + h) 
+    = \arg\min_{h \in H} \mathbb{E}L\big(y, F^{t-1}(\mathbf{x}) + h(\mathbf{x})\big).
+\end{equation}
+
+Bài toán tối thiểu hóa thường được tiếp cận bằng phương pháp Newton sử dụng xấp xỉ bậc 2 của hàm $\mathcal{L}(F^{t-1}+h^t)$ tại $F^{t-1}$ hoặc sử dụng bước nhảy gradient (chiều giảm). Cả hai phương pháp đều là các dạng của functional gradient descent. Gradient bước $h^t$ dược chọn làm cách để $h^t(x)$ xấp xỉ $-g^t(x,y)$ với $g^t(\mathbf{x}, y) := 
+\left. \frac{\partial L(y, s)}{\partial s} \right|_{s = F^{t-1}(\mathbf{x})}$. Tại đây, $h^t$ được tính toán thông qua sấp xỉ bỉnh phương tối thiểu:
+\begin{equation}
+    h^t 
+    = \arg\min_{h \in H} \mathbb{E}(-g^t(\mathbf{x},y)-h(\mathbf{x})^2).
+\end{equation}
+\section{Categorical Boosting (Mô hình CatBoost)~\cite{catboost}}
+
+\subsection{Thuật toán CatBoost}
+$\indent$\textbf{Catboost (tăng cường phân loại)} là một thư viện máy học mã nguồn mở mạnh mẽ được thiết kế đặc biệt để xử lý các tính năng phân loại và thúc đẩy cây quyết định. Được phát triển bởi Yandex, CatBoost nổi bật với khả năng làm việc hiệu quả với các biến phân loại mà không cần tiền xử lý rộng rãi. Thuật toán này đã trở nên phổ biến do tính mạnh mẽ, hiệu suất cao và dễ sử dụng trong các tác vụ máy học khác nhau.
+\vspace{0.8em}
+
+\textbf{Catboost} dựa trên khái niệm kỹ thuật \textbf{Gradient Boosting} trong đó cây quyết định được xây dựng tuần tự để giảm thiểu lỗi và cải thiện dự đoán. Trong mô hình này, cây quyết định được xây dựng dựa trên phân hoạch đệ quy của không gian đặc trưng $R^m$ thành các khu vực tách biệt (Các node của cây) dựa theo giá  trị của một vài \textit{thuộc tính chia tách a}. Các thuộc tính thường là các biến nhị phận để định nghĩa các đặc trưng $x^k$ vượt qua ngưỡng $t$ ($a = \mathbf{1}_{\{x^k > t\}}$) tại $x^k$ với giá trị số học hoặc nhị phân trong trường hợp đạt ngưỡng $t=0.5$. Tại vùng cuối cùng (lá của cây) được gán một giá trị là một ước lượng phản hồi $y$ trong khu vực cho các tác vụ hồi quy hoặc dự đoán lớp nhãn trong bài toán phân loại. Theo cách này, cây quyết định $h$ có thể được biểu diễn như sau:
+\begin{equation}
+    h(\mathbf{x}) = \sum_{j=1}^{J} b_j \mathbf{1}_{\{\mathbf{x} \in R_j\}}
+\end{equation}
+
+Trong đó, $R_j$ là các phân vùng biệt lập tương đồng với các node lá của cây.
+
+Quá trình của CatBoost hoạt động bằng cách xây dựng một cây quyết định và đánh giá mức độ sai số trong các dự đoán. Khi cây đầu tiên được xây dựng, cây tiếp theo được tạo ra để sửa lỗi của cây trước. Quá trình này tiếp tục lặp đi lặp lại với mỗi cây mới tập trung vào việc cải thiện dự đoán của mô hình bằng cách giảm các lỗi trước đó, quá trình này tiếp tục cho đến khi đáp ứng số lần lặp lại được xác định trước. Kết quả là một tập hợp các cây quyết định hoạt động cùng nhau để đưa ra dự đoán chính xác.
+
+\begin{figure}[h] % [h] = here, đặt ảnh ngay vị trí gọi
+  \centering
+  \includegraphics[width=0.75\textwidth]{Images/CB.png} % đường dẫn ảnh
+  \vspace{10pt}
+  \caption{Mô hình CatBoost}
+  \label{fig:sample} % dùng để tham chiếu
+\end{figure}
+
+Nó đặc biệt phù hợp với các bộ dữ liệu quy mô lớn với nhiều tính năng độc lập. Không giống như các thuật toán tăng cường gradient khác, CatBoost được thiết kế đặc biệt để xử lý liền mạch cả tính năng phân loại và số mà không yêu cầu mã hóa tính năng thủ công.
+\vspace{0.8em}
+
+\textbf{CatBoost} được ứng dụng cả trong bài toán \textbf{Hồi quy - Regressor}, \textbf{Phân loại - Classifier} và \textbf{Xếp hạng - Ranking}.
+\subsection{Biến phân loại và Target Statistics}
+$\indent$Một đặc trưng dạng phân loại (categorical feature) là đặc trưng có tập giá trị rời rạc (gọi là các category) và các giá trị này không thể so sánh trực tiếp với nhau. Một kỹ thuật phổ biến để xử lý các đặc trưng dạng phân loại trong các mô hình boosted trees là one-hot encoding; đối với mỗi giá trị của một thuộc tính phân loại (category), ta sẽ thêm một đặc trưng nhị phân (binary feature) để biểu thị sự xuất hiện của giá trị đó. Tuy nhiên, trong trường hợp các đặc trưng phân loại có số lượng giá trị lớn thì kỹ thuật như vậy (one-hot encoding) có thể dẫn đến số lượng đặc trưng mới cực kỳ lớn và khó khả thi.
+\vspace{0.8em}
+
+Để giải quyết vấn đề này, người ta có thể gom các giá trị phân loại (categories) vào một số cụm (clusters) giới hạn, sau đó mới áp dụng one-hot encoding. Một phương pháp phổ biến là gom nhóm các category dựa trên thống kê của nhãn (target statistics – TS), tức là ước lượng giá trị kỳ vọng của nhãn (target) trong từng category.
+\vspace{0.8em}
+
+Thống kê nhãn là phương pháp xử lý đặc trưng dạng phân loại $i$ bằng cách Thay thế giá trị phân loại $x^i_k$ của mẫu huấn luyện thứ $k$ bằng một đặc trưng số có giá trị bằng một thống kê của nhãn (target statistic – TS) $\hat{x}_{k}^{i}$. Thông thường, nó ước lượng giá trị kỳ vọng của nhãn $y$ có điều kiện theo từng giá trị category $\hat{x}_{k}^{i} \approx \mathbb{E}(y \mid x^{i} = x_{k}^{i})$.
+\vspace{0.8em}
+
+\noindent
+\textbf{\large * Greedy Target Statistics - Thống kê nhãn tham lam} 
+\vspace{0.4em}
+
+Đây là một cách tiếp cận đơn giản, trực tiếp để ước lượng $\mathbb{E}(y|x^i=x^i_k)$ làm giá trị trung bình của $y$ trên tập huấn luyện mẫu với cùng phân loại $x^i_k$. Ước lượng này thường có nhiều nhiễu (noisy) đối với các category xuất hiện ít lần (low-frequency categories), và người ta thường làm trơn (smooth) nó bằng cách sử dụng một prior $p$:
+\begin{equation}
+    \hat{x}_{k}^{i} = \frac{\sum_{j=1}^{n} \mathbf{1}_{\{x_{j}^{i} = x_{k}^{i}\}} \cdot y_{j} + ap}{\sum_{j=1}^{n} \mathbf{1}_{\{x_{j}^{i} = x_{k}^{i}\}} + a}
+\end{equation}
+
+Trong đó, $a>0$ là một tham số. Một thiết lập thông thường cho $p$ là giá trị nhãn trung bình trong tập dữ liệu.
+\vspace{0.8em}
+
+Vấn đề của cách tiếp cận tham lam là rò rỉ nhãn: đặc trưng $x^i_k$ được tính toán sử dụng nhãn $y_k$ - nhãn của $\mathbf{x}_k$. Điều này dẫn đến sự dịch chuyển có điều kiện: phân phối của $\hat{x}^i|y$ sẽ khác nhau giữa các mẫu huấn luyện và mẫu kiểm tra. 
+\vspace{0.8em}
+
+Ví dụ sau đây sẽ mô tả sự ảnh hưởng nghiêm trọng của phương pháp này đến sai tố tổng quát hóa của mô hình học. Cho đặc trưng thứ $i$ là dạng phân loại, các giá trị của nó là duy nhất và với mỗi phân loại $A$, ta có $P(y=1|x^i=A)=0.5$ cho tác vụ phân loại. Sau đó, bộ dữ liệu huấn luyện $\hat{x}^i=\frac{y_k+ap}{1+a}$ vì vậy nó chỉ phù hợp để thực hiện 1 phân tách tại ngưỡng $t=\frac{0.5+ap}{1+a}$để phân loại các mẫu huấn luyện một cách hoàn hảo. Tuy nhiên, với tất cả các mẫu thử, giá trị của thống kê nhãn tham lam là $p$, giá trị mô hình dự đoán là 0 trên toàn mẫu thử khi $p<t$ và 1 trong trường hợp ngược lại vì vậy dẫn đễ độ chính xác là 0.5 cho cả 2 trường hợp. Để giải quyết vấn đề này, một tiêu chí mong muốn được đưa vào thống kê nhãn:
+\begin{center}
+    P1 $\mathbb{E}(\hat{x}^i|y=v)=\mathbb{E}(\hat{x}^i_k|y=v)$ tại $(\mathbf{x_k, y_k})$ là mẫu huấn luyện thứ k.
+\end{center}
+
+Ví dụ trên dẫn đến kết quả $\mathbb{E}(\hat{x}^i|y=v)=\frac{y_k+ap}{1+a}$ và $\mathbb{E}(\hat{x}^i|y)=p$, hai giá trị này là khác nhau.
+\vspace{0.8em}
+
+Nhằm khắc phục sự thay đổi có điều kiện trên, ý tưởng được đưa ra là tính toán thống kê nhãn cho $\mathbf{x}_k$ trên tập con của mẫu $\mathcal{D}_k \subset \mathcal{D} \setminus \{\mathbf{x}_k\}$:
+\begin{equation}
+    \hat{x}_{k}^{i} = \frac{\sum_{\mathbf{x}_{j} \in \mathcal{D}_{k}} \mathbf{1}_{\{x_{j}^{i} = x_{k}^{i}\} } \cdot y_{j} + a p}{\sum_{\mathbf{x}_{j} \in \mathcal{D}_{k}} \mathbf{1}_{\{x_{j}^{i} = x_{k}^{i}\} } + a}
+\end{equation}
+\vspace{0.8em}
+
+\noindent
+\textbf{\large * Holdout Target Statistics}
+\vspace{0.4em}
+
+Cách thức của phương pháp này là phân hoạch bộ dữ liệu huấn luyện thành 2 phần $\mathcal{D} = \hat{\mathcal{D}}_0 \sqcup \hat{\mathcal{D}}_1$ và sử dụng $\mathcal{D}_{k} = \hat{\mathcal{D}}_{0}$ để tính thống kê nhãn theo công thức số \textbf{(5)} và $\hat{\mathcal{D}}_1$ để huấn luyện. Mặc dù cách tiếp cận Holdout Target Statistics (TS) thoả mãn tính chất P1, nhưng nó lại làm giảm đáng kể lượng dữ liệu được sử dụng cả cho việc huấn luyện mô hình lẫn cho việc tính toán TS. Do đó, nó vi phạm tính chất:
+\begin{center}
+    P2 \textit{Sử dụng hiệu quả toàn bộ dữ liệu huấn luyện để tính toán thống kê nhãn đặc trưng và để huấn luyện mô hình.}
+\end{center}
+\vspace{0.8em}
+
+\noindent
+\textbf{\large * Leave-one-out Target Statistics}
+\vspace{0.4em}
+
+Ban đầu có thể kỹ thuật leave-one-out sẽ hoath động tốt với phương pháp thực hiện: Lấy $\mathcal{D}_k=\mathcal{D} \setminus \mathbf{x}_k$ sử dụng cho mẫu dữ liệu huấn luyện, trong khi đó $\mathbf{x}_k$ và $\mathcal{D}_k = \mathcal{D}$ cho mẫu thử. Tuy nhiên, phương pháp này không ngăn chặn được vấn đề rò rỉ nhãn. Điều này dẫn đến giá trị hằng của đặc trưng dạng phân loại: $\hat{x}_k^i=A$ đối với mọi mẫu. Khi đặt $n^+$ làm số lượng mẫu với $y=1$ dẫn đến $\hat{x}_{k}^{i} = \frac{n^{+} - y_{k} + a p}{n - 1 + a}$ và có thể phân loại một cách hoàn hảo bộ dữ liệu huấn luyện bằng cách tạo phân tách với ngưỡng $t = \frac{n^{+} - 0.5 + a p}{n - 1 + a}$.
+\vspace{0.8em}
+
+\noindent
+\textbf{\large * Ordered Target Statistics}
+\vspace{0.4em}
+
+Mô hình CatBoost sử dụng chiến lược hiệu quả hơn dựa trên nguyên tắc sắp xếp thứ tự. Trong phương pháp Ordered Target Statistics, với mỗi mẫu, tất cả "lịch sử" khả dụng được sử dụng để tính toán thống kê nhãn.
+\vspace{0.8em}
+
+Ví dụ, ta sử đụng $\mathcal{D}_{k} = {\mathbf{x}_{j} : \sigma(j) < \sigma(k)}$ ($\sigma$ là hoán vị ngẫu nhiên của bộ huấn luyện) áp dụng vào phương trình số (5) cho mẫu huấn luyện và $\mathcal{D}_k = \mathcal{D}$ cho mẫu thử. Kết quả của phương pháp này thỏa mãn yêu cầu P1 và đồng thời cho phép sử dụng toàn bộ dữ liệu huấn luyện cho việc học mô hình (P2). Lưu ý rằng, nếu chỉ sử dụng một phép hoán vị ngẫu nhiên duy nhất, thì các mẫu đứng trước sẽ có giá trị thống kê nhãn với phương sai cao hơn nhiều so với các mẫu đứng sau. Để khắc phục điều này, CatBoost sử dụng nhiều phép hoán vị khác nhau cho các bước khác nhau của quá trình gradient boosting.
+
+\subsection{Độ lệch dự đoán (Prediction Shift) và Boosting có thứ tự (Ordered Boosting)}
+\subsubsection*{a) Độ lệch dự đoán}
+$\indent$Như các phương pháp tính thống kê nhãn, độ lệch dự đoán được gây ra bởi một dạng đặc biệt của rò rỉ nhãn. Giải pháp cho vấn đề trên là Boosting được sắp xếp thứ tự tương tự như phương pháp thống kê nhãn có thứ tự. Trong bài toán này, kì vọng được lấy xấp xỉ sử dụng bộ dữ liệu $\mathcal{D}$ giống nhau:
+\begin{equation}  
+    h^{t} = \mathop{\mathrm{arg} \min}_{h \in H} \frac{1}{n} \sum_{k=1}^{n} (-g^{t}(\mathbf{x}_{k}, y_{k}) - h(\mathbf{x}_{k}))^{2}
+\end{equation}
+
+Trong đó, chuỗi dịch chuyển được mô tả như sau:
+\begin{itemize}
+    \item Phân bố có điều kiện của gradient $g^t(\mathbf{x}_k,y_k)| \mathbf{x}_k$ (xét đến tính ngẫu nhiên của $\mathcal{D} \setminus \{\mathbf{x}_k\}$) bị dịch chuyển so với phân phối đó trên một mẫu kiểm thử  $g^t(\mathbf{x},y)| \mathbf{x}$.
+    \item Lần lượt, bộ dự đoán cơ sở $h^t$ được định nghĩa theo phương trình số (6) bị chệch so với nghiệm của phương trình số (2).
+    \item Cuối cùng, điều này gây ảnh hưởng đến khả năng khái quát hóa của mô hình được huấn luyện $F^t$
+\end{itemize}
+\vspace{0.4em}
+
+Những vấn đề này dẫn đến rò rỉ nhãn. Chính vì vậy, gradients sử dụng ở mỗi bước được ước lượng bằng giá trị nhãn của bộ dữ liệu tương tự mà mô hình $F^{t-1}$ hiện tại được xây dựng trên đó. Tuy nhiên, phân bố có điều kiện $F^{t-1}(\mathbf{x}_k)|\mathbf{x}_k$ cho mẫu huấn luyện $\mathbf{x}_k$ bị lệch, về tổng quát, từ phân bố $F^{t-1}(\mathbf{x})|\mathbf{x}$ cho mẫu thử $\mathbf{x}$. Đây được gọi là \textbf{\textit{độ lệch dự đoán}}.
+\subsubsection*{b) Boosting có sắp xếp thứ tự}
+$\indent$Giả sử mô hình được huấn luyện với $I$ cây. Để tạp phần dư $\gamma^{I-1}(\mathbf{x}_k,y_k)$ không bị chệch, mô hình $F^{I-1}$ cần được huấn luyện mà không sử dụng mẫu $\mathbf{x}_k$. Vì kết quả cần thu được phần dư không chệch cho tất cả các mẫu huấn luyện, không mẫu nào được sử dụng để huấn luyện $F^{I-1}$ - điều mà có vẻ mấy khả thi cho quá trình huấn luyện. Tuy nhiên có thể duy trì tập các mô hình khác nhau dựa trên các mẫu được dùng để huấn luyện chúng. Khi đó, để tính phần dư (residual) của một mẫu, ta sử dụng mô hình được huấn luyện mà không bao gồm mẫu đó. Để xây dựng tập mô hình như vậy, ta có thể sử dụng nguyên tắc sắp xếp (ordering principle) đã được áp dụng trước đó cho thống kê nhãn. Nhằm biểu diễn ý tưởng của của phương pháp này, giả sử lấy một hoán vị ngẫu nhiên $\sigma$ từ mẫu huấn luyện và duy trì $n$ mô hình hỗ trợ khác nhau $M_1,M_2,...,M_n$ với mô hình $M_i$ được học bằng cachs chỉ sử dụng $i$ mẫu đầu tiên trong hoán vị. Tại mỗi bước, để thu được phần dư cho mẫu thứ $i$, mô hình $M_{j-1}$. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/ordering principle.png}
+    \vspace{15pt}
+    \caption{Nguyên tắc sắp xếp}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+Thuật toán thu được cuối cùng được gọi là ordered boosting. Tuy nhiên, thuật toán này không khả thi trong hầu hết các tác vụ thực tế, do cần phải huấn luyện $n$ mô hình khác nhau, khiến độ phức tạp tính toán và yêu cầu bộ nhớ tăng lên gấp $n$ lần. Trong CatBoost, một phiên bản sửa đổi của thuật toán này được triển khai, dựa trên thuật toán gradient boosting với cây quyết định làm bộ dự đoán cơ sở (GBDT).\\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/order boosting.png}
+    \vspace{15pt}
+    \caption{Thuật toán ordering boosting}
+    \label{fig:placeholder}
+\end{figure}
+\vspace{0.8em}
+
+\noindent
+\textbf{\large * Ordered boosting với các đặc trưng dạng phân loại}
+\vspace{0.4em}
+
+Ở các mục 3.2.2 và 3.2.3, các hoán vị ngẫu nhiên $\sigma_{cat}$ và $\sigma_{boost}$ của mẫu huấn luyện lần lượt được sử dụng cho việc tính toán thống kê nhãn và boosting có sắp xếp thứ tự. Khi thực hiện kết hợp cả 2 hoán vị trên vào thuật toán, cần lấy $\sigma_{cat}=\sigma_{boost}$ để tránh sai lệch dự đoán. Điều này nhằm đảm bảo nhãn $y_i$ không được sự dụng trong việc huấn luyện mô hình $M_i$ kể cả trong việc tính toán thống kê nhãn và ước lượng gradient để đảm bảo được yêu cầu về mặt lý thuyết. 
+\subsection{Hiện thực mô hình CatBoost}
+$\indent$CatBoost có 2 chế độ boosting là Ordered và Plain. Chế độ Plain là thuật toán GBDT tiêu chuẩn đã được tích hợp sẵn thống kê nhãn có thứ tự trong khi đó chế độ Ordered thể hiện một biến thể hiệu quả của Thuật toán Ordering Boosting.
+\vspace{0.8em}
+
+Khi bắt đầu, CatBoost thực hiện $s+1$ hoán vị ngẫu nhiên độc lập của bộ dữ liệu huấn luyện. Các hoán vị $\sigma_1,...,\sigma_s$ được sử dụng để đánh giá các phép chia tách nhằm xác định kiến trúc cây, trong khi đó $\sigma_0$ phục vụ cho việc chọn các giá trị lá $b_j$ của các cây. Trong những mẫu dữ liệu với lịch sử ngắn trong các hoán vị được cho, cả giá trị thống kê nhãn lẫn dự đoán được sử dụng trong ordered boosting ($M_{\sigma(i)-1}(\mathbf{x}_i)$) có phương sai cao. Vì vậy, việc chỉ sử dụng một hoán vị có thể làm tăng phương sai của kết quả cuối cùng mà mô hình dự đoán, trong khi đó việc sử dụng nhiều hoán vị cho phép làm giảm mức độ ảnh hưởng trong cách mô tả về sau. 
+\vspace{0.8em}
+
+Trong CatBoost, hệ dự đoán cơ sở là các cây quyết định hay còn được gọi là bảng quyết định. Các node trên cùng 1 tầng cây sẽ được áp dụng các điều kiện chia tách giống nhau. Những cây mang tính chất trên thì cân bằng, ít khả năng bị overfitting hơn và cho phép tăng tốc quá trình thực thi tại thời điểm kiểm thử. Thủ tục xây dựng cây trong CatBoost được mô tả như sau:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/building tree algo.png}
+    \vspace{15pt}
+    \caption{Giải thuật xây dựng cây trong CatBoost}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+Trong chế độ Ordered Boosting, trong suốt quá trình học, các mô hình hỗ trợ $M_{r,j}$ được duy trì với $M_{r,j}(i)$ là dự đoán hiện tại cho mẫu thứ $i$ dựa trên $j$ mẫu đàu tiên trong hoán vị $\sigma_r$. Tại mỗi lần lặp $t$ của giải thuật, một hoán vị ngẫu nhiên $\sigma_r$ được lấy mẫu từ $\{\sigma_1,...,\sigma_s\}$ và xây dựng cây $T_t$ dựa trên hoán vị đó. Đầu tiên, với các đặc trưng dạng phân loại, tất cả giá trị thống kê nhãn được tính toán được tính theo hoán vị này. Tiếp đó, hoán vị gây ảnh hưởng lên thủ tục học dạng cây.
+\subsection{Các tham số chung của mô hình CatBoost}
+Mô hình CatBoost được thiết lập với các thông số dưới đây:
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3cm}|
+                    >{\raggedright\arraybackslash}p{4cm}|
+                    >{\raggedright\arraybackslash}p{7cm}|}
+\hline
+\textbf{Tham số} & \textbf{Kiểu dữ liệu / Default} & \textbf{Ý nghĩa} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Tham số} & \textbf{Kiểu dữ liệu / Default} & \textbf{Ý nghĩa} \\
+\hline
+\endhead
+
+iterations & \texttt{int}, mặc định = 1000 &
+Số lượng cây (boosting rounds). Giá trị càng lớn, mô hình càng mạnh nhưng dễ overfitting. \\
+\hline
+
+learning\_rate & \texttt{float}, mặc định = None (CatBoost tự chọn) &
+Tốc độ học, thường chọn trong khoảng 0.01–0.3. Nhỏ thì học chậm nhưng ổn định, lớn thì hội tụ nhanh nhưng dễ overfit. \\
+\hline
+
+depth & \texttt{int}, mặc định = 6 &
+Độ sâu của mỗi cây. Thường chọn trong khoảng 4–10. Sâu hơn $\rightarrow$ mô hình phức tạp hơn nhưng dễ overfitting. \\
+\hline
+
+l2\_leaf\_reg & \texttt{float}, mặc định = 3.0 &
+Hệ số regularization L2 trên lá cây. Giúp giảm overfitting. Giá trị lớn $\rightarrow$ regularization mạnh hơn. \\
+\hline
+
+loss\_function & \texttt{str}, mặc định: `Logloss` (classification), `RMSE` (regression) &
+Hàm mất mát chính: \newline
+-- Regression: RMSE, MAE, Quantile, Huber \newline
+-- Classification: Logloss, CrossEntropy \newline
+-- Ranking: YetiRank, PairLogit \\
+\hline
+
+custom\_loss & \texttt{list of str} &
+Các metric phụ để tính trong quá trình huấn luyện (không ảnh hưởng training). Ví dụ: [``AUC'', ``Accuracy'']. \\
+\hline
+
+bootstrap\_type & \texttt{str}, mặc định = ``Bayesian'' &
+Loại sampling: ``Bayesian'', ``Bernoulli'', ``Poisson'', ``No''. \\
+\hline
+
+bagging\_temperature & \texttt{float} &
+Kiểm soát mức độ random trong sampling (chỉ dùng khi bootstrap\_type = Bayesian). \\
+\hline
+
+rsm & \texttt{float}, mặc định = 1.0 &
+Random Subspace Method, tỷ lệ feature được chọn cho mỗi cây. \\
+\hline
+
+nan\_mode & \texttt{str}, mặc định = ``Min'' &
+Cách xử lý giá trị thiếu: ``Min'', ``Max'', ``Forbidden''. \\
+\hline
+
+cat\_features & \texttt{list of int/str} &
+Danh sách các cột dạng categorical (CatBoost sẽ tự mã hóa). \\
+\hline
+
+one\_hot\_max\_size & \texttt{int}, mặc định = None &
+Nếu biến categorical có số lượng giá trị $\leq$ threshold thì mã hóa one-hot. \\
+\hline
+
+text\_features & \texttt{list of int/str} &
+Danh sách cột dữ liệu dạng text. \\
+\hline
+
+ignored\_features & \texttt{list of int/str} &
+Các feature bị bỏ qua trong quá trình huấn luyện. \\
+\hline
+
+eval\_metric & \texttt{str}, mặc định = None &
+Metric chính để đánh giá, ví dụ: ``AUC'', ``Accuracy'', ``RMSE''... \\
+\hline
+
+early\_stopping\_rounds & \texttt{int}, mặc định = None &
+Dừng sớm nếu metric trên validation không cải thiện sau $n$ vòng. \\
+\hline
+
+use\_best\_model & \texttt{bool}, mặc định = False &
+Sử dụng model tốt nhất (trên tập validation) sau khi dừng huấn luyện. \\
+\hline
+
+random\_seed & \texttt{int}, mặc định = None &
+Đặt seed để tái lập kết quả. \\
+\hline
+
+verbose & \texttt{int/bool}, mặc định = True &
+Tần suất log kết quả. \\
+\hline
+
+thread\_count & \texttt{int}, mặc định = -1 &
+Số luồng CPU sử dụng. -1 nghĩa là dùng tất cả. \\
+\hline
+
+task\_type & \texttt{str}, mặc định = ``CPU'' &
+Loại thiết bị huấn luyện: ``CPU'' hoặc ``GPU''. \\
+\hline
+
+devices & \texttt{str}, mặc định = None &
+Chỉ định GPU nào để train (nếu task\_type = GPU). \\
+\hline
+\end{longtable}
+
+

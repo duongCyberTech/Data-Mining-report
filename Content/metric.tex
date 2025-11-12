@@ -1,0 +1,233 @@
+\section{Các phương pháp đánh giá mô hình}
+\subsection{Ma trận nhầm lẫn (Confusion Matrix)}
+$\indent$Ma trận nhầm lẫn là một bảng đơn giản được sử dụng để đo lường hiệu suất của mô hình phân loại. Nó so sánh các dự đoán do mô hình đưa ra với kết quả thực tế và cho thấy mô hình đã đúng hoặc sai ở đâu. Điều này giúp hiểu được nơi mô hình đang mắc lỗi để có thể cải thiện nó.
+
+\subsubsection*{a) Các thành phần của Confusion Matrix ~\cite{confusionmatrix} }
+Ma trận nhầm lẫn phân tích các dự đoán thành bốn danh mục chính:
+
+\begin{itemize}
+    \item \textbf{Dương tính Thực (True Positive - TP)}: Mô hình dự đoán đúng kết quả dương tính, tức kết quả thực tế là dương tính.
+    \item \textbf{Âm tính Thực (True Negative - TN)}: Mô hình dự đoán đúng kết quả âm tính, tức kết quả thực tế là âm tính.
+    \item \textbf{Dương tính Giả (False Positive - FP)}: Mô hình dự đoán sai kết quả dương tính, tức kết quả thực tế là âm tính. Còn được gọi là \textbf{Lỗi Loại I (Type I Error)}.
+    \item \textbf{Âm tính Giả (False Negative - FN)}: Mô hình dự đoán sai kết quả âm tính, tức kết quả thực tế là dương tính. Còn được gọi là \textbf{Lỗi Loại II (Type II Error)}.
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Images/pp.png}
+    \vspace{15pt}
+    \caption{Các chỉ số đánh giá}
+    \label{fig:basic_cm}
+\end{figure}
+
+\subsubsection*{b) Biểu diễn Confusion Matrix}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multirow{2}{*}{\textbf{Thực tế (Actual)}} & \multicolumn{2}{c|}{\textbf{Dự đoán (Predicted)}} & \multirow{2}{*}{\textbf{Tổng}} \\ \cline{2-3}
+ & \textbf{Positive} & \textbf{Negative} & \\ \hline
+\textbf{Positive} & TP (True Positive) & FN (False Negative) & TP + FN \\ \hline
+\textbf{Negative} & FP (False Positive) & TN (True Negative) & FP + TN \\ \hline
+\textbf{Tổng} & TP + FP & FN + TN & TP + TN + FP + FN \\ \hline
+\end{tabular}
+\caption{Confusion Matrix cho bài toán phân loại nhị phân}
+\label{table:confusion_matrix}
+\end{table}
+
+\subsubsection*{c) Các chỉ số đánh giá dựa trên Confusion Matrix}
+$\indent$\textbf{Accuracy (Độ chính xác)}
+Độ chính xác cho thấy có bao nhiêu dự đoán mà mô hình đã đúng trong tổng số các dự đoán. Nó cho ý tưởng về hiệu suất tổng thể nhưng có thể gây hiểu nhầm khi một lớp chiếm ưu thế hơn lớp khác.
+
+\[
+Accuracy = \frac{TP + TN}{TP + TN + FP + FN}
+\]
+
+\textbf{Precision (Độ chính xác dương)}
+Precision tập trung vào chất lượng của các dự đoán dương tính của mô hình. Nó cho chúng ta biết có bao nhiêu dự đoán "dương tính" thực sự chính xác.
+
+\[
+Precision = \frac{TP}{TP + FP}
+\]
+
+\textbf{Recall (Độ nhạy)}
+Recall đo lường mô hình tốt như thế nào trong việc dự đoán các trường hợp dương tính. Nó cho thấy tỷ lệ các trường hợp dương tính thực tế được phát hiện.
+
+\[
+Recall = \frac{TP}{TP + FN}
+\]
+
+\textbf{F1-score}
+F1-score kết hợp Precision và Recall thành một chỉ số duy nhất để cân bằng sự đánh đổi giữa chúng. Nó cung cấp ý nghĩa tốt hơn về hiệu suất tổng thể của mô hình, đặc biệt đối với các tập dữ liệu mất cân bằng.
+
+\[
+F1 = \frac{2 \times Precision \times Recall}{Precision + Recall}
+\]
+
+\textbf{Specificity (Độ đặc hiệu)}
+Specificity đo lường khả năng của mô hình trong việc xác định chính xác các trường hợp âm tính. Specificity còn được gọi là Tỷ lệ Âm tính Thực (True Negative Rate).
+
+\[
+Specificity = \frac{TN}{TN + FP}
+\]
+
+\textbf{Lỗi Loại I và Loại II (Type 1 and Type 2 Error)}
+\begin{itemize}
+    \item \textbf{Lỗi Loại I (Type 1 Error)}: Xảy ra khi mô hình dự đoán sai một trường hợp dương tính nhưng trường hợp thực tế là âm tính. Đây còn được gọi là \textbf{dương tính giả (false positive)}. Lỗi Loại I ảnh hưởng đến \textbf{precision} của mô hình.
+    \[
+    \text{Type 1 Error} = \frac{FP}{FP + TN}
+    \]
+    
+    \item \textbf{Lỗi Loại II (Type 2 Error)}: Xảy ra khi mô hình không dự đoán được một trường hợp dương tính mặc dù nó thực sự là dương tính. Đây còn được gọi là \textbf{âm tính giả (false negative)}. Lỗi Loại II ảnh hưởng đến \textbf{recall} của mô hình.
+    \[
+    \text{Type 2 Error} = \frac{FN}{TP + FN}
+    \]
+\end{itemize}
+
+\subsubsection*{d) Ví dụ minh họa}
+Xét bài toán phân loại hình ảnh "Chó" và "Không phải chó" với 10 mẫu dữ liệu:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Mẫu} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline
+\textbf{Thực tế} & Chó & Chó & Chó & Không & Chó & Không & Chó & Chó & Không & Không \\ \hline
+\textbf{Dự đoán} & Chó & Không & Chó & Không & Chó & Chó & Chó & Chó & Không & Không \\ \hline
+\textbf{Kết quả} & TP & FN & TP & TN & TP & FP & TP & TP & TN & TN \\ \hline
+\end{tabular}
+\caption{Ví dụ chi tiết các dự đoán}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images//Confusion Matrix/CMvd1.png}
+    \vspace{15pt}
+    \caption{Confusion Matrix cho bài toán phân loại}
+    \label{fig:placeholder}
+\end{figure}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multirow{2}{*}{\textbf{Thực tế}} & \multicolumn{2}{c|}{\textbf{Dự đoán}} & \multirow{2}{*}{\textbf{Tổng}} \\ \cline{2-3}
+ & \textbf{Chó} & \textbf{Không phải} & \\ \hline
+\textbf{Chó} & TP = 5 & FN = 1 & 6 \\ \hline
+\textbf{Không phải} & FP = 1 & TN = 3 & 4 \\ \hline
+\textbf{Tổng} & 6 & 4 & 10 \\ \hline
+\end{tabular}
+\caption{Confusion Matrix tổng hợp}
+\end{table}
+
+Tính các chỉ số:
+\begin{itemize}
+    \item \textbf{Accuracy} = $\frac{5 + 3}{10} = 0.8$ (80\%)
+    \item \textbf{Precision} = $\frac{5}{5 + 1} = 0.833$ (83.3\%)
+    \item \textbf{Recall} = $\frac{5}{5 + 1} = 0.833$ (83.3\%)
+    \item \textbf{F1-score} = $\frac{2 \times 0.833 \times 0.833}{0.833 + 0.833} = 0.833$ (83.3\%)
+    \item \textbf{Specificity} = $\frac{3}{3 + 1} = 0.75$ (75\%)
+\end{itemize}
+
+\subsubsection*{e) Confusion Matrix cho bài toán Đa lớp (Multi-class)}
+Trong phân loại đa lớp, ma trận nhầm lẫn được mở rộng để xem xét nhiều lớp:
+\begin{itemize}
+    \item \textbf{Hàng} đại diện cho các lớp thực tế (ground truth)
+    \item \textbf{Cột} đại diện cho các lớp dự đoán
+    \item Mỗi ô trong ma trận cho thấy tần suất một lớp thực tế cụ thể được dự đoán là một lớp khác
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images//Confusion Matrix/CMvd2.png}
+    \vspace{15pt}
+    \caption{Confusion Matrix cho bài toán phân loại 3 lớp}
+    \label{fig:placeholder}
+\end{figure}
+
+\paragraph{Ví dụ: Phân loại hình ảnh Mèo, Chó, Ngựa}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{\textbf{Thực tế}} & \multicolumn{3}{c|}{\textbf{Dự đoán}} & \multirow{2}{*}{\textbf{Tổng}} \\ \cline{2-4}
+ & \textbf{Mèo} & \textbf{Chó} & \textbf{Ngựa} & \\ \hline
+\textbf{Mèo} & 8 & 1 & 1 & 10 \\ \hline
+\textbf{Chó} & 2 & 10 & 0 & 12 \\ \hline
+\textbf{Ngựa} & 0 & 2 & 8 & 10 \\ \hline
+\textbf{Tổng} & 10 & 13 & 9 & 32 \\ \hline
+\end{tabular}
+\caption{Confusion Matrix cho bài toán phân loại 3 lớp}
+\end{table}
+
+Trong ví dụ này:
+\begin{itemize}
+    \item \textbf{Mèo}: 8 được xác định chính xác, 1 bị xác định nhầm thành chó, 1 bị xác định nhầm thành ngựa
+    \item \textbf{Chó}: 10 được xác định chính xác, 2 bị xác định nhầm thành mèo
+    \item \textbf{Ngựa}: 8 được xác định chính xác, 2 bị xác định nhầm thành chó
+\end{itemize}
+\subsection{Đường cong ROC và AUC~\cite{aucroc} }
+\subsubsection*{a) Giới thiệu về đường cong ROC}
+$\indent$Đường cong ROC (Receiver Operating Characteristic) là một công cụ trực quan được sử dụng để đánh giá hiệu suất của các mô hình phân loại nhị phân. Nó minh họa sự đánh đổi giữa hai tỷ lệ:
+\begin{itemize}
+    \item \textbf{Tỷ lệ Dương tính Thực (True Positive Rate - TPR)}: Còn được gọi là \textbf{Độ nhạy (Sensitivity)} hoặc \textbf{Recall}.
+    \item \textbf{Tỷ lệ Dương tính Giả (False Positive Rate - FPR)}: Tỷ lệ các trường hợp âm tính bị phân loại sai.
+\end{itemize}
+
+\subsubsection*{b) Công thức tính toán}
+Các chỉ số được sử dụng trong đường cong ROC được tính dựa trên Ma trận Nhầm lẫn (Confusion Matrix):
+
+\[
+TPR = \frac{TP}{TP + FN}
+\]
+\[
+FPR = \frac{FP}{FP + TN}
+\]
+\[
+Specificity = \frac{TN}{TN + FP} = 1 - FPR
+\]
+
+\subsubsection*{c) Ý nghĩa của đường cong ROC}
+Đường cong ROC được tạo ra bằng cách vẽ TPR theo FPR tại \textbf{tất cả các ngưỡng phân loại có thể}. Mỗi điểm trên đường cong đại diện cho một ngưỡng quyết định khác nhau.
+\begin{itemize}
+    \item Điểm ở góc trên bên trái \((0, 1)\) biểu thị một bộ phân loại hoàn hảo (TPR=1, FPR=0).
+    \item Đường chéo từ \((0,0)\) đến \((1,1)\) biểu thị hiệu suất của một bộ phân loại ngẫu nhiên, không có kỹ năng phân biệt.
+    \item Một đường cong càng "cong" lên phía trên góc trên bên trái thì mô hình càng tốt.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images//Confusion Matrix/rocauc.png}
+    \vspace{15pt}
+    \caption{Chỉ số đánh giá phân loại ROC-AUC}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsubsection*{d) AUC (Area Under the Curve)}
+AUC là diện tích nằm dưới đường cong ROC, cung cấp một thước đo tổng hợp về khả năng phân loại của mô hình.
+\[
+AUC = \int_{0}^{1} TPR(FPR)  d(FPR)
+\]
+
+\subsubsection*{e) Diễn giải giá trị AUC}
+\begin{itemize}
+    \item \textbf{AUC = 1.0}: Mô hình hoàn hảo, có khả năng phân biệt tuyệt đối giữa hai lớp.
+    \item \textbf{AUC = 0.9 - 0.99}: Mô hình xuất sắc.
+    \item \textbf{AUC = 0.8 - 0.89}: Mô hình tốt.
+    \item \textbf{AUC = 0.7 - 0.79}: Mô hình trung bình.
+    \item \textbf{AUC = 0.5}: Mô hình không có khả năng phân biệt, tương đương với đoán ngẫu nhiên.
+    \item \textbf{AUC < 0.5}: Mô hình hoạt động tệ hơn cả đoán ngẫu nhiên; có thể đảo ngược dự đoán để cải thiện.
+\end{itemize}
+
+\subsubsection*{f) Khi nào sử dụng AUC-ROC?}
+AUC-ROC đặc biệt hữu ích khi:
+\begin{itemize}
+    \item Tập dữ liệu có sự cân bằng tương đối giữa các lớp.
+    \item Chi phí của False Positive (FP) và False Negative (FN) được coi là tương đương.
+    \item Khi muốn đánh giá hiệu suất mô hình trên nhiều ngưỡng phân loại khác nhau mà không cần chọn một ngưỡng cụ thể.
+\end{itemize}
+
+\textbf{Lưu ý}: Đối với các tập dữ liệu mất cân bằng nghiêm trọng, đường cong Precision-Recall thường cung cấp đánh giá thực tế hơn so với AUC-ROC.
+

@@ -1,0 +1,206 @@
+\chapter{Đặc tả bộ dữ liệu được sử dụng trong bài toán}
+\section{Tổng quan bộ dữ liệu}
+ $\indent$Bộ dữ liệu \emph{Home Credit Default Risk}\footnote{Kaggle: \url{https://www.kaggle.com/competitions/home-credit-default-risk}} cung cấp hồ sơ khách hàng vay tiêu dùng và nhãn rủi ro vỡ nợ, nhằm hỗ trợ xây dựng mô hình dự đoán khả năng không trả nợ đúng hạn.
+Bộ dữ liệu chính gồm hai tệp:
+\begin{itemize}
+  \item \texttt{application\_train.csv}: \num{307511} quan sát, \num{122} biến (bao gồm biến mục tiêu \texttt{TARGET}).
+  \item \texttt{application\_test.csv}: \num{48744} quan sát, \num{121} biến (không có \texttt{TARGET}).
+\end{itemize}
+$\indent$Trong \texttt{application\_train}, tỷ lệ dương của \texttt{TARGET} (khách hàng \emph{vỡ nợ}) là \SI{8.073}{\percent} (24825/307511), thể hiện hiện tượng \emph{mất cân bằng lớp}. Tỷ lệ thiếu trung bình toàn bộ cột vào khoảng \SI{24.396}{\percent}, trong đó một số biến căn hộ có tỷ lệ thiếu rất cao. \\
+$\indent$\textbf{Biến mục tiêu:} \texttt{TARGET} \(\in \{0,1\}\), với 1 = \emph{vỡ nợ} và 0 = \emph{không vỡ nợ}.
+
+$\indent$\noindent\textbf{Kiểu biến:} \num{106} biến số và \num{16} biến phân loại (object). Các nhóm biến chính:
+\begin{itemize}
+  \item \textbf{Nhân khẩu/kinh tế:} \texttt{CODE\_GENDER}, \texttt{CNT\_CHILDREN}, \texttt{AMT\_INCOME\_TOTAL}, \texttt{NAME\_EDUCATION\_TYPE}, \texttt{NAME\_INCOME\_TYPE}, \texttt{NAME\_FAMILY\_STATUS}, \texttt{NAME\_HOUSING\_TYPE}, v.v.
+  \item \textbf{Khoản vay:} \texttt{AMT\_CREDIT}, \texttt{AMT\_ANNUITY}, \texttt{AMT\_GOODS\_PRICE}, \texttt{NAME\_CONTRACT\_TYPE}.
+  \item \textbf{Điểm/nguồn bên ngoài:} \texttt{EXT\_SOURCE\_1}, \texttt{EXT\_SOURCE\_2}, \texttt{EXT\_SOURCE\_3}.
+  \item \textbf{Mốc thời gian tương đối (ngày):} \texttt{DAYS\_*} như \texttt{DAYS\_BIRTH}, \texttt{DAYS\_EMPLOYED}, \texttt{DAYS\_REGISTRATION} (giá trị \emph{âm} biểu diễn số ngày trước thời điểm tham chiếu hiện tại).
+\end{itemize}
+
+Bộ dữ liệu Home Credit Default Risk là một điển hình trong các bài toán xếp hạng rủi ro tín dụng trong thực tế, nơi hiện tượng mất cân bằng lớp không phải là lỗi do việc thu thập mà là do bản chất của vấn đề. Trong tập dữ liệu này, các khoản vay "không vỡ nợ" chiếm tỷ lệ áp đảo lên đến khoảng 92\%, trong khi các khoản vay "vỡ nợ" chỉ chiếm khoảng 8\%. Sự chênh lệch lớn này phản ánh chính xác hiện tượng thực tế trong lĩnh vực tín dụng tiêu dùng: các quy trình thẩm định nghiêm ngặt đảm bảo rằng chỉ những khách hàng có rủi ro thấp mới được chấp thuận cho vay. Bên cạnh đó, điều kiện kinh tế thuận lợi tại thời điểm thu thập dữ liệu và thiên lệch trong việc lựa chọn mẫu (chỉ các hồ sơ đã được phê duyệt mới có mặt trong dataset) cũng góp phần tạo nên sự mất cân bằng này.
+
+Hiện tượng mất cân bằng lớp dẫn đến những thách thức đáng kể trong việc đánh giá mô hình. Các chỉ số truyền thống như Accuracy trở nên không còn ý nghĩa khi một mô hình đơn giản chỉ cần luôn dự đoán "không vỡ nợ" đã có thể đạt độ chính xác lên đến 92\%. Do đó, việc đánh giá hiệu suất thực sự của mô hình cần tập trung vào các chỉ số như ROC-AUC, PR-AUC, Recall và F1-score cho lớp thiểu số, đồng thời xem xét việc lựa chọn ngưỡng phân loại tối ưu phù hợp với mục tiêu kinh doanh cụ thể.
+
+Một đặc điểm nổi bật khác của bộ dữ liệu này là tình trạng thiếu dữ liệu xuất hiện phổ biến với nhiều cơ chế khác nhau. Đối với nhóm thông tin nhân khẩu học và nghề nghiệp, các trường như loại hình công việc, nguồn thu nhập thường bị bỏ trống do không phải là thông tin bắt buộc trong quá trình đăng ký. Đối với dữ liệu từ các tổ chức tín dụng bên ngoài, việc thiếu thông tin có thể do không truy vấn được hoặc nhà cung cấp dịch vụ không trả về kết quả. Đặc biệt, một số trường dữ liệu chứa các giá trị mã hóa đặc biệt, điển hình như \texttt{DAYS\_EMPLOYED} với giá trị 365243, thực chất đại diện cho trạng thái "không xác định" thay vì một con số có ý nghĩa thực tế. Các biến tài chính quan trọng như \texttt{AMT\_ANNUITY} và \texttt{AMT\_GOODS\_PRICE} cũng có tỷ lệ thiếu nhất định, gây ảnh hưởng đến việc tính toán các chỉ số tài chính then chốt.
+
+Trong đánh giá mô hình, cần ưu tiên sử dụng các chỉ số như ROC-AUC và PR-AUC thay vì Accuracy, đồng thời bổ sung các chỉ số vận hành thực tế như Recall - tỷ lệ phát hiện đúng các khoản vay vỡ nợ trong nhóm k\% hồ sơ có điểm rủi ro cao nhất. Cách tiếp cận này không chỉ đảm bảo đánh giá toàn diện hiệu suất mô hình mà còn bám sát vào quy trình sàng lọc và quản lý rủi ro trong thực tế kinh doanh của các tổ chức tín dụng.
+\subsection{Đặc điểm về bộ dữ liệu}
+
+$\indent$Bộ dữ liệu được xây dựng từ thông tin hồ sơ tín dụng của khách hàng vay vốn tại một tổ chức tài chính. 
+Mỗi dòng trong tập dữ liệu tương ứng với một khách hàng (hay một khoản vay), được mô tả bằng các đặc trưng cá nhân, tình trạng tài chính, tài sản sở hữu, thông tin hợp đồng và bối cảnh nộp hồ sơ. 
+Toàn bộ các trường đầu vào đều là thông tin sẵn có tại thời điểm thẩm định nhằm tránh rò rỉ dữ liệu và phục vụ cho việc dự báo rủi ro sau này. 
+Dữ liệu bao gồm các nhóm đặc trưng chính sau:
+
+\begin{itemize}
+    \item \textbf{Thông tin định danh:} mã khách hàng \texttt{SK\_ID\_CURR} (chỉ dùng để phân biệt bản ghi, không đưa vào mô hình).
+
+    \item \textbf{Thông tin cá nhân:} giới tính (\texttt{CODE\_GENDER}), số con (\texttt{CNT\_CHILDREN}), số thành viên gia đình (\texttt{CNT\_FAM\_MEMBERS}), tình trạng gia đình (\texttt{NAME\_FAMILY\_STATUS}), trình độ học vấn (\texttt{NAME\_EDUCATION\_TYPE}), loại hình thu nhập (\texttt{NAME\_INCOME\_TYPE}), loại hình cư trú/nhà ở (\texttt{NAME\_HOUSING\_TYPE}), nghề nghiệp (\texttt{OCCUPATION\_TYPE}), loại hình tổ chức/cơ quan (\texttt{ORGANIZATION\_TYPE}), nhóm đi cùng khi nộp hồ sơ (\texttt{NAME\_TYPE\_SUITE}).
+
+    \item \textbf{Tài sản sở hữu:} cờ sở hữu ô tô (\texttt{FLAG\_OWN\_CAR}) và tuổi xe (\texttt{OWN\_CAR\_AGE}), cờ sở hữu nhà/đất (\texttt{FLAG\_OWN\_REALTY}), cùng các khối đặc trưng nhà ở/căn hộ được chuẩn hoá theo ba biến \_AVG, \_MEDI, \_MODE như: \texttt{APARTMENTS\_*}, \texttt{LIVINGAREA\_*}, \texttt{LANDAREA\_*}, \texttt{BASEMENTAREA\_*}, \texttt{YEARS\_BUILD\_*}, \texttt{YEARS\_BEGINEXPLUATATION\_*}, \texttt{COMMONAREA\_*}, \texttt{ELEVATORS\_*}, \texttt{ENTRANCES\_*}, \texttt{FLOORSMAX\_*}, \texttt{FLOORSMIN\_*}, \texttt{LIVINGAPARTMENTS\_*}, \texttt{NONLIVINGAPARTMENTS\_*}, \texttt{NONLIVINGAREA\_*}.
+
+    \item \textbf{Tài chính \& thu nhập:} thu nhập hằng năm (\texttt{AMT\_INCOME\_TOTAL}), số tiền vay (\texttt{AMT\_CREDIT}), giá trị hàng hoá/dịch vụ (\texttt{AMT\_GOODS\_PRICE}), niên kim trả góp (\texttt{AMT\_ANNUITY}).
+
+    \item \textbf{Điểm/nguồn rủi ro ngoại sinh:} các điểm tổng hợp từ nguồn ngoài (\texttt{EXT\_SOURCE\_1}, \texttt{EXT\_SOURCE\_2}, \texttt{EXT\_SOURCE\_3}) phản ánh rủi ro tín dụng tổng quát của khách hàng.
+
+    \item \textbf{Bối cảnh \& lịch sử hồ sơ theo thời gian:} bao gồm tuổi và thâm niên việc làm quy đổi theo ngày (\texttt{DAYS\_BIRTH}, \texttt{DAYS\_EMPLOYED}), thời điểm đăng ký hồ sơ (\texttt{DAYS\_REGISTRATION}), thời điểm cấp/cập nhật giấy tờ (\texttt{DAYS\_ID\_PUBLISH}), thời điểm thay đổi số điện thoại (\texttt{DAYS\_LAST\_PHONE\_CHANGE}), cùng bối cảnh xử lý hồ sơ (\texttt{WEEKDAY\_APPR\_PROCESS\_START}, \texttt{HOUR\_APPR\_PROCESS\_START}).
+
+    \item \textbf{Đặc trưng vùng/khu vực \& tính nhất quán nơi ở–làm việc:} mật độ dân số vùng (\texttt{REGION\_POPULATION\_RELATIVE}), xếp hạng vùng cư trú (\texttt{REGION\_RATING\_CLIENT}, \texttt{REGION\_RATING\_CLIENT\_W\_CITY}), và các cờ không khớp giữa nơi đăng ký–ở–làm việc như: \texttt{REG\_REGION\_NOT\_LIVE\_REGION}, \texttt{REG\_REGION\_NOT\_WORK\_REGION}, \texttt{LIVE\_REGION\_NOT\_WORK\_REGION}, \texttt{REG\_CITY\_NOT\_LIVE\_CITY}, \texttt{REG\_CITY\_NOT\_WORK\_CITY}, \texttt{LIVE\_CITY\_NOT\_WORK\_CITY}.
+
+    \item \textbf{Liên hệ/thiết bị \& trạng thái cung cấp:} \texttt{FLAG\_MOBIL}, \texttt{FLAG\_EMP\_PHONE}, \texttt{FLAG\_WORK\_PHONE}, \texttt{FLAG\_CONT\_MOBILE}, \texttt{FLAG\_PHONE}, \texttt{FLAG\_EMAIL} — các cờ 0/1 phản ánh sự hiện diện của thông tin liên hệ.
+
+    \item \textbf{Giấy tờ chứng minh:} nhóm cờ \texttt{FLAG\_DOCUMENT\_2} … \texttt{FLAG\_DOCUMENT\_21} thể hiện tình trạng có mặt của từng loại chứng từ.
+
+    \item \textbf{Truy vấn tín dụng tại bureau:} biểu thị cường độ truy vấn tín dụng theo các cửa sổ thời gian khác nhau: \texttt{AMT\_REQ\_CREDIT\_BUREAU\_HOUR}, \texttt{...DAY}, \texttt{...WEEK}, \texttt{...MON}, \texttt{...QRT}, \texttt{...YEAR}.
+
+    \item \textbf{Biến mục tiêu (Label):} \texttt{TARGET} – biến nhị phân cho biết khách hàng có phát sinh khó khăn khi trả nợ (1) hay không (0) trong cửa sổ theo dõi sau thời điểm ra quyết định.
+\end{itemize}
+
+\textbf{Mục tiêu chính} của bộ dữ liệu là cung cấp góc nhìn toàn diện về hồ sơ và hành vi khách hàng tại thời điểm thẩm định, 
+từ đó dự đoán xác suất vỡ nợ để hỗ trợ phê duyệt tín dụng, định giá theo rủi ro, phân bổ hạn mức và kích hoạt can thiệp sớm. 
+Đồng thời, bộ dữ liệu cũng bảo đảm tuân thủ nguyên tắc công bằng mô hình khi xem xét các biến nhân khẩu học hoặc đặc trưng vùng.
+
+\subsection{Mô tả các feature của bộ dữ liệu}
+
+\begin{longtable}{|p{6cm}|p{1cm}|p{2cm}|p{4.5cm}|}
+\caption{Mô tả chi tiết các biến trong bộ dữ liệu}\\
+\hline
+\textbf{Tên biến} & \textbf{Kiểu dữ liệu} & \textbf{Kiểu biến} & \textbf{Ý nghĩa} \\
+\hline
+\endfirsthead
+
+\multicolumn{4}{c}{{\tablename\ \thetable{} -- tiếp theo từ trang trước}} \\
+\hline
+\textbf{Tên biến} & \textbf{Kiểu dữ liệu} & \textbf{Kiểu biến} & \textbf{Ý nghĩa} \\
+\hline
+\endhead
+
+\hline \multicolumn{4}{r}{{(tiếp trang sau)}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+
+SK\_ID\_CURR & int64 & đặc trưng & Mã khách hàng. \\ \hline
+TARGET & int64 & nhãn & 1 = có khó khăn khi trả nợ; 0 = trả nợ bình thường. \\ \hline
+NAME\_CONTRACT\_TYPE & object & phân loại & Loại hợp đồng tín dụng (vay tiêu dùng, tín dụng xoay vòng,\ldots). \\ \hline
+CODE\_GENDER & object & phân loại & Giới tính khách hàng. \\ \hline
+FLAG\_OWN\_CAR & object & phân loại & Cờ sở hữu ô tô (1 = Có, 0 = Không). \\ \hline
+FLAG\_OWN\_REALTY & object & phân loại & Cờ sở hữu nhà/đất (1 = Có, 0 = Không). \\ \hline
+CNT\_CHILDREN & int64 & đặc trưng & Số lượng con. \\ \hline
+AMT\_INCOME\_TOTAL & float64 & đặc trưng & Tổng thu nhập năm (đơn vị nội bộ). \\ \hline
+AMT\_CREDIT & float64 & đặc trưng & Số tiền vay/tín dụng. \\ \hline
+AMT\_ANNUITY & float64 & đặc trưng & Khoản trả góp định kỳ (niên kim). \\ \hline
+AMT\_GOODS\_PRICE & float64 & đặc trưng & Giá trị hàng hoá/dịch vụ được tài trợ. \\ \hline
+NAME\_TYPE\_SUITE & object & phân loại & Nhóm/người đi cùng khi nộp hồ sơ. \\ \hline
+NAME\_INCOME\_TYPE & object & phân loại & Loại hình thu nhập (làm công, tự doanh, hưu trí,\ldots). \\ \hline
+NAME\_EDUCATION\_TYPE & object & phân loại & Trình độ học vấn. \\ \hline
+NAME\_FAMILY\_STATUS & object & phân loại & Tình trạng gia đình. \\ \hline
+NAME\_HOUSING\_TYPE & object & phân loại & Loại hình nhà ở/cư trú. \\ \hline
+REGION\_POPULATION\_RELATIVE & float64 & đặc trưng & Mật độ dân số vùng (chuẩn hoá). \\ \hline
+DAYS\_BIRTH & int64 & đặc trưng & Số ngày tính từ ngày sinh (âm; trị tuyệt đối lớn $\Rightarrow$ tuổi cao). \\ \hline
+DAYS\_EMPLOYED & int64 & đặc trưng & Số ngày làm việc/thâm niên (âm; trị tuyệt đối phản ánh thâm niên). \\ \hline
+DAYS\_REGISTRATION & float64 & đặc trưng & Số ngày kể từ thời điểm đăng ký cư trú/hồ sơ. \\ \hline
+DAYS\_ID\_PUBLISH & int64 & đặc trưng & Số ngày kể từ khi cấp/cập nhật giấy tờ tuỳ thân. \\ \hline
+OWN\_CAR\_AGE & float64 & đặc trưng & Tuổi xe (năm) nếu có sở hữu ô tô. \\ \hline
+FLAG\_MOBIL & int64 & đặc trưng & Có số điện thoại di động (1/0). \\ \hline
+FLAG\_EMP\_PHONE & int64 & đặc trưng & Có số điện thoại công ty (1/0). \\ \hline
+FLAG\_WORK\_PHONE & int64 & đặc trưng & Có số điện thoại nơi làm việc (1/0). \\ \hline
+FLAG\_CONT\_MOBILE & int64 & đặc trưng & Liên hệ di động hoạt động/duy trì (1/0). \\ \hline
+FLAG\_PHONE & int64 & đặc trưng & Có cung cấp số điện thoại (1/0). \\ \hline
+FLAG\_EMAIL & int64 & đặc trưng & Có cung cấp email (1/0). \\ \hline
+OCCUPATION\_TYPE & object & phân loại & Nghề nghiệp/chức danh công việc. \\ \hline
+CNT\_FAM\_MEMBERS & float64 & đặc trưng & Số thành viên gia đình. \\ \hline
+REGION\_RATING\_CLIENT & int64 & đặc trưng & Xếp hạng rủi ro vùng cư trú (nội bộ). \\ \hline
+REGION\_RATING\_CLIENT\_W\_CITY & int64 & đặc trưng & Xếp hạng vùng cư trú (có xét yếu tố thành phố). \\ \hline
+WEEKDAY\_APPR\_PROCESS\_START & object & phân loại & Thứ trong tuần khi hệ thống bắt đầu xử lý hồ sơ. \\ \hline
+HOUR\_APPR\_PROCESS\_START & int64 & đặc trưng & Giờ trong ngày khi hệ thống bắt đầu xử lý hồ sơ. \\ \hline
+REG\_REGION\_NOT\_LIVE\_REGION & int64 & đặc trưng & Vùng đăng ký khác vùng đang cư trú (cờ 1/0). \\ \hline
+REG\_REGION\_NOT\_WORK\_REGION & int64 & đặc trưng & Vùng đăng ký khác vùng làm việc (cờ 1/0). \\ \hline
+LIVE\_REGION\_NOT\_WORK\_REGION & int64 & đặc trưng & Vùng cư trú khác vùng làm việc (cờ 1/0). \\ \hline
+REG\_CITY\_NOT\_LIVE\_CITY & int64 & đặc trưng & Thành phố đăng ký khác thành phố cư trú (cờ 1/0). \\ \hline
+REG\_CITY\_NOT\_WORK\_CITY & int64 & đặc trưng & Thành phố đăng ký khác thành phố làm việc (cờ 1/0). \\ \hline
+LIVE\_CITY\_NOT\_WORK\_CITY & int64 & đặc trưng & Thành phố cư trú khác thành phố làm việc (cờ 1/0). \\ \hline
+ORGANIZATION\_TYPE & object & phân loại & Loại hình tổ chức/cơ quan nơi làm việc. \\ \hline
+EXT\_SOURCE\_1 & float64 & đặc trưng & Điểm ngoại sinh tổng hợp 1 (rủi ro tín dụng). \\ \hline
+EXT\_SOURCE\_2 & float64 & đặc trưng & Điểm ngoại sinh tổng hợp 2 (rủi ro tín dụng). \\ \hline
+EXT\_SOURCE\_3 & float64 & đặc trưng & Điểm ngoại sinh tổng hợp 3 (rủi ro tín dụng). \\ \hline
+APARTMENTS\_AVG & float64 & đặc trưng & Chỉ số diện tích căn hộ (trung bình, chuẩn hoá). \\ \hline
+BASEMENTAREA\_AVG & float64 & đặc trưng & Chỉ số diện tích tầng hầm (trung bình, chuẩn hoá). \\ \hline
+YEARS\_BEGINEXPLUATATION\_AVG & float64 & đặc trưng & Năm bắt đầu đưa công trình vào sử dụng (trung bình, chuẩn hoá). \\ \hline
+YEARS\_BUILD\_AVG & float64 & đặc trưng & Năm xây dựng công trình (trung bình, chuẩn hoá). \\ \hline
+COMMONAREA\_AVG & float64 & đặc trưng & Diện tích khu vực dùng chung (trung bình, chuẩn hoá). \\ \hline
+ELEVATORS\_AVG & float64 & đặc trưng & Số thang máy (trung bình, chuẩn hoá). \\ \hline
+ENTRANCES\_AVG & float64 & đặc trưng & Số lối vào toà nhà (trung bình, chuẩn hoá). \\ \hline
+FLOORSMAX\_AVG & float64 & đặc trưng & Số tầng tối đa (trung bình, chuẩn hoá). \\ \hline
+FLOORSMIN\_AVG & float64 & đặc trưng & Số tầng tối thiểu (trung bình, chuẩn hoá). \\ \hline
+LANDAREA\_AVG & float64 & đặc trưng & Diện tích đất (trung bình, chuẩn hoá). \\ \hline
+LIVINGAPARTMENTS\_AVG & float64 & đặc trưng & Số căn hộ có người ở (trung bình, chuẩn hoá). \\ \hline
+LIVINGAREA\_AVG & float64 & đặc trưng & Diện tích ở (trung bình, chuẩn hoá). \\ \hline
+NONLIVINGAPARTMENTS\_AVG & float64 & đặc trưng & Số căn hộ không có người ở (trung bình, chuẩn hoá). \\ \hline
+NONLIVINGAREA\_AVG & float64 & đặc trưng & Diện tích không dùng để ở (trung bình, chuẩn hoá). \\ \hline
+APARTMENTS\_MODE & float64 & đặc trưng & Diện tích căn hộ (mode, chuẩn hoá). \\ \hline
+BASEMENTAREA\_MODE & float64 & đặc trưng & Diện tích tầng hầm (mode, chuẩn hoá). \\ \hline
+YEARS\_BEGINEXPLUATATION\_MODE & float64 & đặc trưng & Năm bắt đầu sử dụng (mode, chuẩn hoá). \\ \hline
+YEARS\_BUILD\_MODE & float64 & đặc trưng & Năm xây dựng (mode, chuẩn hoá). \\ \hline
+COMMONAREA\_MODE & float64 & đặc trưng & Khu vực dùng chung (mode, chuẩn hoá). \\ \hline
+ELEVATORS\_MODE & float64 & đặc trưng & Số thang máy (mode, chuẩn hoá). \\ \hline
+ENTRANCES\_MODE & float64 & đặc trưng & Số lối vào (mode, chuẩn hoá). \\ \hline
+FLOORSMAX\_MODE & float64 & đặc trưng & Số tầng tối đa (mode, chuẩn hoá). \\ \hline
+FLOORSMIN\_MODE & float64 & đặc trưng & Số tầng tối thiểu (mode, chuẩn hoá). \\ \hline
+LANDAREA\_MODE & float64 & đặc trưng & Diện tích đất (mode, chuẩn hoá). \\ \hline
+LIVINGAPARTMENTS\_MODE & float64 & đặc trưng & Số căn hộ có người ở (mode, chuẩn hoá). \\ \hline
+LIVINGAREA\_MODE & float64 & đặc trưng & Diện tích ở (mode, chuẩn hoá). \\ \hline
+NONLIVINGAPARTMENTS\_MODE & float64 & đặc trưng & Số căn hộ không người ở (mode, chuẩn hoá). \\ \hline
+NONLIVINGAREA\_MODE & float64 & đặc trưng & Diện tích không dùng để ở (mode, chuẩn hoá). \\ \hline
+APARTMENTS\_MEDI & float64 & đặc trưng & Diện tích căn hộ (median, chuẩn hoá). \\ \hline
+BASEMENTAREA\_MEDI & float64 & đặc trưng & Diện tích tầng hầm (median, chuẩn hoá). \\ \hline
+YEARS\_BEGINEXPLUATATION\_MEDI & float64 & đặc trưng & Năm bắt đầu sử dụng (median, chuẩn hoá). \\ \hline
+YEARS\_BUILD\_MEDI & float64 & đặc trưng & Năm xây dựng (median, chuẩn hoá). \\ \hline
+COMMONAREA\_MEDI & float64 & đặc trưng & Khu vực dùng chung (median, chuẩn hoá). \\ \hline
+ELEVATORS\_MEDI & float64 & đặc trưng & Số thang máy (median, chuẩn hoá). \\ \hline
+ENTRANCES\_MEDI & float64 & đặc trưng & Số lối vào (median, chuẩn hoá). \\ \hline
+FLOORSMAX\_MEDI & float64 & đặc trưng & Số tầng tối đa (median, chuẩn hoá). \\ \hline
+FLOORSMIN\_MEDI & float64 & đặc trưng & Số tầng tối thiểu (median, chuẩn hoá). \\ \hline
+LANDAREA\_MEDI & float64 & đặc trưng & Diện tích đất (median, chuẩn hoá). \\ \hline
+LIVINGAPARTMENTS\_MEDI & float64 & đặc trưng & Số căn hộ có người ở (median, chuẩn hoá). \\ \hline
+LIVINGAREA\_MEDI & float64 & đặc trưng & Diện tích ở (median, chuẩn hoá). \\ \hline
+NONLIVINGAPARTMENTS\_MEDI & float64 & đặc trưng & Số căn hộ không người ở (median, chuẩn hoá). \\ \hline
+NONLIVINGAREA\_MEDI & float64 & đặc trưng & Diện tích không dùng để ở (median, chuẩn hoá). \\ \hline
+FONDKAPREMONT\_MODE & object & phân loại & Loại quỹ sửa chữa toà nhà (biến phân loại). \\ \hline
+HOUSETYPE\_MODE & object & phân loại & Loại hình nhà ở (biến phân loại). \\ \hline
+TOTALAREA\_MODE & float64 & đặc trưng & Tổng diện tích căn hộ/nhà ở (mode, chuẩn hoá). \\ \hline
+WALLSMATERIAL\_MODE & object & phân loại & Vật liệu tường (biến phân loại). \\ \hline
+EMERGENCYSTATE\_MODE & object & phân loại & Trạng thái khẩn cấp (nếu có). \\ \hline
+OBS\_30\_CNT\_SOCIAL\_CIRCLE & float64 & đặc trưng & Chỉ số liên quan mốc 30 ngày (nguồn xã hội). \\ \hline
+DEF\_30\_CNT\_SOCIAL\_CIRCLE & float64 & đặc trưng & Chỉ số liên quan mốc 30 ngày (nguồn xã hội). \\ \hline
+OBS\_60\_CNT\_SOCIAL\_CIRCLE & float64 & đặc trưng & Chỉ số liên quan mốc 60 ngày (nguồn xã hội). \\ \hline
+DEF\_60\_CNT\_SOCIAL\_CIRCLE & float64 & đặc trưng & Chỉ số liên quan mốc 60 ngày (nguồn xã hội). \\ \hline
+DAYS\_LAST\_PHONE\_CHANGE & float64 & đặc trưng & Số ngày kể từ lần đổi số điện thoại gần nhất. \\ \hline
+FLAG\_DOCUMENT\_2 & int64 & đặc trưng & Cờ có giấy tờ \#2 (1/0). \\ \hline
+FLAG\_DOCUMENT\_3 & int64 & đặc trưng & Cờ có giấy tờ \#3 (1/0). \\ \hline
+FLAG\_DOCUMENT\_4 & int64 & đặc trưng & Cờ có giấy tờ \#4 (1/0). \\ \hline
+FLAG\_DOCUMENT\_5 & int64 & đặc trưng & Cờ có giấy tờ \#5 (1/0). \\ \hline
+FLAG\_DOCUMENT\_6 & int64 & đặc trưng & Cờ có giấy tờ \#6 (1/0). \\ \hline
+FLAG\_DOCUMENT\_7 & int64 & đặc trưng & Cờ có giấy tờ \#7 (1/0). \\ \hline
+FLAG\_DOCUMENT\_8 & int64 & đặc trưng & Cờ có giấy tờ \#8 (1/0). \\ \hline
+FLAG\_DOCUMENT\_9 & int64 & đặc trưng & Cờ có giấy tờ \#9 (1/0). \\ \hline
+FLAG\_DOCUMENT\_10 & int64 & đặc trưng & Cờ có giấy tờ \#10 (1/0). \\ \hline
+FLAG\_DOCUMENT\_11 & int64 & đặc trưng & Cờ có giấy tờ \#11 (1/0). \\ \hline
+FLAG\_DOCUMENT\_12 & int64 & đặc trưng & Cờ có giấy tờ \#12 (1/0). \\ \hline
+FLAG\_DOCUMENT\_13 & int64 & đặc trưng & Cờ có giấy tờ \#13 (1/0). \\ \hline
+FLAG\_DOCUMENT\_14 & int64 & đặc trưng & Cờ có giấy tờ \#14 (1/0). \\ \hline
+FLAG\_DOCUMENT\_15 & int64 & đặc trưng & Cờ có giấy tờ \#15 (1/0). \\ \hline
+FLAG\_DOCUMENT\_16 & int64 & đặc trưng & Cờ có giấy tờ \#16 (1/0). \\ \hline
+FLAG\_DOCUMENT\_17 & int64 & đặc trưng & Cờ có giấy tờ \#17 (1/0). \\ \hline
+FLAG\_DOCUMENT\_18 & int64 & đặc trưng & Cờ có giấy tờ \#18 (1/0). \\ \hline
+FLAG\_DOCUMENT\_19 & int64 & đặc trưng & Cờ có giấy tờ \#19 (1/0). \\ \hline
+FLAG\_DOCUMENT\_20 & int64 & đặc trưng & Cờ có giấy tờ \#20 (1/0). \\ \hline
+FLAG\_DOCUMENT\_21 & int64 & đặc trưng & Cờ có giấy tờ \#21 (1/0). \\ \hline
+AMT\_REQ\_CREDIT\_BUREAU\_HOUR & float64 & đặc trưng & Số lần truy vấn tín dụng trong 1 giờ gần nhất. \\ \hline
+AMT\_REQ\_CREDIT\_BUREAU\_DAY & float64 & đặc trưng & Số lần truy vấn tín dụng trong 1 ngày gần nhất. \\ \hline
+AMT\_REQ\_CREDIT\_BUREAU\_WEEK & float64 & đặc trưng & Số lần truy vấn tín dụng trong 1 tuần gần nhất. \\ \hline
+AMT\_REQ\_CREDIT\_BUREAU\_MON & float64 & đặc trưng & Số lần truy vấn tín dụng trong 1 tháng gần nhất. \\ \hline
+AMT\_REQ\_CREDIT\_BUREAU\_QRT & float64 & đặc trưng & Số lần truy vấn tín dụng trong 1 quý gần nhất. \\ \hline
+AMT\_REQ\_CREDIT\_BUREAU\_YEAR & float64 & đặc trưng & Số lần truy vấn tín dụng trong 1 năm gần nhất. \\ \hline
+
+\end{longtable}
