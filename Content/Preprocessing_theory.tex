@@ -1,5 +1,5 @@
 \section{Tiền xử lý dữ liệu}
-\subsection{Xử lý dữ liệu khuyết với Phương pháp gán đa biến bằng phương trình chuỗi (MICE - Multivariate imputation by chained equations)~\cite{mice}}
+\subsection[Xử lý dữ liệu khuyết với Phương pháp gán đa biến bằng phương trình chuỗi]{Xử lý dữ liệu khuyết với Phương pháp gán đa biến bằng phương trình chuỗi (MICE - Multivariate imputation by chained equations)~\cite{mice}}
 \subsubsection{Sơ lược về MICE}
 $\indent$\textbf{Thiếu khuyết dữ liệu} là vấn đề phổ biến thường xảy ra khi thực hiện các bài toán với dữ liệu. Khi gặp trường hợp thiếu khuyết nếu thực hiện bỏ hoàn toàn hoặc chỉ thay thế bằng một giá trị trung bình có thể dẫn đến mất thông tin, giảm độ chính xác và bias trong phân tích. Nhằm giải quyết vấn đề trên, \textbf{MICE} là phương án xử lý dữ liệu thiếu khuyết đặc biệt hữu ích cho quy trình gán lớn.
 \vspace{0.8em}
@@ -117,7 +117,7 @@ Mặc định bỏ qua vì không thể impute. \\
 
 \caption{Các tham số của \texttt{IterativeImputer} trong scikit-learn và ý nghĩa chi tiết.}
 \end{longtable}
-\subsection{Trọng số của bằng chứng (WOE - Weight Of Envidence) và Giá trị thông tin (IV - Information Value)~\cite{woeniv}}
+\subsection[Trọng số của bằng chứng (WOE - Weight Of Envidence) và Giá trị thông tin (IV - Information Value)]{Trọng số của bằng chứng (WOE - Weight Of Envidence) và Giá trị thông tin (IV - Information Value)~\cite{woeniv}}
 
 $\indent$\textbf{Mô hình hồi quy logistic} là một trong những kỹ thuật thống kê được sử dụng phổ biến nhất để giải bài toán phân loại nhị phân. Đây là một kỹ thuật được chấp nhận trong hầu hết các lĩnh vực. Hai khái niệm này - \textbf{trọng số bằng chứng (WOE)} và \textbf{giá trị thông tin (IV)} phát triển từ cùng một kỹ thuật hồi quy logistic. Hai thuật ngữ này đã tồn tại trong \textbf{thế giới chấm điểm tín dụng} trong hơn 4-5 thập kỷ. Hai thông số đã được sử dụng như một tiêu chuẩn để \textbf{sàng lọc các biến số} trong các dự án \textbf{mô hình hóa rủi ro tín dụng} như \textbf{xác suất vỡ nợ}. Chúng giúp khám phá dữ liệu và các biến màn hình. Chúng cũng được sử dụng trong \textbf{dự án phân tích tiếp thị} như mô hình tiêu hao khách hàng, mô hình phản hồi chiến dịch, v.v.
 \subsubsection{Trọng số của bằng chứng (WOE - Weight Of Envidence)}
@@ -176,7 +176,7 @@ Dưới 0,02 & Không hữu ích cho việc lập mô hình dự đoán \\ \hlin
     \item Giá trị thông tin tăng khi các thùng / nhóm tăng lên đối với một biến độc lập. Hãy cẩn thận khi có hơn 20 thùng vì một số nhóm có thể có rất ít quan sát "diễn ra sự kiện" và "không diễn ra sự kiện".
     \item Giá trị thông tin không phải là một phương pháp lựa chọn tính năng (biến) tối ưu khi bạn đang xây dựng một mô hình phân loại khác với hồi quy logistic nhị phân vì tỷ lệ cược log có điều kiện (mà chúng tôi dự đoán trong mô hình hồi quy logistic) có liên quan nhiều đến việc tính toán trọng số của bằng chứng. Nói cách khác, thông số này được thiết kế chủ yếu cho mô hình hồi quy logistic nhị phân. Cũng hãy nghĩ theo cách này - \textbf{Rừng ngẫu nhiên (Random Forest)} có thể phát hiện mối quan hệ phi tuyến tính rất tốt, vì vậy việc chọn các biến thông qua \textbf{Giá trị thông tin} và sử dụng chúng trong mô hình rừng ngẫu nhiên có thể không tạo ra mô hình dự đoán chính xác và mạnh mẽ nhất.
 \end{itemize}
-\subsection{Xử lý dữ liệu ngoại biên (outliers) với Rừng cô lập (Isolation Forest)~\cite{if}}
+\subsection[Xử lý dữ liệu ngoại biên (outliers) với Rừng cô lập (Isolation Forest)]{Xử lý dữ liệu ngoại biên (outliers) với Rừng cô lập (Isolation Forest)~\cite{if}}
 $\indent$\textbf{Isolation Forest} là một thuật toán hiệu quả và đơn giản được sử dụng để \textbf{phát hiện bất thường}, khiến nó trở thành lựa chọn phổ biến trong các ngành như an ninh mạng, tài chính và chăm sóc sức khỏe. Thuật toán xác định \textbf{các ngoại lệ} trong các bộ dữ liệu lớn bằng cách \textbf{cô lập} chúng thông qua \textbf{phân vùng nhị phân} đòi hỏi chi phí tính toán tối thiểu. Khả năng nhanh chóng tìm ra \textbf{điểm bất thường} này rất quan trọng trong các ứng dụng mà việc phát hiện các mẫu bất thường là chìa khóa để bảo vệ khỏi rủi ro hoặc xác định thông tin chi tiết ẩn.
 
 \begin{figure}[h]
@@ -201,7 +201,7 @@ Trong sơ đồ, "Tập dữ liệu đầu vào" (Input Dataset) ở trên cùng
 \end{enumerate}
 
 \subsection{Phân tích độ nhọn (Kurtosis) và độ lệch (Skewness)}
-\subsubsection{Độ nhọn (Kurtosis)~\cite{kurtosis}}
+\subsubsection[Độ nhọn (Kurtosis)]{Độ nhọn (Kurtosis)~\cite{kurtosis}}
 $\indent$Kurtosis là một thước đo thống kê mô tả hình dạng của phân phối dữ liệu, đặc biệt là mức độ nặng hay nhẹ của đuôi. Thông số cho chúng ta biết liệu một tập dữ liệu có nhièu điểm ngoại lệ hơn phân phối chuẩn hay hầu hết các điểm dữ liệu gần với mức trung bình hơn. Thông số này cho biết một bức tranh rõ nét hơn về mức độ lan rộng hoặc đỉnh của dữ liệu thực sự vượt ra ngoài giá trị trung bình và phương sai.
 \begin{figure}[h]
     \centering
@@ -247,7 +247,7 @@ Trong đó, $\mu$ là giá trị trung bình và $\sigma$ là độ lệch chu�
     \item \textbf{Không hiển thị hướng:} Kurtosis cho biết trọng lượng đuôi nhưng không cho biết dữ liệu bị lệch sang trái hay phải.
     \item \textbf{Bối cảnh nhu cầu:} Nên được giải thích với các thước đo thống kê khác để có những hiểu biết sâu sắc có ý nghĩa.
 \end{enumerate}
-\subsubsection{Độ lệch (Skewness)~\cite{skew}}
+\subsubsection[Độ lệch (Skewness)]{Độ lệch (Skewness)~\cite{skew}}
 $\indent$Độ lệch là một thước đo thống kê quan trọng cho thấy dữ liệu được trải rộng như thế nào trong tập dữ liệu. Giá trị này cho chúng ta biết liệu các điểm dữ liệu bị lệch sang trái (độ lệch âm) hay sang phải (độ lệch dương) liên quan đến giá trị trung bình. Điều này rất quan trọng vì nó giúp chúng ta hiểu hình dạng của phân phối dữ liệu, điều này rất quan trọng để phân tích dữ liệu chính xác và giúp xác định các ngoại lệ và tìm ra các phương pháp thống kê tốt nhất để sử dụng để phân tích.
 \begin{figure}[h]
     \centering
@@ -478,7 +478,7 @@ và lựa chọn các kỹ thuật xử lý dữ liệu phù hợp.
 \textit{tiền xử lý dữ liệu (data preprocessing)} và 
 \textit{phân tích thống kê (statistical analysis)} trong học máy (Machine Learning),
 giúp cải thiện hiệu suất và độ tin cậy của mô hình.
-\subsection{Xử lý dữ liệu mất cân bằng trong bài toán phân loại~\cite{imbalance}}
+\subsection[Xử lý dữ liệu mất cân bằng trong bài toán phân loại]{Xử lý dữ liệu mất cân bằng trong bài toán phân loại~\cite{imbalance}}
 \subsubsection{Sơ lược về mất cân bằng dữ liệu (Imbalanced Data)}
 $\indent$Một thành phần quan trọng trong các bài toán phân loại (classification) của học máy (machine learning) là xử lý \textbf{dữ liệu mất cân bằng (imbalanced data)}, được đặc trưng bởi \textbf{phân bố lớp bị lệch (skewed class distribution)} — trong đó một \textbf{lớp chiếm ưu thế (majority class)} có số lượng vượt trội so với các \textbf{lớp thiểu số (minority classes)}.  
 \vspace{0.8em}

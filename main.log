@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.13)  13 NOV 2025 00:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.13)  13 NOV 2025 02:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1111,11 +1111,43 @@ Package: enumitem 2025/02/06 v3.11 Customized lists
 \enit@inbox=\box141
 \enit@count@id=\count379
 \enitdp@description=\count380
+) (C:\Users\admin\MikTek\tex/latex/siunitx\siunitx.sty
+Package: siunitx 2025-07-09 v3.4.14 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count381
+\l__siunitx_number_exponent_fixed_int=\count382
+\l__siunitx_number_min_decimal_int=\count383
+\l__siunitx_number_min_integer_int=\count384
+\l__siunitx_number_round_precision_int=\count385
+\l__siunitx_number_lower_threshold_int=\count386
+\l__siunitx_number_upper_threshold_int=\count387
+\l__siunitx_number_group_first_int=\count388
+\l__siunitx_number_group_size_int=\count389
+\l__siunitx_number_group_minimum_int=\count390
+\l__siunitx_angle_tmp_dim=\dimen348
+\l__siunitx_angle_marker_box=\box142
+\l__siunitx_angle_unit_box=\box143
+\l__siunitx_compound_count_int=\count391
+ (C:\Users\admin\MikTek\tex/latex/translations\translations.sty
+Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
+)
+\l__siunitx_table_tmp_box=\box144
+\l__siunitx_table_tmp_dim=\dimen349
+\l__siunitx_table_column_width_dim=\dimen350
+\l__siunitx_table_integer_box=\box145
+\l__siunitx_table_decimal_box=\box146
+\l__siunitx_table_uncert_box=\box147
+\l__siunitx_table_before_box=\box148
+\l__siunitx_table_after_box=\box149
+\l__siunitx_table_before_dim=\dimen351
+\l__siunitx_table_carry_dim=\dimen352
+\l__siunitx_unit_tmp_int=\count392
+\l__siunitx_unit_position_int=\count393
+\l__siunitx_unit_total_int=\count394
 ) (C:\Users\admin\MikTek\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryarrows.code.tex
 File: tikzlibraryarrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
  (C:\Users\admin\MikTek\tex/generic/pgf/libraries\pgflibraryarrows.code.tex
 File: pgflibraryarrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\arrowsize=\dimen348
+\arrowsize=\dimen353
 )) (C:\Users\admin\MikTek\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarysnakes.code.tex
 File: tikzlibrarysnakes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 
@@ -1123,26 +1155,26 @@ File: tikzlibrarysnakes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 Package pgf Warning: Snakes have been superseded by decorations. Please use the decoration libraries instead of the snakes library on input line 14.
 
 (C:\Users\admin\MikTek\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarydecorations.pathmorphing.code.tex (C:\Users\admin\MikTek\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarydecorations.code.tex (C:\Users\admin\MikTek\tex/generic/pgf/modules\pgfmoduledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen349
-\pgfdecoratedremainingdistance=\dimen350
-\pgfdecoratedinputsegmentcompleteddistance=\dimen351
-\pgfdecoratedinputsegmentremainingdistance=\dimen352
-\pgf@decorate@distancetomove=\dimen353
-\pgf@decorate@repeatstate=\count381
-\pgfdecorationsegmentamplitude=\dimen354
-\pgfdecorationsegmentlength=\dimen355
+\pgfdecoratedcompleteddistance=\dimen354
+\pgfdecoratedremainingdistance=\dimen355
+\pgfdecoratedinputsegmentcompleteddistance=\dimen356
+\pgfdecoratedinputsegmentremainingdistance=\dimen357
+\pgf@decorate@distancetomove=\dimen358
+\pgf@decorate@repeatstate=\count395
+\pgfdecorationsegmentamplitude=\dimen359
+\pgfdecorationsegmentlength=\dimen360
 )
-\tikz@lib@dec@box=\box142
+\tikz@lib@dec@box=\box150
 ) (C:\Users\admin\MikTek\tex/generic/pgf/libraries/decorations\pgflibrarydecorations.pathmorphing.code.tex)) (C:\Users\admin\MikTek\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarydecorations.pathreplacing.code.tex (C:\Users\admin\MikTek\tex/generic/pgf/libraries/decorations\pgflibrarydecorations.pathreplacing.code.tex)) (C:\Users\admin\MikTek\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarydecorations.shapes.code.tex (C:\Users\admin\MikTek\tex/generic/pgf/libraries/decorations\pgflibrarydecorations.shapes.code.tex))) (C:\Users\admin\MikTek\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarybackgrounds.code.tex
 File: tikzlibrarybackgrounds.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@layerbox@background=\box143
-\pgf@layerboxsaved@background=\box144
+\pgf@layerbox@background=\box151
+\pgf@layerboxsaved@background=\box152
 ) (C:\Users\admin\MikTek\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarycalc.code.tex
 File: tikzlibrarycalc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 48.
+Package hyperref Info: Option `colorlinks' set `true' on input line 50.
  (C:\Users\admin\MikTek\tex/latex/listings\listings.sty \lstset,
-\lst@mode=\count382
+\lst@mode=\count396
  
 new hook `InitVars',
 
@@ -1153,16 +1185,16 @@ new hook `ExitVars',
 new hook `ModeTrue',
 
 new hook `EOL',
-\lst@gtempboxa=\box145
+\lst@gtempboxa=\box153
 \lst@token=\toks58
-\lst@length=\count383
+\lst@length=\count397
 
 new hook `InitVarsBOL',
-\lst@currlwidth=\dimen356
-\lst@column=\count384
-\lst@pos=\count385
-\lst@lostspace=\dimen357
-\lst@width=\dimen358
+\lst@currlwidth=\dimen361
+\lst@column=\count398
+\lst@pos=\count399
+\lst@lostspace=\dimen362
+\lst@width=\dimen363
 basewidth, 
 new hook `FontAdjust',
 fontadjust, 
@@ -1172,7 +1204,7 @@ new hook `OutputBox',
 
 new hook `InitBOL',
 columns, flexiblecolumns,
-\lst@newlines=\count386
+\lst@newlines=\count400
  
 new hook `OnNewLine',
 emptylines, 
@@ -1191,7 +1223,7 @@ extendedchars, useoutput, rescanchars, alsoletter, alsodigit, alsoother,
 new hook `SelectCharTable',
 excludedelims, delim, moredelim, deletedelim, literate, basicstyle, inputencoding, multicols, 
 new hook `EveryLine',
-\lst@lineno=\count387
+\lst@lineno=\count401
 print, firstline, lastline, 
 new hook `PreSet',
 nolol, linerange, consecutivenumbers, rangeprefix, rangesuffix, rangebeginprefix, rangebeginsuffix, rangeendprefix, rangeendsuffix, includerangemarker, 
@@ -1205,7 +1237,7 @@ new hook `PreInit',
 
 new hook `EveryPar',
 showlines,
-\lst@maxwidth=\dimen359
+\lst@maxwidth=\dimen364
  
 new hook `InitVarsEOL',
 gobble, name, \lstlistlistingname, \lstlistoflistings, inputpath, \lstnewenvironment, fancyvrb, (C:\Users\admin\MikTek\tex/latex/listings\lstpatch.sty
@@ -1250,8 +1282,8 @@ Define lst-aspect `language': \lstlanguagefiles, \lstdefinelanguage, \lst@define
 Allocs: none
 
 Define lst-aspect `labels': numbers, stepnumber, numberfirstline, numberstyle, numbersep, numberblanklines, firstnumber,
-\c@lstnumber=\count388
-\lst@skipnumbers=\count389
+\c@lstnumber=\count402
+\lst@skipnumbers=\count403
  
 Allocs: 2\count, 
 
@@ -1261,7 +1293,7 @@ linewidth, lineskip, breaklines, breakindent, breakautoindent, breakatwhitespace
 Allocs: none
 
 Define lst-aspect `frames': framexleftmargin, framexrightmargin, framextopmargin, framexbottommargin, backgroundcolor, fillcolor, rulecolor, rulesepcolor, rulesep, framerule, framesep, frameshape, frameround, frame,
-\lst@framebox=\box146
+\lst@framebox=\box154
  
 Allocs: 1\box, 
 ) 
@@ -1277,10 +1309,10 @@ Package: listings 2025/10/06 1.11 (Carsten Heinz)
     but found:
         2025/10/06 1.11 (Carsten Heinz)
     so I'm assuming it got fixed.
-\c@theorem=\count390
-\c@property=\count391
-\c@proposition=\count392
-\c@exer=\count393
+\c@theorem=\count404
+\c@property=\count405
+\c@proposition=\count406
+\c@exer=\count407
 (C:\Users\admin\MikTek\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2025/10/06 1.11 listings language file
 ) (C:\Users\admin\MikTek\tex/latex/listings\lstlang2.sty
@@ -1288,45 +1320,98 @@ File: lstlang2.sty 2025/10/06 1.11 listings language file
 ) (C:\Users\admin\MikTek\tex/latex/listings\lstlang3.sty
 File: lstlang3.sty 2025/10/06 1.11 listings language file
 )
-\c@subsubsubsection=\count394
-LaTeX Font Info:    Trying to load font information for T5+ptm on input line 183.
+\c@subsubsubsection=\count408
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 185.
+LaTeX Font Info:    Trying to load font information for T5+ptm on input line 185.
  (C:\Users\admin\MikTek\tex/latex/vntex\t5ptm.fd
 File: t5utm.fd 2005/08/24 Fontinst v1.929 font definitions for T5/ptm.
-) (main.aux)
+) (main.aux
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:sample' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:placeholder' multiply defined.
+
+
+LaTeX Warning: Label `fig:grid_images' multiply defined.
+
+
+LaTeX Warning: Label `fig:grid_images' multiply defined.
+
+
+LaTeX Warning: Label `fig:grid_images' multiply defined.
+
+
+LaTeX Warning: Label `fig:grid_images' multiply defined.
+
+
+LaTeX Warning: Label `fig:grid_images' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 183.
-LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 185.
+LaTeX Font Info:    ... okay on input line 185.
  (C:\Users\admin\MikTek\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count395
-\scratchdimen=\dimen360
-\scratchbox=\box147
-\nofMPsegments=\count396
-\nofMParguments=\count397
+\scratchcounter=\count409
+\scratchdimen=\dimen365
+\scratchbox=\box155
+\nofMPsegments=\count410
+\nofMParguments=\count411
 \everyMPshowfont=\toks59
-\MPscratchCnt=\count398
-\MPscratchDim=\dimen361
-\MPnumerator=\count399
-\makeMPintoPDFobject=\count400
+\MPscratchCnt=\count412
+\MPscratchDim=\dimen366
+\MPnumerator=\count413
+\makeMPintoPDFobject=\count414
 \everyMPtoPDFconversion=\toks60
 ) (C:\Users\admin\MikTek\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1334,7 +1419,8 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\admin\MikTek\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 183.
+Package hyperref Info: Link coloring ON on input line 185.
+ (main.out) (main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
@@ -1377,58 +1463,65 @@ Package caption Info: End \AtBeginDocument code.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count401
-<Images/hcmut.png, id=6, 1204.5pt x 1218.5525pt>
+(C:\Users\admin\MikTek\tex/latex/translations/dicts\translations-basic-dictionary-english.trsl
+File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
+)
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 185.
+\c@lstlisting=\count415
+<Images/hcmut.png, id=222, 1204.5pt x 1218.5525pt>
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
-Package pdftex.def Info: Images/hcmut.png  used on input line 196.
+Package pdftex.def Info: Images/hcmut.png  used on input line 198.
 (pdftex.def)             Requested size: 85.35826pt x 86.34863pt.
-LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 201.
-(C:\Users\admin\MikTek\tex/latex/psnfss\ot1ztmcm.fd
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 203.
+ (C:\Users\admin\MikTek\tex/latex/psnfss\ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 201.
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 203.
  (C:\Users\admin\MikTek\tex/latex/psnfss\omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 201.
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 203.
  (C:\Users\admin\MikTek\tex/latex/psnfss\omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 201.
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 203.
  (C:\Users\admin\MikTek\tex/latex/psnfss\omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 201.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 203.
  (C:\Users\admin\MikTek\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 201.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 203.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 201.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 203.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 201.
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 201.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 203.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 203.
  (C:\Users\admin\MikTek\tex/latex/base\ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
-{C:/Users/admin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/admin/MikTek/fonts/enc/dvips/vntex/t5.enc} <./Images/hcmut.png>]
-No file main.toc.
-\tf@toc=\write5
-\openout5 = `main.toc'.
-
-
+{C:/Users/admin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/admin/MikTek/fonts/enc/dvips/vntex/t5.enc} <./Images/hcmut.png>] (main.toc
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.240 \newpage
-               [1
+l.44 ...�a trong bài toán}{44}{subsection.4.2.1}
+                                                  % [1
 
-] (Content/Tổng quan bài toán.tex
+])
+\tf@toc=\write5
+\openout5 = `main.toc'.
+
+File: Images/hcmut.png Graphic file (type png)
+<use Images/hcmut.png>
+Package pdftex.def Info: Images/hcmut.png  used on input line 242.
+(pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
+ [2] (Content/Tổng quan bài toán.tex
 Ch\uhorn \ohorn ng 1.
-) (Content/Đặc tả bộ dữ liệu.tex [2
+) (Content/Đặc tả bộ dữ liệu.tex [3
 
 ]
 Ch\uhorn \ohorn ng 2.
@@ -1444,102 +1537,11 @@ LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6.
  (C:\Users\admin\MikTek\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-Content/Đặc tả bộ dữ liệu.tex:6: Undefined control sequence.
-l.6   \item \texttt{application\_train.csv}: \num
-                                                 {307511} quan sát, \num{12...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:6: Undefined control sequence.
-l.6 ...n\_train.csv}: \num{307511} quan sát, \num
-                                                  {122} biến (bao gồm bi...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:7: Undefined control sequence.
-l.7   \item \texttt{application\_test.csv}: \num
-                                                {48744} quan sát, \num{121}...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:7: Undefined control sequence.
-l.7 ...ion\_test.csv}: \num{48744} quan sát, \num
-                                                  {121} biến (không có \...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:9: Undefined control sequence.
-l.9 ...ET} (khách hàng \emph{vỡ nợ}) là \SI
-                                                  {8.073}{\percent} (24825/3...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:9: Undefined control sequence.
-l.9 ...g \emph{vỡ nợ}) là \SI{8.073}{\percent
-                                                  } (24825/307511), thể hi...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:9: Undefined control sequence.
-l.9 ...ng bình toàn bộ cột vào khoảng \SI
-                                                  {24.396}{\percent}, trong ...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:9: Undefined control sequence.
-l.9 ...�� cột vào khoảng \SI{24.396}{\percent
-                                                  }, trong đó một số b...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:12: Undefined control sequence.
-l.12 ...dent$\noindent\textbf{Kiểu biến:} \num
-                                                  {106} biến số và \num...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Content/Đặc tả bộ dữ liệu.tex:12: Undefined control sequence.
-l.12 ...�u biến:} \num{106} biến số và \num
-                                                  {16} biến phân loại (...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
 Underfull \hbox (badness 1552) in paragraph at lines 14--15
 []\T5/ptm/b/n/10 Nh�n kh�u/kinh t�: \T5/cmtt/m/n/10 CODE_GENDER\T5/ptm/m/n/10 , \T5/cmtt/m/n/10 CNT_CHILDREN\T5/ptm/m/n/10 , \T5/cmtt/m/n/10 AMT_INCOME_TOTAL\T5/ptm/m/n/10 , \T5/cmtt/m/n/10 NAME_EDUCATION_TYPE\T5/ptm/m/n/10 ,
  []
 
-[3
+[4
 
 {C:/Users/admin/MikTek/fonts/enc/dvips/base/8r.enc}]
 Underfull \hbox (badness 4582) in paragraph at lines 37--38
@@ -1595,10 +1597,7 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 61.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 61.
-
-[4]
+[5]
 Underfull \hbox (badness 10000) in paragraph at lines 67--67
 []|\T5/ptm/b/n/10 Ki�u
  []
@@ -1693,60 +1692,32 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 206.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 206.
-
-[5]
+ [6]
 Content/Đặc tả bộ dữ liệu.tex:206: ignored error: Infinite glue shrinkage found in box being split
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 206.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 206.
-
-[6]
+ [7]
 Content/Đặc tả bộ dữ liệu.tex:206: ignored error: Infinite glue shrinkage found in box being split
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 206.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 206.
-
-[7]
+ [8]
 Content/Đặc tả bộ dữ liệu.tex:206: ignored error: Infinite glue shrinkage found in box being split
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 206.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 206.
-
-[8]) (Content/Cơ sở lý thuyết cho các model.tex
+ [9]) (Content/Cơ sở lý thuyết cho các model.tex
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 1.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 1.
-
-[9]
+ [10]
 Ch\uhorn \ohorn ng 3.
-(Content/Preprocessing_theory.tex
-
-LaTeX Warning: Citation `mice' on page 10 undefined on input line 2.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 2.
-
-[10
+(Content/Preprocessing_theory.tex [11
 
 ]
 Overfull \hbox (9.14722pt too wide) in alignment at lines 23--27
@@ -1778,38 +1749,17 @@ Overfull \hbox (9.14722pt too wide) in alignment at lines 31--119
  [] [] [] 
  []
 
-
-LaTeX Warning: Citation `woeniv' on page 11 undefined on input line 120.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 120.
-
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 123.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 123.
-
-[11]
+[12]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 159.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 159.
-
-[12]
-
-LaTeX Warning: Citation `if' on page 13 undefined on input line 179.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 179.
-
-<Images/IF.png, id=102, 803.0pt x 401.5pt>
+ [13]
+<Images/IF.png, id=387, 803.0pt x 401.5pt>
 File: Images/IF.png Graphic file (type png)
 <use Images/IF.png>
 Package pdftex.def Info: Images/IF.png  used on input line 184.
@@ -1818,18 +1768,8 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 192.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 192.
-
-[13 <./Images/IF.png (PNG copy)>]
-
-LaTeX Warning: Citation `kurtosis' on page 14 undefined on input line 204.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 204.
-
-<Images/kurtosis.png, id=113, 695.59875pt x 384.43625pt>
+ [14 <./Images/IF.png (PNG copy)>]
+<Images/kurtosis.png, id=399, 695.59875pt x 384.43625pt>
 File: Images/kurtosis.png Graphic file (type png)
 <use Images/kurtosis.png>
 Package pdftex.def Info: Images/kurtosis.png  used on input line 208.
@@ -1838,18 +1778,8 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 221.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 221.
-
-[14 <./Images/kurtosis.png (PNG copy)>]
-
-LaTeX Warning: Citation `skew' on page 15 undefined on input line 250.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 250.
-
-<Images/skewness.png, id=129, 608.2725pt x 401.5pt>
+ [15 <./Images/kurtosis.png (PNG copy)>]
+<Images/skewness.png, id=416, 608.2725pt x 401.5pt>
 File: Images/skewness.png Graphic file (type png)
 <use Images/skewness.png>
 Package pdftex.def Info: Images/skewness.png  used on input line 254.
@@ -1858,59 +1788,31 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 259.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 259.
-
-[15 <./Images/skewness.png (PNG copy)>]
+ [16 <./Images/skewness.png (PNG copy)>]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 324.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 324.
-
-[16]
+ [17]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 410.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 410.
-
-[17]
+ [18]
 Underfull \hbox (badness 1248) in paragraph at lines 442--444
 []|\T5/ptm/m/n/10 Bao g�m c�c ch� s�: ph��ng sai (\T5/ptm/m/it/10 vari-ance\T5/ptm/m/n/10 ), ^^_�
  []
-
-
-LaTeX Warning: Citation `imbalance' on page 18 undefined on input line 481.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 481.
 
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 489.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 489.
-
-[18]
+[19]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 540.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 540.
-
-[19]) (Content/CatBoost_theory.tex
-
-LaTeX Warning: Citation `gboost' on page 20 undefined on input line 2.
-
+ [20]) (Content/CatBoost_theory.tex
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\@ifnextchar' on input line 2.
@@ -1919,11 +1821,8 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 5.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 5.
-
-[20]
-<Images/GB.png, id=192, 602.25pt x 301.125pt>
+[21]
+<Images/GB.png, id=485, 602.25pt x 301.125pt>
 File: Images/GB.png Graphic file (type png)
 <use Images/GB.png>
 Package pdftex.def Info: Images/GB.png  used on input line 24.
@@ -1932,20 +1831,10 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 29.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 29.
-
-[21 <./Images/GB.png (PNG copy)>]
-
-LaTeX Warning: Citation `catboost' on page 22 undefined on input line 50.
-
+ [22 <./Images/GB.png (PNG copy)>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\@ifnextchar' on input line 50.
-
-
-LaTeX Warning: Citation `catboost' on page 22 undefined on input line 69.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
@@ -1955,11 +1844,8 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 74.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 22 undefined on input line 74.
-
-[22]
-<Images/CB.png, id=214, 803.0pt x 401.5pt>
+[23]
+<Images/CB.png, id=506, 803.0pt x 401.5pt>
 File: Images/CB.png Graphic file (type png)
 <use Images/CB.png>
 Package pdftex.def Info: Images/CB.png  used on input line 86.
@@ -1968,21 +1854,13 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 105.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 23 undefined on input line 105.
-
-[23 <./Images/CB.png (PNG copy)>]
+ [24 <./Images/CB.png (PNG copy)>]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 160.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 24 undefined on input line 160.
-
-[24]
-<Images/ordering principle.png, id=229, 365.86688pt x 152.06813pt>
+ [25]
+<Images/ordering principle.png, id=522, 365.86688pt x 152.06813pt>
 File: Images/ordering principle.png Graphic file (type png)
 <use Images/ordering principle.png>
 Package pdftex.def Info: Images/ordering principle.png  used on input line 181.
@@ -1991,17 +1869,13 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 186.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 25 undefined on input line 186.
-
-[25 <./Images/ordering principle.png>]
-<Images/order boosting.png, id=240, 257.46187pt x 263.48438pt>
+ [26 <./Images/ordering principle.png>]
+<Images/order boosting.png, id=533, 257.46187pt x 263.48438pt>
 File: Images/order boosting.png Graphic file (type png)
 <use Images/order boosting.png>
 Package pdftex.def Info: Images/order boosting.png  used on input line 190.
 (pdftex.def)             Requested size: 227.62204pt x 232.95247pt.
-<Images/building tree algo.png, id=241, 259.7203pt x 402.00188pt>
+<Images/building tree algo.png, id=534, 259.7203pt x 402.00188pt>
 File: Images/building tree algo.png Graphic file (type png)
 <use Images/building tree algo.png>
 Package pdftex.def Info: Images/building tree algo.png  used on input line 212.
@@ -2014,10 +1888,7 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 217.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 26 undefined on input line 217.
-
-[26 <./Images/order boosting.png>]
+[27 <./Images/order boosting.png>]
 Overfull \hbox (5.72173pt too wide) in paragraph at lines 296--296
 []|\T5/ptm/m/n/10 early_stopping_rounds|  
  []
@@ -2027,27 +1898,13 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 323.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 27 undefined on input line 323.
-
-[27 <./Images/building tree algo.png>]) (Content/LightGBM_theory.tex
-
-LaTeX Warning: Citation `lightgbm' on page 28 undefined on input line 1.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 1.
-
+ [28 <./Images/building tree algo.png>]) (Content/LightGBM_theory.tex
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 19.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 28 undefined on input line 19.
-
-[28]
-<Images/Histogram.png, id=263, 387.69844pt x 404.26031pt>
+ [29]
+<Images/Histogram.png, id=557, 387.69844pt x 404.26031pt>
 File: Images/Histogram.png Graphic file (type png)
 <use Images/Histogram.png>
 Package pdftex.def Info: Images/Histogram.png  used on input line 52.
@@ -2056,26 +1913,13 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 62.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 29 undefined on input line 62.
-
-[29 <./Images/Histogram.png>]
-
-LaTeX Warning: Reference `eq:lgbm-var-gain' on page 30 undefined on input line 89.
-
-
-LaTeX Warning: Reference `eq:lgbm-var-gain' on page 30 undefined on input line 109.
-
+ [30 <./Images/Histogram.png>]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 124.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 30 undefined on input line 124.
-
-[30]
-<Images/GOSS .png, id=279, 389.95688pt x 417.81094pt>
+ [31]
+<Images/GOSS .png, id=576, 389.95688pt x 417.81094pt>
 File: Images/GOSS .png Graphic file (type png)
 <use Images/GOSS .png>
 Package pdftex.def Info: Images/GOSS .png  used on input line 155.
@@ -2084,39 +1928,23 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 160.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 31 undefined on input line 160.
-
-[31]
-
-LaTeX Warning: Reference `eq:goss-vtilde' on page 32 undefined on input line 189.
-
+ [32]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 193.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 32 undefined on input line 193.
-
-[32 <./Images/GOSS .png>]
-
-LaTeX Warning: Reference `eq:goss-vtilde' on page 33 undefined on input line 211.
-
+ [33 <./Images/GOSS .png>]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 228.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 33 undefined on input line 228.
-
-[33]
-<Images/GreedyBundling.png, id=307, 380.92313pt x 322.20375pt>
+ [34]
+<Images/GreedyBundling.png, id=607, 380.92313pt x 322.20375pt>
 File: Images/GreedyBundling.png Graphic file (type png)
 <use Images/GreedyBundling.png>
 Package pdftex.def Info: Images/GreedyBundling.png  used on input line 248.
 (pdftex.def)             Requested size: 227.62204pt x 192.5322pt.
-<Images/MEF.png, id=308, 374.90062pt x 301.125pt>
+<Images/MEF.png, id=608, 374.90062pt x 301.125pt>
 File: Images/MEF.png Graphic file (type png)
 <use Images/MEF.png>
 Package pdftex.def Info: Images/MEF.png  used on input line 256.
@@ -2125,21 +1953,13 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 264.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 34 undefined on input line 264.
-
-[34 <./Images/GreedyBundling.png> <./Images/MEF.png>]
+ [35 <./Images/GreedyBundling.png> <./Images/MEF.png>]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 309.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 35 undefined on input line 309.
-
-[35]
-<Images/leafwise.png, id=327, 660.21657pt x 420.06938pt>
+ [36]
+<Images/leafwise.png, id=629, 660.21657pt x 420.06938pt>
 File: Images/leafwise.png Graphic file (type png)
 <use Images/leafwise.png>
 Package pdftex.def Info: Images/leafwise.png  used on input line 317.
@@ -2153,24 +1973,14 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 446.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 36 undefined on input line 446.
-
-[36 <./Images/leafwise.png>]
+[37 <./Images/leafwise.png>]
 Content/LightGBM_theory.tex:446: ignored error: Infinite glue shrinkage found in box being split
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 446.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 37 undefined on input line 446.
-
-[37]) (Content/metric.tex
-
-LaTeX Warning: Citation `confusionmatrix' on page 38 undefined on input line 5.
-
-<Images/pp.png, id=341, 2690.05pt x 1572.87625pt>
+ [38]) (Content/metric.tex
+<Images/pp.png, id=644, 2690.05pt x 1572.87625pt>
 File: Images/pp.png Graphic file (type png)
 <use Images/pp.png>
 Package pdftex.def Info: Images/pp.png  used on input line 18.
@@ -2179,11 +1989,8 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 40.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 38 undefined on input line 40.
-
-[38 <./Images/pp.png>]
-<Images//Confusion Matrix/CMvd1.png, id=351, 542.77782pt x 414.04688pt>
+ [39 <./Images/pp.png>]
+<Images//Confusion Matrix/CMvd1.png, id=654, 542.77782pt x 414.04688pt>
 File: Images//Confusion Matrix/CMvd1.png Graphic file (type png)
 <use Images//Confusion Matrix/CMvd1.png>
 Package pdftex.def Info: Images//Confusion Matrix/CMvd1.png  used on input line 106.
@@ -2192,12 +1999,8 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 110.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 39 undefined on input line 110.
-
-[39]
-<Images//Confusion Matrix/CMvd2.png, id=359, 496.85625pt x 419.31656pt>
+ [40]
+<Images//Confusion Matrix/CMvd2.png, id=663, 496.85625pt x 419.31656pt>
 File: Images//Confusion Matrix/CMvd2.png Graphic file (type png)
 <use Images//Confusion Matrix/CMvd2.png>
 Package pdftex.def Info: Images//Confusion Matrix/CMvd2.png  used on input line 144.
@@ -2206,14 +2009,7 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 149.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 40 undefined on input line 149.
-
-[40 <./Images//Confusion Matrix/CMvd1.png>]
-
-LaTeX Warning: Citation `aucroc' on page 41 undefined on input line 171.
-
+ [41 <./Images//Confusion Matrix/CMvd1.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\@ifnextchar' on input line 171.
@@ -2222,11 +2018,8 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 195.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 41 undefined on input line 195.
-
-[41 <./Images//Confusion Matrix/CMvd2.png>]
-<Images//Confusion Matrix/rocauc.png, id=381, 640.64343pt x 472.76625pt>
+[42 <./Images//Confusion Matrix/CMvd2.png>]
+<Images//Confusion Matrix/rocauc.png, id=688, 640.64343pt x 472.76625pt>
 File: Images//Confusion Matrix/rocauc.png Graphic file (type png)
 <use Images//Confusion Matrix/rocauc.png>
 Package pdftex.def Info: Images//Confusion Matrix/rocauc.png  used on input line 202.
@@ -2234,13 +2027,9 @@ Package pdftex.def Info: Images//Confusion Matrix/rocauc.png  used on input line
 ))
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
-Package pdftex.def Info: Images/hcmut.png  used on input line 244.
+Package pdftex.def Info: Images/hcmut.png  used on input line 246.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 42 undefined on input line 244.
-
-[42 <./Images//Confusion Matrix/rocauc.png>] (Content/Hiện thực bài toán.tex
+ [43 <./Images//Confusion Matrix/rocauc.png>] (Content/Hiện thực bài toán.tex
 Ch\uhorn \ohorn ng 4.
 (C:\Users\admin\MikTek\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2025/10/06 1.11 listings language file
@@ -2250,6 +2039,21 @@ LaTeX Font Info:    Trying to load font information for T5+cmss on input line 11
  (C:\Users\admin\MikTek\tex/latex/vntex\t5cmss.fd
 File: t5cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
+Overfull \hbox (10.08516pt too wide) in alignment at lines 31--35
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (10.08516pt too wide) in alignment at lines 35--39
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (10.08516pt too wide) in alignment at lines 39--41
+ [] [] [] [] 
+ []
+
+
 Underfull \hbox (badness 1742) in paragraph at lines 51--51
 \T5/ptm/m/n/10 work ad-dress (1=dif-fer-ent, 0=same, at re-gion
  []
@@ -2264,11 +2068,7 @@ Overfull \hbox (10.08516pt too wide) in alignment at lines 41--87
  [] [] [] [] 
  []
 
-
-Package longtable Warning: Column widths have changed
-(longtable)                in table 4.1 on input line 87.
-
-Content/Hiện thực bài toán.tex:87: ignored error: Infinite glue shrinkage found in box being split [43
+Content/Hiện thực bài toán.tex:87: ignored error: Infinite glue shrinkage found in box being split [44
 
 ]
 Content/Hiện thực bài toán.tex:87: ignored error: Infinite glue shrinkage found in box being split
@@ -2276,306 +2076,234 @@ File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 87.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 44 undefined on input line 87.
-
-[44]
-
-Package longtable Warning: Column widths have changed
-(longtable)                in table 4.2 on input line 191.
-
+ [45]
 Content/Hiện thực bài toán.tex:191: ignored error: Infinite glue shrinkage found in box being split
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 191.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 45 undefined on input line 191.
-
-[45]
+ [46]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 209.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 46 undefined on input line 209.
-
-[46]
+ [47]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 274.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 47 undefined on input line 274.
-
-[47]
-
-Content/Hiện thực bài toán.tex:287: LaTeX Error: Invalid UTF-8 byte sequence (�\expandafter).
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.287         # Tránh 
-                       log(0)
-The document does not appear to be in UTF-8 encoding.
-Try adding \UseRawInputEncoding as the first line of the file
-or specify an encoding such as \usepackage [latin1]{inputenc}
-in the document preamble.
-Alternatively, save the file in UTF-8 using your editor or another tool
-
-
-Content/Hiện thực bài toán.tex:287: LaTeX Error: Invalid UTF-8 byte "A1.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.287         # Tránh 
-                       log(0)
-The document does not appear to be in UTF-8 encoding.
-Try adding \UseRawInputEncoding as the first line of the file
-or specify an encoding such as \usepackage [latin1]{inputenc}
-in the document preamble.
-Alternatively, save the file in UTF-8 using your editor or another tool
-
+ [48]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 345.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 48 undefined on input line 345.
-
-[48]
-
-Package longtable Warning: Column widths have changed
-(longtable)                in table 4.3 on input line 402.
-
+ [49]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
-Package pdftex.def Info: Images/hcmut.png  used on input line 414.
+Package pdftex.def Info: Images/hcmut.png  used on input line 415.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-LaTeX Warning: Reference `LastPage' on page 49 undefined on input line 414.
-
-[49]
-<Images/Data Distribution/amt_annuity.png, id=606, 650.43pt x 420.82219pt>
+ [50]
+<Images/Data Distribution/amt_annuity.png, id=912, 650.43pt x 420.82219pt>
 File: Images/Data Distribution/amt_annuity.png Graphic file (type png)
 <use Images/Data Distribution/amt_annuity.png>
-Package pdftex.def Info: Images/Data Distribution/amt_annuity.png  used on input line 434.
+Package pdftex.def Info: Images/Data Distribution/amt_annuity.png  used on input line 433.
 (pdftex.def)             Requested size: 204.85844pt x 132.54042pt.
-<Images/Data Distribution/amt_credit.png, id=607, 651.93562pt x 423.08063pt>
+<Images/Data Distribution/amt_credit.png, id=913, 651.93562pt x 423.08063pt>
 File: Images/Data Distribution/amt_credit.png Graphic file (type png)
 <use Images/Data Distribution/amt_credit.png>
-Package pdftex.def Info: Images/Data Distribution/amt_credit.png  used on input line 435.
+Package pdftex.def Info: Images/Data Distribution/amt_credit.png  used on input line 434.
 (pdftex.def)             Requested size: 204.85844pt x 132.94185pt.
-<Images/Data Distribution/amt_goods_price.png, id=608, 648.17157pt x 420.06938pt>
+<Images/Data Distribution/amt_goods_price.png, id=914, 648.17157pt x 420.06938pt>
 File: Images/Data Distribution/amt_goods_price.png Graphic file (type png)
 <use Images/Data Distribution/amt_goods_price.png>
-Package pdftex.def Info: Images/Data Distribution/amt_goods_price.png  used on input line 436.
+Package pdftex.def Info: Images/Data Distribution/amt_goods_price.png  used on input line 435.
 (pdftex.def)             Requested size: 204.85844pt x 132.76482pt.
-<Images/Data Distribution/ext_source_3.png, id=609, 532.99126pt x 417.05812pt>
+<Images/Data Distribution/ext_source_3.png, id=915, 532.99126pt x 417.05812pt>
 File: Images/Data Distribution/ext_source_3.png Graphic file (type png)
 <use Images/Data Distribution/ext_source_3.png>
-Package pdftex.def Info: Images/Data Distribution/ext_source_3.png  used on input line 437.
+Package pdftex.def Info: Images/Data Distribution/ext_source_3.png  used on input line 436.
 (pdftex.def)             Requested size: 172.99496pt x 135.36409pt.
-<Images/Data Distribution/ext_source_2.png, id=610, 623.32875pt x 420.06938pt>
+<Images/Data Distribution/ext_source_2.png, id=916, 623.32875pt x 420.06938pt>
 File: Images/Data Distribution/ext_source_2.png Graphic file (type png)
 <use Images/Data Distribution/ext_source_2.png>
-Package pdftex.def Info: Images/Data Distribution/ext_source_2.png  used on input line 438.
+Package pdftex.def Info: Images/Data Distribution/ext_source_2.png  used on input line 437.
 (pdftex.def)             Requested size: 204.85844pt x 138.05927pt.
-<Images/Data Distribution/region_population_relative.png, id=611, 647.41875pt x 419.31656pt>
+<Images/Data Distribution/region_population_relative.png, id=917, 647.41875pt x 419.31656pt>
 File: Images/Data Distribution/region_population_relative.png Graphic file (type png)
 <use Images/Data Distribution/region_population_relative.png>
-Package pdftex.def Info: Images/Data Distribution/region_population_relative.png  used on input line 439.
+Package pdftex.def Info: Images/Data Distribution/region_population_relative.png  used on input line 438.
 (pdftex.def)             Requested size: 204.85844pt x 132.68044pt.
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
-Package pdftex.def Info: Images/hcmut.png  used on input line 447.
+Package pdftex.def Info: Images/hcmut.png  used on input line 446.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 50 undefined on input line 447.
-
-[50 <./Images/Data Distribution/amt_annuity.png> <./Images/Data Distribution/amt_credit.png> <./Images/Data Distribution/amt_goods_price.png> <./Images/Data Distribution/ext_source_3.png> <./Images/Data Distribution/ext_source_2.png> <./Images/Data Distribution/region_population_relative.png>]
-<Images/Data Transformation/amt_annuity.png, id=639, 534.49687pt x 419.31656pt>
+ [51 <./Images/Data Distribution/amt_annuity.png> <./Images/Data Distribution/amt_credit.png> <./Images/Data Distribution/amt_goods_price.png> <./Images/Data Distribution/ext_source_3.png> <./Images/Data Distribution/ext_source_2.png> <./Images/Data Distribution/region_population_relative.png>]
+<Images/Data Transformation/amt_annuity.png, id=944, 534.49687pt x 419.31656pt>
 File: Images/Data Transformation/amt_annuity.png Graphic file (type png)
 <use Images/Data Transformation/amt_annuity.png>
-Package pdftex.def Info: Images/Data Transformation/amt_annuity.png  used on input line 469.
+Package pdftex.def Info: Images/Data Transformation/amt_annuity.png  used on input line 468.
 (pdftex.def)             Requested size: 172.99496pt x 135.71321pt.
-<Images/Data Transformation/amt_credit.png, id=640, 532.23843pt x 419.31656pt>
+<Images/Data Transformation/amt_credit.png, id=945, 532.23843pt x 419.31656pt>
 File: Images/Data Transformation/amt_credit.png Graphic file (type png)
 <use Images/Data Transformation/amt_credit.png>
-Package pdftex.def Info: Images/Data Transformation/amt_credit.png  used on input line 470.
+Package pdftex.def Info: Images/Data Transformation/amt_credit.png  used on input line 469.
 (pdftex.def)             Requested size: 172.99496pt x 136.28905pt.
-<Images/Data Transformation/amt_goods_price.png, id=641, 534.49687pt x 417.81094pt>
+<Images/Data Transformation/amt_goods_price.png, id=946, 534.49687pt x 417.81094pt>
 File: Images/Data Transformation/amt_goods_price.png Graphic file (type png)
 <use Images/Data Transformation/amt_goods_price.png>
-Package pdftex.def Info: Images/Data Transformation/amt_goods_price.png  used on input line 471.
+Package pdftex.def Info: Images/Data Transformation/amt_goods_price.png  used on input line 470.
 (pdftex.def)             Requested size: 172.99496pt x 135.22592pt.
-<Images/Data Transformation/ext_3.png, id=642, 532.99126pt x 417.81094pt>
+<Images/Data Transformation/ext_3.png, id=947, 532.99126pt x 417.81094pt>
+File: Images/Data Transformation/ext_3.png Graphic file (type png)
+<use Images/Data Transformation/ext_3.png>
+Package pdftex.def Info: Images/Data Transformation/ext_3.png  used on input line 471.
+(pdftex.def)             Requested size: 172.99496pt x 135.60843pt.
 File: Images/Data Transformation/ext_3.png Graphic file (type png)
 <use Images/Data Transformation/ext_3.png>
 Package pdftex.def Info: Images/Data Transformation/ext_3.png  used on input line 472.
 (pdftex.def)             Requested size: 172.99496pt x 135.60843pt.
-File: Images/Data Transformation/ext_3.png Graphic file (type png)
-<use Images/Data Transformation/ext_3.png>
-Package pdftex.def Info: Images/Data Transformation/ext_3.png  used on input line 473.
-(pdftex.def)             Requested size: 172.99496pt x 135.60843pt.
-<Images/Data Transformation/re_popu_re.png, id=643, 531.48563pt x 418.56375pt>
+<Images/Data Transformation/re_popu_re.png, id=948, 531.48563pt x 418.56375pt>
 File: Images/Data Transformation/re_popu_re.png Graphic file (type png)
 <use Images/Data Transformation/re_popu_re.png>
-Package pdftex.def Info: Images/Data Transformation/re_popu_re.png  used on input line 474.
+Package pdftex.def Info: Images/Data Transformation/re_popu_re.png  used on input line 473.
 (pdftex.def)             Requested size: 172.99496pt x 136.24236pt.
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
-Package pdftex.def Info: Images/hcmut.png  used on input line 483.
+Package pdftex.def Info: Images/hcmut.png  used on input line 482.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 51 undefined on input line 483.
-
-[51 <./Images/Data Transformation/amt_annuity.png> <./Images/Data Transformation/amt_credit.png> <./Images/Data Transformation/amt_goods_price.png> <./Images/Data Transformation/ext_3.png> <./Images/Data Transformation/re_popu_re.png>]
+ [52 <./Images/Data Transformation/amt_annuity.png> <./Images/Data Transformation/amt_credit.png> <./Images/Data Transformation/amt_goods_price.png> <./Images/Data Transformation/ext_3.png> <./Images/Data Transformation/re_popu_re.png>]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
-Package pdftex.def Info: Images/hcmut.png  used on input line 547.
+Package pdftex.def Info: Images/hcmut.png  used on input line 546.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 52 undefined on input line 547.
-
-[52]
-<Images/Report/normal.png, id=712, 310.15875pt x 103.13531pt>
+ [53]
+<Images/Report/normal.png, id=1018, 310.15875pt x 103.13531pt>
 File: Images/Report/normal.png Graphic file (type png)
 <use Images/Report/normal.png>
-Package pdftex.def Info: Images/Report/normal.png  used on input line 598.
+Package pdftex.def Info: Images/Report/normal.png  used on input line 597.
 (pdftex.def)             Requested size: 172.99496pt x 57.52403pt.
-<Images/Report/smote.png, id=713, 313.17pt x 103.13531pt>
+<Images/Report/smote.png, id=1019, 313.17pt x 103.13531pt>
 File: Images/Report/smote.png Graphic file (type png)
 <use Images/Report/smote.png>
-Package pdftex.def Info: Images/Report/smote.png  used on input line 599.
+Package pdftex.def Info: Images/Report/smote.png  used on input line 598.
 (pdftex.def)             Requested size: 172.99496pt x 56.97322pt.
-<Images/Report/under.png, id=714, 315.42844pt x 105.39375pt>
+<Images/Report/under.png, id=1020, 315.42844pt x 105.39375pt>
 File: Images/Report/under.png Graphic file (type png)
 <use Images/Report/under.png>
-Package pdftex.def Info: Images/Report/under.png  used on input line 600.
+Package pdftex.def Info: Images/Report/under.png  used on input line 599.
 (pdftex.def)             Requested size: 172.99496pt x 57.80269pt.
-<Images/Report/both.png, id=715, 311.66437pt x 108.405pt>
+<Images/Report/both.png, id=1021, 311.66437pt x 108.405pt>
 File: Images/Report/both.png Graphic file (type png)
 <use Images/Report/both.png>
-Package pdftex.def Info: Images/Report/both.png  used on input line 601.
+Package pdftex.def Info: Images/Report/both.png  used on input line 600.
 (pdftex.def)             Requested size: 172.99496pt x 60.17209pt.
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
-Package pdftex.def Info: Images/hcmut.png  used on input line 607.
+Package pdftex.def Info: Images/hcmut.png  used on input line 606.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 53 undefined on input line 607.
-
-[53]
-<Images/Confusion Matrix/normal.png, id=746, 384.6872pt x 331.2375pt>
+ [54]
+<Images/Confusion Matrix/normal.png, id=1051, 384.6872pt x 331.2375pt>
 File: Images/Confusion Matrix/normal.png Graphic file (type png)
 <use Images/Confusion Matrix/normal.png>
-Package pdftex.def Info: Images/Confusion Matrix/normal.png  used on input line 620.
+Package pdftex.def Info: Images/Confusion Matrix/normal.png  used on input line 619.
 (pdftex.def)             Requested size: 172.99496pt x 148.95946pt.
-<Images/Confusion Matrix/smote.png, id=747, 384.6872pt x 335.75438pt>
+<Images/Confusion Matrix/smote.png, id=1052, 384.6872pt x 335.75438pt>
 File: Images/Confusion Matrix/smote.png Graphic file (type png)
 <use Images/Confusion Matrix/smote.png>
-Package pdftex.def Info: Images/Confusion Matrix/smote.png  used on input line 621.
+Package pdftex.def Info: Images/Confusion Matrix/smote.png  used on input line 620.
 (pdftex.def)             Requested size: 172.99496pt x 150.99072pt.
-<Images/Confusion Matrix/under.png, id=748, 381.67593pt x 334.24875pt>
+<Images/Confusion Matrix/under.png, id=1053, 381.67593pt x 334.24875pt>
 File: Images/Confusion Matrix/under.png Graphic file (type png)
 <use Images/Confusion Matrix/under.png>
-Package pdftex.def Info: Images/Confusion Matrix/under.png  used on input line 622.
+Package pdftex.def Info: Images/Confusion Matrix/under.png  used on input line 621.
 (pdftex.def)             Requested size: 172.99496pt x 151.49689pt.
-<Images/Confusion Matrix/both.png, id=749, 388.45125pt x 335.00156pt>
+<Images/Confusion Matrix/both.png, id=1054, 388.45125pt x 335.00156pt>
 File: Images/Confusion Matrix/both.png Graphic file (type png)
 <use Images/Confusion Matrix/both.png>
-Package pdftex.def Info: Images/Confusion Matrix/both.png  used on input line 623.
+Package pdftex.def Info: Images/Confusion Matrix/both.png  used on input line 622.
 (pdftex.def)             Requested size: 172.99496pt x 149.19534pt.
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
-Package pdftex.def Info: Images/hcmut.png  used on input line 629.
+Package pdftex.def Info: Images/hcmut.png  used on input line 628.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 54 undefined on input line 629.
-
-[54 <./Images/Report/normal.png> <./Images/Report/smote.png> <./Images/Report/under.png> <./Images/Report/both.png> <./Images/Confusion Matrix/normal.png> <./Images/Confusion Matrix/smote.png> <./Images/Confusion Matrix/under.png> <./Images/Confusion Matrix/both.png>]
-<Images/Feature Imp/normal.png, id=768, 671.50874pt x 517.935pt>
+ [55 <./Images/Report/normal.png> <./Images/Report/smote.png> <./Images/Report/under.png> <./Images/Report/both.png> <./Images/Confusion Matrix/normal.png> <./Images/Confusion Matrix/smote.png> <./Images/Confusion Matrix/under.png> <./Images/Confusion Matrix/both.png>]
+<Images/Feature Imp/normal.png, id=1073, 671.50874pt x 517.935pt>
 File: Images/Feature Imp/normal.png Graphic file (type png)
 <use Images/Feature Imp/normal.png>
-Package pdftex.def Info: Images/Feature Imp/normal.png  used on input line 634.
+Package pdftex.def Info: Images/Feature Imp/normal.png  used on input line 633.
 (pdftex.def)             Requested size: 172.99496pt x 133.42703pt.
-<Images/Feature Imp/smote.png, id=769, 682.80093pt x 519.44063pt>
+<Images/Feature Imp/smote.png, id=1074, 682.80093pt x 519.44063pt>
 File: Images/Feature Imp/smote.png Graphic file (type png)
 <use Images/Feature Imp/smote.png>
-Package pdftex.def Info: Images/Feature Imp/smote.png  used on input line 635.
+Package pdftex.def Info: Images/Feature Imp/smote.png  used on input line 634.
 (pdftex.def)             Requested size: 172.99496pt x 131.60356pt.
-<Images/Feature Imp/under.png, id=770, 677.53125pt x 519.44063pt>
+<Images/Feature Imp/under.png, id=1075, 677.53125pt x 519.44063pt>
 File: Images/Feature Imp/under.png Graphic file (type png)
 <use Images/Feature Imp/under.png>
-Package pdftex.def Info: Images/Feature Imp/under.png  used on input line 636.
+Package pdftex.def Info: Images/Feature Imp/under.png  used on input line 635.
 (pdftex.def)             Requested size: 172.99496pt x 132.626pt.
-<Images/Feature Imp/both.png, id=771, 687.31781pt x 519.44063pt>
+<Images/Feature Imp/both.png, id=1076, 687.31781pt x 519.44063pt>
 File: Images/Feature Imp/both.png Graphic file (type png)
 <use Images/Feature Imp/both.png>
-Package pdftex.def Info: Images/Feature Imp/both.png  used on input line 637.
+Package pdftex.def Info: Images/Feature Imp/both.png  used on input line 636.
 (pdftex.def)             Requested size: 172.99496pt x 130.73962pt.
-<Images/Pred Distribution/normal.png, id=772, 423.08063pt x 337.26pt>
+<Images/Pred Distribution/normal.png, id=1077, 423.08063pt x 337.26pt>
 File: Images/Pred Distribution/normal.png Graphic file (type png)
 <use Images/Pred Distribution/normal.png>
-Package pdftex.def Info: Images/Pred Distribution/normal.png  used on input line 647.
+Package pdftex.def Info: Images/Pred Distribution/normal.png  used on input line 646.
 (pdftex.def)             Requested size: 172.99496pt x 137.90181pt.
-<Images/Pred Distribution/smote.png, id=773, 419.31656pt x 338.76563pt>
+<Images/Pred Distribution/smote.png, id=1078, 419.31656pt x 338.76563pt>
 File: Images/Pred Distribution/smote.png Graphic file (type png)
 <use Images/Pred Distribution/smote.png>
-Package pdftex.def Info: Images/Pred Distribution/smote.png  used on input line 648.
+Package pdftex.def Info: Images/Pred Distribution/smote.png  used on input line 647.
 (pdftex.def)             Requested size: 172.99496pt x 139.76321pt.
-<Images/Pred Distribution/under.png, id=774, 417.81094pt x 340.27126pt>
+<Images/Pred Distribution/under.png, id=1079, 417.81094pt x 340.27126pt>
 File: Images/Pred Distribution/under.png Graphic file (type png)
 <use Images/Pred Distribution/under.png>
-Package pdftex.def Info: Images/Pred Distribution/under.png  used on input line 649.
+Package pdftex.def Info: Images/Pred Distribution/under.png  used on input line 648.
 (pdftex.def)             Requested size: 172.99496pt x 140.89322pt.
-<Images/Pred Distribution/both.png, id=775, 423.83344pt x 331.2375pt>
+<Images/Pred Distribution/both.png, id=1080, 423.83344pt x 331.2375pt>
 File: Images/Pred Distribution/both.png Graphic file (type png)
 <use Images/Pred Distribution/both.png>
-Package pdftex.def Info: Images/Pred Distribution/both.png  used on input line 650.
+Package pdftex.def Info: Images/Pred Distribution/both.png  used on input line 649.
 (pdftex.def)             Requested size: 172.99496pt x 135.19667pt.
 ) (Content/Insight.tex
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 1.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 55 undefined on input line 1.
-
-[55 <./Images/Feature Imp/normal.png> <./Images/Feature Imp/smote.png> <./Images/Feature Imp/under.png> <./Images/Feature Imp/both.png> <./Images/Pred Distribution/normal.png> <./Images/Pred Distribution/smote.png> <./Images/Pred Distribution/under.png> <./Images/Pred Distribution/both.png>]
+ [56 <./Images/Feature Imp/normal.png> <./Images/Feature Imp/smote.png> <./Images/Feature Imp/under.png> <./Images/Feature Imp/both.png> <./Images/Pred Distribution/normal.png> <./Images/Pred Distribution/smote.png> <./Images/Pred Distribution/under.png> <./Images/Pred Distribution/both.png>]
 File: Images/hcmut.png Graphic file (type png)
 <use Images/hcmut.png>
 Package pdftex.def Info: Images/hcmut.png  used on input line 1.
 (pdftex.def)             Requested size: 28.45094pt x 28.44818pt.
-
-
-LaTeX Warning: Reference `LastPage' on page 56 undefined on input line 1.
-
-[56]
+ [57]
 Ch\uhorn \ohorn ng 5.
-)
-No file main.bbl.
-[57
+) (main.bbl [58
 
 ]
+Underfull \hbox (badness 1043) in paragraph at lines 12--16
+[]\T5/ptm/m/n/10 Deepanshu Bhalla.  Weight of ev-i-dence (woe) and in-for-ma-tion value (iv) ex-plained.  Ref-er-ences:
+ []
 
-Package longtable Warning: Table widths have changed. Rerun LaTeX.
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--28
+[]\T5/ptm/m/n/10 GeeksForGeeks.  Han-dling im-bal-anced data for clas-si-fi-ca-tion.  Ref-er-ences:
+ []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 30--34
+[]\T5/ptm/m/n/10 GeeksForGeeks.  How to cal-cu-late kur-to-sis in statis-tics?  Ref-er-ences:
+ []
+
+
+Underfull \hbox (badness 4765) in paragraph at lines 48--52
+[]\T5/ptm/m/n/10 GeeksForGeeks.  Auc roc curve in ma-chine learn-ing.  [][]$[]\T5/cmtt/m/n/10 https : / / www . geeksforgeeks . org /
+ []
+
+) [59
+
+] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (main.aux)
  ***********
@@ -2584,38 +2312,26 @@ L3 programming layer <2025-10-24>
  ***********
 
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: There were multiply-defined labels.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  37961D035A277E359D50C84C3E5D24E6;15319.
-
-Package lastpage Warning: Rerun to get the references right on input line 249.
-
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: EEA82397A8E560AC77198561CCBB379B;14745.
  ) 
 Here is how much of TeX's memory you used:
- 31618 strings out of 467871
- 584355 string characters out of 5429438
- 1700052 words of memory out of 5000000
- 59329 multiletter control sequences out of 15000+600000
- 711873 words of font info for 140 fonts, out of 8000000 for 9000
+ 35540 strings out of 467871
+ 706472 string characters out of 5429438
+ 1791953 words of memory out of 5000000
+ 63216 multiletter control sequences out of 15000+600000
+ 709609 words of font info for 139 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 104i,26n,126p,1525b,2331s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,26n,126p,1525b,2801s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist, replaced by a fixed one
 
  <C:\Users\admin\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss0800.pk><C:/Users/admin/MikTek/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/admin/MikTek/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/admin/MikTek/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/admin/MikTek/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/admin/MikTek/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/admin/MikTek/fonts/type1/public/rsfs/rsfs10.pfb><C:/Users/admin/MikTek/fonts/type1/urw/symbol/usyr.pfb><C:/Users/admin/MikTek/fonts/type1/urw/symbol/usyr.pfb><C:/Users/admin/MikTek/fonts/type1/urw/times/utmb8a.pfb><C:/Users/admin/MikTek/fonts/type1/vntex/urwvn/utmb8v.pfb><C:/Users/admin/MikTek/fonts/type1/vntex/urwvn/utmbi8v.pfb><C:/Users/admin/MikTek/fonts/type1/urw/times/utmr8a.pfb><C:/Users/admin/MikTek/fonts/type1/vntex/urwvn/utmr8v.pfb><C:/Users/admin/MikTek/fonts/type1/urw/times/utmri8a.pfb><C:/Users/admin/MikTek/fonts/type1/vntex/urwvn/utmri8v.pfb><C:/Users/admin/MikTek/fonts/type1/vntex/vnr/vnitt10.pfb><C:/Users/admin/MikTek/fonts/type1/vntex/vnr/vnss8.pfb><C:/Users/admin/MikTek/fonts/type1/vntex/vnr/vntt10.pfb><C:/Users/admin/MikTek/fonts/type1/vntex/vnr/vntt8.pfb>
-Output written on main.pdf (58 pages, 2719117 bytes).
+Output written on main.pdf (60 pages, 2781009 bytes).
 PDF statistics:
- 995 PDF objects out of 1000 (max. 8388607)
- 506 named destinations out of 1000 (max. 500000)
- 238 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1322 PDF objects out of 1440 (max. 8388607)
+ 519 named destinations out of 1000 (max. 500000)
+ 670 words of extra memory for PDF output out of 10000 (max. 10000000)
 

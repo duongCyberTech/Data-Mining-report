@@ -284,7 +284,6 @@ def calc_woe_iv(df, feature, target):
         dist_good = good / total_good if total_good > 0 else 0
         dist_bad = bad / total_bad if total_bad > 0 else 0
 
-        # Tránh log(0)
         if dist_good == 0 or dist_bad == 0:
             woe = 0
         else:

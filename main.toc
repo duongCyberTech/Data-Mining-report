@@ -1,55 +1,55 @@
-\contentsline {chapter}{\numberline {1}Tổng quan bài toán}{2}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Đặc tả bộ dữ liệu được sử dụng trong bài toán}{3}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Tổng quan bộ dữ liệu}{3}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Đặc điểm về bộ dữ liệu}{4}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Mô tả các feature của bộ dữ liệu}{5}{subsection.2.1.2}%
-\contentsline {chapter}{\numberline {3}Cơ sở lý thuyết}{10}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Tiền xử lý dữ liệu}{10}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Xử lý dữ liệu khuyết với Phương pháp gán đa biến bằng phương trình chuỗi (MICE - Multivariate imputation by chained equations)~\cite {mice}}{10}{subsection.3.1.1}%
-\contentsline {subsubsection}{\numberline {3.1.1.1}Sơ lược về MICE}{10}{subsubsection.3.1.1.1}%
-\contentsline {subsubsection}{\numberline {3.1.1.2}Hiện thực MICE trong Python}{11}{subsubsection.3.1.1.2}%
-\contentsline {subsection}{\numberline {3.1.2}Trọng số của bằng chứng (WOE - Weight Of Envidence) và Giá trị thông tin (IV - Information Value)~\cite {woeniv}}{12}{subsection.3.1.2}%
-\contentsline {subsubsection}{\numberline {3.1.2.1}Trọng số của bằng chứng (WOE - Weight Of Envidence)}{12}{subsubsection.3.1.2.1}%
-\contentsline {subsubsection}{\numberline {3.1.2.2}Giá trị thông tin (IV - Information Value)}{13}{subsubsection.3.1.2.2}%
-\contentsline {subsection}{\numberline {3.1.3}Xử lý dữ liệu ngoại biên (outliers) với Rừng cô lập (Isolation Forest)~\cite {if}}{13}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Phân tích độ nhọn (Kurtosis) và độ lệch (Skewness)}{14}{subsection.3.1.4}%
-\contentsline {subsubsection}{\numberline {3.1.4.1}Độ nhọn (Kurtosis)~\cite {kurtosis}}{14}{subsubsection.3.1.4.1}%
-\contentsline {subsubsection}{\numberline {3.1.4.2}Độ lệch (Skewness)~\cite {skew}}{15}{subsubsection.3.1.4.2}%
-\contentsline {subsection}{\numberline {3.1.5}Xử lý dữ liệu mất cân bằng trong bài toán phân loại~\cite {imbalance}}{18}{subsection.3.1.5}%
-\contentsline {subsubsection}{\numberline {3.1.5.1}Sơ lược về mất cân bằng dữ liệu (Imbalanced Data)}{18}{subsubsection.3.1.5.1}%
-\contentsline {subsubsection}{\numberline {3.1.5.2}Các cách xử lý dữ liệu mất cân bằng trong phân loại}{19}{subsubsection.3.1.5.2}%
-\contentsline {section}{\numberline {3.2}Gradient Boosting}{21}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Sơ lược về giải thuật Gradient Boosting~\cite {gboost}}{21}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Cơ sở toán học cho Gradient Boosting~\cite {catboost}}{22}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Categorical Boosting (Mô hình CatBoost)~\cite {catboost}}{22}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Thuật toán CatBoost}{22}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Biến phân loại và Target Statistics}{23}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Độ lệch dự đoán (Prediction Shift) và Boosting có thứ tự (Ordered Boosting)}{25}{subsection.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Hiện thực mô hình CatBoost}{26}{subsection.3.3.4}%
-\contentsline {subsection}{\numberline {3.3.5}Các tham số chung của mô hình CatBoost}{27}{subsection.3.3.5}%
-\contentsline {section}{\numberline {3.4}Light Gradient Boosting Machine (LightGBM) ~\cite {lightgbm} }{28}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Sơ lược về LightGBM}{28}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Cơ sở toán học cho LightGBM}{29}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}GOSS: Lấy mẫu một phía theo độ lớn gradient}{31}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}EFB: Gom bó đặc trưng loại trừ nhau}{33}{subsection.3.4.4}%
-\contentsline {subsection}{\numberline {3.4.5}Hiện thực mô hình LightGBM (tóm lược thực nghiệm)}{35}{subsection.3.4.5}%
-\contentsline {subsection}{\numberline {3.4.6}Các tham số chung của mô hình LightGBM}{37}{subsection.3.4.6}%
-\contentsline {section}{\numberline {3.5}Các phương pháp đánh giá mô hình}{38}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Ma trận nhầm lẫn (Confusion Matrix)}{38}{subsection.3.5.1}%
-\contentsline {paragraph}{\numberline {3.5.1.0.1}Ví dụ: Phân loại hình ảnh Mèo, Chó, Ngựa}{41}{table.caption.40}%
-\contentsline {subsection}{\numberline {3.5.2}Đường cong ROC và AUC~\cite {aucroc} }{41}{subsection.3.5.2}%
-\contentsline {chapter}{\numberline {4}Hiện thực bài toán}{43}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Xác định bài toán}{43}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Tiền xử lý dữ liệu}{43}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Loại bỏ các biến không có ý nghĩa trong bài toán}{43}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Xử lý dữ liệu khuyết}{45}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Đánh giá chỉ số giá trị thông tin (IV - Information Value)}{47}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Loại bỏ outliers với Isolation Forest}{49}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Phân tích độ nhọn (Kurtosis) và độ lệch (Skewness)}{50}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Cân bằng dữ liệu}{52}{subsection.4.2.6}%
-\contentsline {section}{\numberline {4.3}Mô hình CatBoost}{53}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Thiết lập mô hình dự đoán khả năng vỡ nợ tài chính}{53}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Kết quả mô hình}{53}{subsection.4.3.2}%
-\contentsline {section}{\numberline {4.4}Mô hình XGBoost}{56}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Mô hình LightGBM}{56}{section.4.5}%
-\contentsline {chapter}{\numberline {5}Insight của bài toán}{57}{chapter.5}%
+\contentsline {chapter}{\numberline {1}Tổng quan bài toán}{3}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Đặc tả bộ dữ liệu được sử dụng trong bài toán}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Tổng quan bộ dữ liệu}{4}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Đặc điểm về bộ dữ liệu}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Mô tả các feature của bộ dữ liệu}{6}{subsection.2.1.2}%
+\contentsline {chapter}{\numberline {3}Cơ sở lý thuyết}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Tiền xử lý dữ liệu}{11}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Xử lý dữ liệu khuyết với Phương pháp gán đa biến bằng phương trình chuỗi}{11}{subsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.1.1}Sơ lược về MICE}{11}{subsubsection.3.1.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.1.2}Hiện thực MICE trong Python}{12}{subsubsection.3.1.1.2}%
+\contentsline {subsection}{\numberline {3.1.2}Trọng số của bằng chứng (WOE - Weight Of Envidence) và Giá trị thông tin (IV - Information Value)}{13}{subsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.1}Trọng số của bằng chứng (WOE - Weight Of Envidence)}{13}{subsubsection.3.1.2.1}%
+\contentsline {subsubsection}{\numberline {3.1.2.2}Giá trị thông tin (IV - Information Value)}{14}{subsubsection.3.1.2.2}%
+\contentsline {subsection}{\numberline {3.1.3}Xử lý dữ liệu ngoại biên (outliers) với Rừng cô lập (Isolation Forest)}{14}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Phân tích độ nhọn (Kurtosis) và độ lệch (Skewness)}{15}{subsection.3.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.4.1}Độ nhọn (Kurtosis)}{15}{subsubsection.3.1.4.1}%
+\contentsline {subsubsection}{\numberline {3.1.4.2}Độ lệch (Skewness)}{16}{subsubsection.3.1.4.2}%
+\contentsline {subsection}{\numberline {3.1.5}Xử lý dữ liệu mất cân bằng trong bài toán phân loại}{19}{subsection.3.1.5}%
+\contentsline {subsubsection}{\numberline {3.1.5.1}Sơ lược về mất cân bằng dữ liệu (Imbalanced Data)}{19}{subsubsection.3.1.5.1}%
+\contentsline {subsubsection}{\numberline {3.1.5.2}Các cách xử lý dữ liệu mất cân bằng trong phân loại}{20}{subsubsection.3.1.5.2}%
+\contentsline {section}{\numberline {3.2}Gradient Boosting}{22}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Sơ lược về giải thuật Gradient Boosting~\cite {gboost}}{22}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Cơ sở toán học cho Gradient Boosting~\cite {catboost}}{23}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Categorical Boosting (Mô hình CatBoost)~\cite {catboost}}{23}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Thuật toán CatBoost}{23}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Biến phân loại và Target Statistics}{24}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Độ lệch dự đoán (Prediction Shift) và Boosting có thứ tự (Ordered Boosting)}{26}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Hiện thực mô hình CatBoost}{27}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Các tham số chung của mô hình CatBoost}{28}{subsection.3.3.5}%
+\contentsline {section}{\numberline {3.4}Light Gradient Boosting Machine (LightGBM)}{29}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Sơ lược về LightGBM}{29}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Cơ sở toán học cho LightGBM}{30}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}GOSS: Lấy mẫu một phía theo độ lớn gradient}{32}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}EFB: Gom bó đặc trưng loại trừ nhau}{34}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}Hiện thực mô hình LightGBM (tóm lược thực nghiệm)}{36}{subsection.3.4.5}%
+\contentsline {subsection}{\numberline {3.4.6}Các tham số chung của mô hình LightGBM}{38}{subsection.3.4.6}%
+\contentsline {section}{\numberline {3.5}Các phương pháp đánh giá mô hình}{39}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Ma trận nhầm lẫn (Confusion Matrix)}{39}{subsection.3.5.1}%
+\contentsline {paragraph}{\numberline {3.5.1.0.1}Ví dụ: Phân loại hình ảnh Mèo, Chó, Ngựa}{42}{table.caption.40}%
+\contentsline {subsection}{\numberline {3.5.2}Đường cong ROC và AUC~\cite {aucroc} }{42}{subsection.3.5.2}%
+\contentsline {chapter}{\numberline {4}Hiện thực bài toán}{44}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Xác định bài toán}{44}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Tiền xử lý dữ liệu}{44}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Loại bỏ các biến không có ý nghĩa trong bài toán}{44}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Xử lý dữ liệu khuyết}{46}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Đánh giá chỉ số giá trị thông tin (IV - Information Value)}{48}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Loại bỏ outliers với Isolation Forest}{50}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Phân tích độ nhọn (Kurtosis) và độ lệch (Skewness)}{51}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Cân bằng dữ liệu}{53}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}Mô hình CatBoost}{54}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Thiết lập mô hình dự đoán khả năng vỡ nợ tài chính}{54}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Kết quả mô hình}{54}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Mô hình XGBoost}{57}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Mô hình LightGBM}{57}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Insight của bài toán}{58}{chapter.5}%

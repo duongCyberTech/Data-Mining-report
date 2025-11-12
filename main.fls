@@ -1,4 +1,4 @@
-PWD C:\Users\admin\Downloads\Data_Mining__Copy_
+PWD c:\Users\admin\Downloads\Data_Mining__Copy_
 INPUT C:\Users\admin\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
 INPUT c:\Users\admin\Downloads\Data_Mining__Copy_\main.tex
 OUTPUT main.log
@@ -327,6 +327,10 @@ INPUT C:\Users\admin\MikTek\tex\latex\colortbl\colortbl.sty
 INPUT C:\Users\admin\MikTek\tex\latex\colortbl\colortbl.sty
 INPUT C:\Users\admin\MikTek\tex\latex\enumitem\enumitem.sty
 INPUT C:\Users\admin\MikTek\tex\latex\enumitem\enumitem.sty
+INPUT C:\Users\admin\MikTek\tex\latex\siunitx\siunitx.sty
+INPUT C:\Users\admin\MikTek\tex\latex\siunitx\siunitx.sty
+INPUT C:\Users\admin\MikTek\tex\latex\translations\translations.sty
+INPUT C:\Users\admin\MikTek\tex\latex\translations\translations.sty
 INPUT C:\Users\admin\MikTek\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryarrows.code.tex
 INPUT C:\Users\admin\MikTek\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryarrows.code.tex
 INPUT C:\Users\admin\MikTek\tex\generic\pgf\libraries\pgflibraryarrows.code.tex
@@ -388,8 +392,17 @@ INPUT C:\Users\admin\MikTek\tex\latex\epstopdf-pkg\epstopdf-base.sty
 INPUT C:\Users\admin\MikTek\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\admin\MikTek\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\admin\MikTek\tex\latex\00miktex\epstopdf-sys.cfg
-OUTPUT main.out
+INPUT .\main.out
+INPUT .\main.out
+INPUT main.out
+INPUT main.out
 OUTPUT main.pdf
+INPUT .\main.out
+INPUT .\main.out
+OUTPUT main.out
+INPUT C:\Users\admin\MikTek\tex\latex\translations\dicts\translations-basic-dictionary-english.trsl
+INPUT C:\Users\admin\MikTek\tex\latex\translations\dicts\translations-basic-dictionary-english.trsl
+INPUT C:\Users\admin\MikTek\tex\latex\translations\dicts\translations-basic-dictionary-english.trsl
 INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmb8v.tfm
 INPUT .\Images\hcmut.png
 INPUT .\Images\hcmut.png
@@ -448,7 +461,17 @@ INPUT C:\Users\admin\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT C:\Users\admin\MikTek\fonts\enc\dvips\vntex\t5.enc
 INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmr8v.tfm
 INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmb8v.tfm
+INPUT .\main.toc
+INPUT .\main.toc
+INPUT main.toc
 OUTPUT main.toc
+INPUT .\Images\hcmut.png
+INPUT .\Images\hcmut.png
+INPUT .\Images\hcmut.png
+INPUT .\Images\hcmut.png
+INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmr8v.tfm
+INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmb8v.tfm
+INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmr8v.tfm
 INPUT .\Content\Tổng quan bài toán.tex
 INPUT .\Content\Tổng quan bài toán.tex
 INPUT .\Content\Tổng quan bài toán.tex
@@ -495,23 +518,19 @@ INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\vnr\vntt10.tfm
 INPUT C:\Users\admin\MikTek\fonts\vf\adobe\times\ptmr8c.vf
 INPUT C:\Users\admin\MikTek\fonts\tfm\adobe\times\ptmr8r.tfm
 INPUT C:\Users\admin\MikTek\fonts\enc\dvips\base\8r.enc
-INPUT C:\Users\admin\MikTek\fonts\vf\adobe\times\zptmcm7y.vf
-INPUT C:\Users\admin\MikTek\fonts\tfm\adobe\symbol\psyr.tfm
-INPUT C:\Users\admin\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs10.tfm
 INPUT C:\Users\admin\MikTek\fonts\vf\adobe\times\zptmcm7t.vf
+INPUT C:\Users\admin\MikTek\fonts\tfm\adobe\symbol\psyr.tfm
 INPUT C:\Users\admin\MikTek\fonts\vf\adobe\times\zptmcm7m.vf
 INPUT C:\Users\admin\MikTek\fonts\tfm\adobe\times\psyro.tfm
 INPUT C:\Users\admin\MikTek\fonts\tfm\adobe\times\ptmri8r.tfm
+INPUT C:\Users\admin\MikTek\fonts\vf\adobe\times\zptmcm7y.vf
+INPUT C:\Users\admin\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs10.tfm
 INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmr8v.tfm
 INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmb8v.tfm
 INPUT .\Images\hcmut.png
 INPUT .\Images\hcmut.png
 INPUT .\Images\hcmut.png
 INPUT .\Images\hcmut.png
-INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmr8v.tfm
-INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmb8v.tfm
-INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmr8v.tfm
-INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmb8v.tfm
 INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmr8v.tfm
 INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmb8v.tfm
 INPUT C:\Users\admin\MikTek\fonts\tfm\vntex\urwvn\utmri8v.tfm
@@ -1102,6 +1121,9 @@ INPUT .\Images\hcmut.png
 INPUT .\Images\hcmut.png
 INPUT .\Images\hcmut.png
 INPUT .\Images\hcmut.png
+INPUT .\main.bbl
+INPUT .\main.bbl
+INPUT main.bbl
 INPUT main.aux
 INPUT .\main.out
 INPUT .\main.out

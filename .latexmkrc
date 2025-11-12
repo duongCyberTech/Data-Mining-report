@@ -1,0 +1,1 @@
+$ENV{PERL_UTF8} = 1;
