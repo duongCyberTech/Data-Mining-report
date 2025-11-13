@@ -231,3 +231,74 @@ AUC-ROC đặc biệt hữu ích khi:
 
 \textbf{Lưu ý}: Đối với các tập dữ liệu mất cân bằng nghiêm trọng, đường cong Precision-Recall thường cung cấp đánh giá thực tế hơn so với AUC-ROC.
 
+\subsection{Chỉ số KS (Kolmogorov--Smirnov Statistic)}
+$\indent$Chỉ số Kolmogorov--Smirnov (KS) là một thống kê phi tham số dùng để so sánh hai phân phối xác suất một chiều. Trong thống kê cổ điển, KS được sử dụng để kiểm tra xem một mẫu có tuân theo một phân phối lý thuyết cho trước (one–sample KS test) hoặc hai mẫu độc lập có cùng phân phối hay không (two–sample KS test). Trong bối cảnh học máy và chấm điểm tín dụng, ta thường quan tâm trực tiếp tới \textbf{giá trị thống kê KS} như một thước đo cho khả năng tách biệt giữa hai lớp (ví dụ: khách hàng tốt và khách hàng xấu).
+
+\subsubsection*{a) Hàm phân phối tích luỹ thực nghiệm (Empirical Distribution Function)}
+Giả sử ta có một mẫu quan sát $X_1, X_2, \dots, X_n$. Hàm phân phối tích luỹ thực nghiệm (EDF) của mẫu tại một giá trị $x$ được định nghĩa là:
+\[
+F_n(x) = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}_{\{X_i \le x\}},
+\]
+trong đó $\mathbf{1}_{\{X_i \le x\}} = 1$ nếu $X_i \le x$ và bằng $0$ nếu ngược lại. $F_n(x)$ biểu diễn tỷ lệ các điểm dữ liệu có giá trị không vượt quá $x$ trong mẫu.
+
+\subsubsection*{b) Định nghĩa thống kê KS}
+\begin{itemize}
+    \item \textbf{One–sample KS}: dùng để kiểm tra xem mẫu có tuân theo một phân phối lý thuyết $F(x)$ cho trước hay không. Thống kê KS được định nghĩa là:
+    \[
+    D_n = \sup_{x} \left| F_n(x) - F(x) \right|.
+    \]
+    \item \textbf{Two–sample KS}: dùng để so sánh hai mẫu độc lập có kích thước lần lượt là $n_1$ và $n_2$, với các hàm phân phối thực nghiệm $F_{1,n}(x)$ và $F_{2,m}(x)$. Khi đó:
+    \[
+    D_{n_1,n_2} = \sup_{x} \left| F_{1,n}(x) - F_{2,m}(x) \right|.
+    \]
+\end{itemize}
+Giá trị $D$ càng lớn thì khoảng cách giữa hai phân phối càng lớn, nghĩa là hình dạng phân phối khác nhau nhiều hơn.
+
+\subsubsection*{c) Liên hệ với bài toán phân loại nhị phân}
+Trong bài toán chấm điểm tín dụng hoặc phân loại nhị phân, mô hình thường trả về một \textbf{điểm số} (score) hoặc \textbf{xác suất} cho mỗi quan sát. Khi đó, ta có thể:
+\begin{itemize}
+    \item Tách các điểm số thành hai nhóm: nhóm lớp dương tính (ví dụ: khách hàng xấu) và nhóm lớp âm tính (khách hàng tốt).
+    \item Xây dựng hai hàm phân phối tích luỹ thực nghiệm $F_{\text{pos}}(s)$ và $F_{\text{neg}}(s)$ cho điểm số $s$.
+\end{itemize}
+Chỉ số KS trong ngữ cảnh này chính là \textbf{độ lệch tối đa giữa hai hàm phân phối tích luỹ}:
+\[
+KS = \sup_{s} \left| F_{\text{pos}}(s) - F_{\text{neg}}(s) \right|.
+\]
+
+Mặt khác, từ quan điểm đường cong ROC, tại mỗi ngưỡng $t$ ta có:
+\[
+TPR(t) = \frac{TP(t)}{TP(t) + FN(t)}, \quad FPR(t) = \frac{FP(t)}{FP(t) + TN(t)}.
+\]
+Có thể chứng minh rằng (với cách sắp xếp ngưỡng phù hợp), thống kê KS tương đương với:
+\[
+KS = \max_{t} \left| TPR(t) - FPR(t) \right|.
+\]
+Do đó, KS có thể xem như \textbf{khoảng cách lớn nhất} giữa hai đường CDF của lớp dương và lớp âm, hoặc giữa hai đường TPR và FPR khi thay đổi ngưỡng phân loại.
+
+\subsubsection*{d) Diễn giải giá trị KS trong đánh giá mô hình}
+Trong thực tế ứng dụng (đặc biệt là chấm điểm tín dụng), KS thường được diễn giải theo trực giác:
+\begin{itemize}
+    \item $KS$ càng lớn $\Rightarrow$ hai phân phối điểm của hai lớp càng tách biệt rõ rệt $\Rightarrow$ mô hình càng dễ phân biệt khách hàng tốt và xấu.
+    \item Một số ngưỡng tham khảo thường dùng:
+    \begin{itemize}
+        \item $KS < 0.2$: mô hình yếu, khả năng tách biệt kém.
+        \item $0.2 \le KS < 0.4$: mô hình ở mức chấp nhận được.
+        \item $KS \ge 0.4$: mô hình tốt, phân biệt hai lớp rõ.
+    \end{itemize}
+\end{itemize}
+Các ngưỡng này chỉ mang tính kinh nghiệm, cần được hiệu chỉnh tuỳ theo bài toán và yêu cầu của doanh nghiệp.
+
+\subsubsection*{e) Ưu điểm và hạn chế}
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Là một kiểm định phi tham số, không yêu cầu giả định về dạng phân phối (không cần giả định chuẩn, mũ, \dots).
+    \item Chỉ số đơn giản, trực quan, có thể nhìn trực tiếp trên biểu đồ hai CDF hoặc từ đường cong ROC.
+    \item Rất phổ biến trong các hệ thống chấm điểm tín dụng để so sánh khả năng phân biệt giữa các mô hình.
+\end{itemize}
+
+\textbf{Hạn chế:}
+\begin{itemize}
+    \item Nhạy với kích thước mẫu: với mẫu rất lớn, các khác biệt nhỏ cũng có thể cho giá trị KS cao; với mẫu nhỏ, kiểm định mất sức mạnh.
+    \item Thiết kế chủ yếu cho dữ liệu liên tục; khi áp dụng cho dữ liệu rời rạc cần xử lý cẩn thận.
+    \item Chỉ phản ánh \textbf{khoảng cách tối đa} giữa hai phân phối, không cho biết chi tiết toàn bộ hình dạng phân phối như thế nào.
+\end{itemize}
