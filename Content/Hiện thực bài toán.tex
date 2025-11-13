@@ -654,3 +654,71 @@ $\indent$Trong bài toán này, nhóm thực hiện 4 phương án tái lấy m�
 \end{figure}
 \section{Mô hình XGBoost}
 \section{Mô hình LightGBM}
+\begin{lstlisting}[language=Python]
+lightGBM_proto = lgb.LGBMClassifier(
+    n_estimators=1500,
+    learning_rate=0.01,
+    max_depth=6,
+    reg_lambda=20,
+    random_state=42,
+    objective='binary',
+    scale_pos_weight=math.sqrt(scale_pos_weight_goc),
+    metric='aucpr',
+    bagging_fraction=0.7,
+    feature_fraction=0.8,
+    num_leaves=50,
+    verbose=-1,
+    n_jobs=-1
+)
+\end{lstlisting}
+Trong đó, các siêu tham số được thiết lập như sau:
+\begin{itemize}
+    \item \verb|n_estimators = 1500|: số lượng cây quyết định trong mô hình
+    boosting. Số cây lớn cho phép mô hình học được các quan hệ phức tạp,
+    nhưng vẫn được kiểm soát bởi tốc độ học nhỏ.
+
+    \item \verb|learning_rate = 0.01|: tốc độ học, tức mức độ đóng góp của
+    mỗi cây mới vào mô hình tổng. Giá trị nhỏ (0{,}01) giúp mô hình học
+    “chậm mà chắc” và giảm nguy cơ overfitting khi đi kèm nhiều cây.
+
+    \item \verb|max_depth = 6|: độ sâu tối đa của mỗi cây. Tham số này giới
+    hạn độ phức tạp của cây, tránh việc cây quá sâu dẫn đến mô hình ghi nhớ
+    dữ liệu huấn luyện.
+
+    \item \verb|reg_lambda = 20|: hệ số regularization L2, phạt các tham số
+    có độ lớn quá cao. Việc đặt \verb|reg_lambda| tương đối lớn giúp mô hình
+    ổn định hơn và giảm overfitting.
+
+    \item \verb|random_state = 42|: hạt giống ngẫu nhiên để việc huấn luyện
+    có thể lặp lại với cùng kết quả khi chạy lại mô hình.
+
+    \item \verb|objective = 'binary'|: hàm mục tiêu cho bài toán phân loại
+    nhị phân, phù hợp với nhiệm vụ dự đoán khả năng vỡ nợ (0/1).
+
+    \item \verb|scale_pos_weight = math.sqrt(scale_pos_weight_goc)|: hệ số
+    cân bằng giữa lớp dương (vỡ nợ) và lớp âm. Giá trị này được đặt bằng
+    căn bậc hai của tỉ lệ số lượng mẫu lớp 0 trên lớp 1, giúp mô hình chú ý
+    hơn đến lớp thiểu số nhưng vẫn tránh phóng đại quá mức trọng số.
+
+    \item \verb|metric = 'aucpr'|: chỉ số đánh giá chính được tối ưu trong
+    quá trình huấn luyện là AUC của đường cong Precision--Recall, phù hợp
+    cho dữ liệu mất cân bằng.
+
+    \item \verb|bagging_fraction = 0.7|: mỗi vòng boosting chỉ sử dụng
+    ngẫu nhiên 70\% số mẫu. Kỹ thuật bagging này giúp giảm tương quan giữa
+    các cây và hạn chế overfitting.
+
+    \item \verb|feature_fraction = 0.8|: mỗi cây chỉ sử dụng ngẫu nhiên
+    80\% số đặc trưng, giúp mô hình bớt phụ thuộc vào một nhóm biến cố định
+    và tăng khả năng tổng quát.
+
+    \item \verb|num_leaves = 50|: số lá tối đa của mỗi cây. Đây là tham số
+    quan trọng quyết định độ phức tạp của cây trong LightGBM; 50 lá cho mô
+    hình đủ linh hoạt nhưng vẫn được giới hạn để tránh overfitting.
+
+    \item \verb|verbose = -1|: tắt bớt thông tin log trong quá trình
+    huấn luyện, giúp kết quả in ra gọn hơn.
+
+    \item \verb|n_jobs = -1|: sử dụng toàn bộ số lõi CPU có sẵn để song
+    song hoá việc xây cây, rút ngắn thời gian huấn luyện.
+\end{itemize}
