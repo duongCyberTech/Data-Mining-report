@@ -9,13 +9,7 @@ Bộ dữ liệu chính gồm hai tệp:
 $\indent$Trong \texttt{application\_train}, tỷ lệ dương của \texttt{TARGET} (khách hàng \emph{vỡ nợ}) là \SI{8.073}{\percent} (24825/307511), thể hiện hiện tượng \emph{mất cân bằng lớp}. Tỷ lệ thiếu trung bình toàn bộ cột vào khoảng \SI{24.396}{\percent}, trong đó một số biến căn hộ có tỷ lệ thiếu rất cao. \\
 $\indent$\textbf{Biến mục tiêu:} \texttt{TARGET} \(\in \{0,1\}\), với 1 = \emph{vỡ nợ} và 0 = \emph{không vỡ nợ}.
 
-$\indent$\noindent\textbf{Kiểu biến:} \num{106} biến số và \num{16} biến phân loại (object). Các nhóm biến chính:
-\begin{itemize}
-  \item \textbf{Nhân khẩu/kinh tế:} \texttt{CODE\_GENDER}, \texttt{CNT\_CHILDREN}, \texttt{AMT\_INCOME\_TOTAL}, \texttt{NAME\_EDUCATION\_TYPE}, \texttt{NAME\_INCOME\_TYPE}, \texttt{NAME\_FAMILY\_STATUS}, \texttt{NAME\_HOUSING\_TYPE}, v.v.
-  \item \textbf{Khoản vay:} \texttt{AMT\_CREDIT}, \texttt{AMT\_ANNUITY}, \texttt{AMT\_GOODS\_PRICE}, \texttt{NAME\_CONTRACT\_TYPE}.
-  \item \textbf{Điểm/nguồn bên ngoài:} \texttt{EXT\_SOURCE\_1}, \texttt{EXT\_SOURCE\_2}, \texttt{EXT\_SOURCE\_3}.
-  \item \textbf{Mốc thời gian tương đối (ngày):} \texttt{DAYS\_*} như \texttt{DAYS\_BIRTH}, \texttt{DAYS\_EMPLOYED}, \texttt{DAYS\_REGISTRATION} (giá trị \emph{âm} biểu diễn số ngày trước thời điểm tham chiếu hiện tại).
-\end{itemize}
+$\indent$\noindent\textbf{Kiểu biến:} \num{106} biến số và \num{16} biến phân loại (object).
 
 Bộ dữ liệu Home Credit Default Risk là một điển hình trong các bài toán xếp hạng rủi ro tín dụng trong thực tế, nơi hiện tượng mất cân bằng lớp không phải là lỗi do việc thu thập mà là do bản chất của vấn đề. Trong tập dữ liệu này, các khoản vay "không vỡ nợ" chiếm tỷ lệ áp đảo lên đến khoảng 92\%, trong khi các khoản vay "vỡ nợ" chỉ chiếm khoảng 8\%. Sự chênh lệch lớn này phản ánh chính xác hiện tượng thực tế trong lĩnh vực tín dụng tiêu dùng: các quy trình thẩm định nghiêm ngặt đảm bảo rằng chỉ những khách hàng có rủi ro thấp mới được chấp thuận cho vay. Bên cạnh đó, điều kiện kinh tế thuận lợi tại thời điểm thu thập dữ liệu và thiên lệch trong việc lựa chọn mẫu (chỉ các hồ sơ đã được phê duyệt mới có mặt trong dataset) cũng góp phần tạo nên sự mất cân bằng này.
 
