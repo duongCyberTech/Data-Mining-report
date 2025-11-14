@@ -204,3 +204,77 @@ AMT\_REQ\_CREDIT\_BUREAU\_QRT & float64 & đặc trưng & Số lần truy vấn 
 AMT\_REQ\_CREDIT\_BUREAU\_YEAR & float64 & đặc trưng & Số lần truy vấn tín dụng trong 1 năm gần nhất. \\ \hline
 
 \end{longtable}
+\subsection{Missing data ở từng nhóm biến}
+$\indent$Tỷ lệ thiếu trung bình toàn bộ cột vào khoảng \SI{24.396}{\percent}, nhưng phân bố không đồng đều giữa các nhóm đặc trưng. Dưới đây là tổng quan mức thiếu dữ liệu theo đúng các nhóm đã mô tả:
+
+\begin{itemize}
+    \item \textbf{Thông tin định danh:} \texttt{SK\_ID\_CURR} đầy đủ (0\% thiếu).
+
+    \item \textbf{Thông tin cá nhân:}
+    \begin{itemize}
+        \item Hầu hết đầy đủ (0\%): \texttt{CODE\_GENDER}, \texttt{CNT\_CHILDREN}, \texttt{CNT\_FAM\_MEMBERS}, \texttt{NAME\_FAMILY\_STATUS}, \texttt{NAME\_EDUCATION\_TYPE}, \texttt{NAME\_INCOME\_TYPE}, \texttt{NAME\_HOUSING\_TYPE}.
+        \item Thiếu đáng kể: \texttt{OCCUPATION\_TYPE} $\sim$31.3\%.
+        \item Thiếu trung bình: \texttt{ORGANIZATION\_TYPE} $\sim$18.0\%.
+        \item Thiếu thấp: \texttt{NAME\_TYPE\_SUITE} $\sim$0.42\%.
+    \end{itemize}
+
+    \item \textbf{Tài sản sở hữu:}
+    \begin{itemize}
+        \item Cờ sở hữu (ô tô/nhà đất) gần như đầy đủ: \texttt{FLAG\_OWN\_CAR}, \texttt{FLAG\_OWN\_REALTY} (0\%).
+        \item Tuổi xe: \texttt{OWN\_CAR\_AGE} $\sim$66.0\%.
+        \item Cụm nhà ở/căn hộ (chuẩn hoá theo \_AVG/\_MEDI/\_MODE) có thiếu rất cao:
+        \begin{itemize}
+            \item \texttt{COMMONAREA\_*} $\sim$69.9\%, \texttt{NONLIVINGAPARTMENTS\_*} $\sim$69.4\%, \texttt{LIVINGAPARTMENTS\_*} $\sim$68.3\%.
+            \item \texttt{FONDKAPREMONT\_MODE} $\sim$68.4\% (categorical).
+            \item \texttt{LANDAREA\_*} $\sim$59.4\%, \texttt{BASEMENTAREA\_*} $\sim$58.5\%.
+            \item \texttt{ELEVATORS\_*} $\sim$53.3\%, \texttt{APARTMENTS\_*} $\sim$50.7\%, \texttt{LIVINGAREA\_*} $\sim$50.2\%.
+            \item \texttt{WALLSMATERIAL\_MODE} $\sim$50.8\%, \texttt{HOUSETYPE\_MODE} $\sim$50.2\%.
+            \item \texttt{FLOORSMAX\_*} $\sim$49.8\%, \texttt{FLOORSMIN\_*} $\sim$67.9\%.
+            \item \texttt{YEARS\_BUILD\_*} $\sim$66.5\%, \texttt{YEARS\_BEGINEXPLUATATION\_*} $\sim$48.8\%.
+            \item \texttt{TOTALAREA\_MODE} $\sim$48.3\%.
+        \end{itemize}
+        \item Cụm khu vực xã hội: \texttt{OBS/DEF\_30/60\_CNT\_SOCIAL\_CIRCLE} $\sim$0.33\% (thấp).
+    \end{itemize}
+
+    \item \textbf{Tài chính \& thu nhập:}
+    \begin{itemize}
+        \item Gần như đầy đủ (0\%): \texttt{AMT\_INCOME\_TOTAL}, \texttt{AMT\_CREDIT}, \texttt{AMT\_ANNUITY}.
+        \item Thiếu rất thấp: \texttt{AMT\_GOODS\_PRICE} $\sim$0.09\%.
+    \end{itemize}
+
+    \item \textbf{Điểm/nguồn rủi ro ngoại sinh:}
+    \begin{itemize}
+        \item \texttt{EXT\_SOURCE\_1} $\sim$56.4\% (cao), \texttt{EXT\_SOURCE\_3} $\sim$19.8\% (trung bình), \texttt{EXT\_SOURCE\_2} $\sim$0.21\% (rất thấp).
+    \end{itemize}
+
+    \item \textbf{Bối cảnh \& lịch sử hồ sơ theo thời gian:}
+    \begin{itemize}
+        \item Đa số đầy đủ (0\%): \texttt{DAYS\_BIRTH}, \texttt{DAYS\_EMPLOYED} (lưu ý sentinel 365243), \texttt{DAYS\_REGISTRATION}.
+        \item Thiếu thấp: \texttt{DAYS\_LAST\_PHONE\_CHANGE} $\sim$0\%–nhỏ, \texttt{WEEKDAY\_APPR\_PROCESS\_START} (object) thường đủ dữ liệu; \texttt{HOUR\_APPR\_PROCESS\_START} đầy đủ.
+        \item \texttt{DAYS\_ID\_PUBLISH} gần như đầy đủ (0\%).
+    \end{itemize}
+
+    \item \textbf{Đặc trưng vùng/khu vực \& nhất quán nơi ở–làm việc:}
+    \begin{itemize}
+        \item Hầu hết đầy đủ (0\%): \texttt{REGION\_POPULATION\_RELATIVE}, \texttt{REGION\_RATING\_CLIENT}, \texttt{REGION\_RATING\_CLIENT\_W\_CITY}.
+        \item Cụm cờ không khớp vùng/thành phố (\texttt{REG\_REGION\_NOT\_LIVE\_REGION}, \texttt{REG\_REGION\_NOT\_WORK\_REGION}, \texttt{LIVE\_REGION\_NOT\_WORK\_REGION}, \texttt{REG\_CITY\_NOT\_LIVE\_CITY}, \texttt{REG\_CITY\_NOT\_WORK\_CITY}, \texttt{LIVE\_CITY\_NOT\_WORK\_CITY}) đầy đủ (0\%).
+    \end{itemize}
+
+    \item \textbf{Liên hệ/thiết bị \& trạng thái cung cấp:}
+    \begin{itemize}
+        \item Các cờ liên hệ \texttt{FLAG\_*} gần như đầy đủ (0\%).
+    \end{itemize}
+
+    \item \textbf{Giấy tờ chứng minh:}
+    \begin{itemize}
+        \item Nhóm \texttt{FLAG\_DOCUMENT\_2} … \texttt{FLAG\_DOCUMENT\_21} đầy đủ (0\%).
+    \end{itemize}
+
+    \item \textbf{Truy vấn tín dụng tại bureau:}
+    \begin{itemize}
+        \item Thiếu biến thiên theo cửa sổ thời gian; điển hình mức thiếu từ thấp đến trung bình: 
+        \texttt{AMT\_REQ\_CREDIT\_BUREAU\_HOUR/DAY/WEEK/MON/QRT/YEAR} ($\sim$0\%–\,$\sim$20\% tuỳ cột; trong thống kê mẫu: HOUR/DAY/WEEK/MON/QRT/YEAR thường có thiếu nhưng không vượt ngưỡng cao).
+    \end{itemize}
+
+    \item \textbf{Biến mục tiêu (Label):} \texttt{TARGET} đầy đủ (0\%).
+\end{itemize}
